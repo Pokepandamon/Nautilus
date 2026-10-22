@@ -131,6 +131,7 @@ GameObject:
   - component: {fileID: 240601972}
   - component: {fileID: 240601971}
   - component: {fileID: 240601974}
+  - component: {fileID: 240601975}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -256,6 +257,26 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!114 &240601975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 240601970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd937d0efdf4dea478ffef7c771989b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CameraMovement
+  _distance: 10
+  _playerTransform: {fileID: 429344871}
+  _sensitivity: 0.5
+--- !u!4 &429344871 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 9132606891566556987, guid: b22a1a7344978424b862613745bed830, type: 3}
+  m_PrefabInstance: {fileID: 8593682722913846428}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2065574450
 GameObject:
   m_ObjectHideFlags: 0
