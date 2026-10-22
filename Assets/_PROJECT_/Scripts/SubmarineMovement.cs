@@ -8,9 +8,12 @@ public class SubmarineMovement : MonoBehaviour
 {
     // Fields
     [SerializeField] private float _speed;
+    [SerializeField] private GameObject _netPrefab;
+    [SerializeField] private Transform _netSpawn;
     private Rigidbody _rigidbody;
     private InputAction _linearMovementAction;
     private InputAction _rotationalMovementAction;
+    private InputAction _netAction;
     private Vector2 _linearMovement;
     private float _rotationalMovement;
     
@@ -24,12 +27,17 @@ public class SubmarineMovement : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody>();
         _linearMovementAction = InputSystem.actions.FindAction("ForwardBackUpDown");
         _rotationalMovementAction = InputSystem.actions.FindAction("Move");
+        _netAction = InputSystem.actions.FindAction("Attack");
     }
     
     private void Update()
     {
         _linearMovement = _linearMovementAction.ReadValue<Vector2>();
         _rotationalMovement = _rotationalMovementAction.ReadValue<Vector2>().x;
+        if (_netAction.WasPressedThisFrame())
+        {
+            Instantiate(_netPrefab, _netSpawn);
+        }
     }
     
     private void FixedUpdate()
