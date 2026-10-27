@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 990744854063247525}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: NetSpawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 3302018698303295502}
   - component: {fileID: 2387734138922933652}
   - component: {fileID: 4967738895849806852}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Submarine
   m_TagString: Untagged
   m_Icon: {fileID: 0}

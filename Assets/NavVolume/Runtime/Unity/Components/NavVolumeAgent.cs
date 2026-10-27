@@ -30,6 +30,10 @@ namespace NavVolume
         [SerializeField]
         float _angularSpeed = 360f;
 
+        [Tooltip("Local rotation offset in degrees applied after facing the movement direction.")]
+        [SerializeField]
+        Vector3 _rotationOffset;
+
         [SerializeField]
         internal bool _freezeRotationX;
 
@@ -426,7 +430,8 @@ namespace NavVolume
                 return;
             }
 
-            var desired = Quaternion.LookRotation(direction, Vector3.up);
+            var desired = Quaternion.LookRotation(direction, Vector3.up)
+                * Quaternion.Euler(_rotationOffset);
 
             if (_freezeRotationX || _freezeRotationY || _freezeRotationZ)
             {
