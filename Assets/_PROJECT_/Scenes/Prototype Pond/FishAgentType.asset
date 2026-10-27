@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65788c7e52900354cbd0a65719a35af4, type: 3}
   m_Name: FishAgentType
   m_EditorClassIdentifier: Assembly-CSharp::NavVolume.Runtime.AgentType
-  <Radius>k__BackingField: 0.1
-  <CostMode>k__BackingField: 0
+  <Radius>k__BackingField: 0.45
+  <CostMode>k__BackingField: 1
   <HeuristicWeight>k__BackingField: 1.5
   <AvoidanceNeighborRange>k__BackingField: 5
   <AvoidanceMaxNeighbors>k__BackingField: 10
   <AvoidanceTimeHorizonAgents>k__BackingField: 2
-  <AvoidanceTimeHorizonObstacles>k__BackingField: 1
+  <AvoidanceTimeHorizonObstacles>k__BackingField: 0.5

@@ -39,7 +39,7 @@ public class FishPatrol : MonoBehaviour
             Debug.Log("set dest");
         }
 
-        if (Vector3.Distance(transform.position, destination.position) < 0.5f)
+        if (Vector3.Distance(transform.position, destination.position) < 1f)
         {
             GoNextPoint();
         }
