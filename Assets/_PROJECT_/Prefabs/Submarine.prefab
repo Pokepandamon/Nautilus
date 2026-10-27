@@ -188,5 +188,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SubmarineMovement
   _speed: 2
+  _turnSpeed: 0.5
   _netPrefab: {fileID: 6169549296702479894, guid: 5fdc1581350ece642acabb23c885e0fb, type: 3}
   _netSpawn: {fileID: 990744854063247525}

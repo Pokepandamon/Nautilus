@@ -8,6 +8,7 @@ public class SubmarineMovement : MonoBehaviour
 {
     // Fields
     [SerializeField] private float _speed;
+    [SerializeField] private float _turnSpeed;
     [SerializeField] private GameObject _netPrefab;
     [SerializeField] private Transform _netSpawn;
     private Rigidbody _rigidbody;
@@ -43,7 +44,7 @@ public class SubmarineMovement : MonoBehaviour
     private void FixedUpdate()
     {
         _rigidbody.AddRelativeForce(_linearMovement.y * _speed, _linearMovement.x * _speed, 0f);
-        _rigidbody.AddTorque(0f, _rotationalMovement * _speed, 0f);
+        _rigidbody.AddTorque(0f, _rotationalMovement * _turnSpeed, 0f);
     }
     
     // Public Methods
