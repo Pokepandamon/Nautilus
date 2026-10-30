@@ -18,4 +18,4 @@ MonoBehaviour:
   <AvoidanceNeighborRange>k__BackingField: 5
   <AvoidanceMaxNeighbors>k__BackingField: 10
   <AvoidanceTimeHorizonAgents>k__BackingField: 2
-  <AvoidanceTimeHorizonObstacles>k__BackingField: 0.5
+  <AvoidanceTimeHorizonObstacles>k__BackingField: 1

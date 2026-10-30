@@ -97,8 +97,11 @@ namespace NavVolume.Runtime.Avoidance
                 return;
             }
 
+            // Baked occupancy already includes the build's agent radius. Applying the full
+            // radius here again makes valid paths and destinations unreachable to avoidance.
+            var radius = grid.GetAdditionalRadius(agent.Radius);
             var searchRange = math.min(
-                agent.Radius + agent.MaxSpeed * agent.TimeHorizonObstacles,
+                radius + agent.MaxSpeed * agent.TimeHorizonObstacles,
                 _MAX_VOXEL_SEARCH_NODES * grid.NodeSize
             );
 
@@ -128,7 +131,7 @@ namespace NavVolume.Runtime.Avoidance
 
                 planes[planeCount++] = OrcaMath.StaticPlane(
                     relativePosition,
-                    agent.Radius,
+                    radius,
                     agent.Velocity,
                     float3.zero,
                     agent.TimeHorizonObstacles,

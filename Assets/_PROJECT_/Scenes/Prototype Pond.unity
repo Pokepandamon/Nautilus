@@ -562,43 +562,40 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8698176918246863798, guid: f0a33af8d70c918459b6f4965795481d, type: 3}
-      propertyPath: _isAvoidanceEnabled
-      value: 1
+    - target: {fileID: 5316940220055949786, guid: f0a33af8d70c918459b6f4965795481d, type: 3}
+      propertyPath: points.Array.size
+      value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 5316940220055949786, guid: f0a33af8d70c918459b6f4965795481d, type: 3}
+      propertyPath: _points.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5316940220055949786, guid: f0a33af8d70c918459b6f4965795481d, type: 3}
+      propertyPath: 'points.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1490316507}
+    - target: {fileID: 5316940220055949786, guid: f0a33af8d70c918459b6f4965795481d, type: 3}
+      propertyPath: 'points.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1337645412}
+    - target: {fileID: 5316940220055949786, guid: f0a33af8d70c918459b6f4965795481d, type: 3}
+      propertyPath: '_points.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1490316507}
+    - target: {fileID: 5316940220055949786, guid: f0a33af8d70c918459b6f4965795481d, type: 3}
+      propertyPath: '_points.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1337645412}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 378450582134075640, guid: f0a33af8d70c918459b6f4965795481d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 272871613}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f0a33af8d70c918459b6f4965795481d, type: 3}
 --- !u!4 &272871611 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4810044118576488118, guid: f0a33af8d70c918459b6f4965795481d, type: 3}
   m_PrefabInstance: {fileID: 272871610}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &272871612 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 378450582134075640, guid: f0a33af8d70c918459b6f4965795481d, type: 3}
-  m_PrefabInstance: {fileID: 272871610}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &272871613
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 272871612}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b29815d23d1014e1299514d0bf312968, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FishPatrol
-  points:
-  - {fileID: 1490316507}
-  - {fileID: 1337645412}
 --- !u!1 &389199392
 GameObject:
   m_ObjectHideFlags: 0
@@ -1070,43 +1067,40 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8698176918246863798, guid: f0a33af8d70c918459b6f4965795481d, type: 3}
-      propertyPath: _isAvoidanceEnabled
-      value: 1
+    - target: {fileID: 5316940220055949786, guid: f0a33af8d70c918459b6f4965795481d, type: 3}
+      propertyPath: points.Array.size
+      value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 5316940220055949786, guid: f0a33af8d70c918459b6f4965795481d, type: 3}
+      propertyPath: _points.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5316940220055949786, guid: f0a33af8d70c918459b6f4965795481d, type: 3}
+      propertyPath: 'points.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1274489167}
+    - target: {fileID: 5316940220055949786, guid: f0a33af8d70c918459b6f4965795481d, type: 3}
+      propertyPath: 'points.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1067816030}
+    - target: {fileID: 5316940220055949786, guid: f0a33af8d70c918459b6f4965795481d, type: 3}
+      propertyPath: '_points.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1274489167}
+    - target: {fileID: 5316940220055949786, guid: f0a33af8d70c918459b6f4965795481d, type: 3}
+      propertyPath: '_points.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1067816030}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 378450582134075640, guid: f0a33af8d70c918459b6f4965795481d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 576860356}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f0a33af8d70c918459b6f4965795481d, type: 3}
 --- !u!4 &576860354 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4810044118576488118, guid: f0a33af8d70c918459b6f4965795481d, type: 3}
   m_PrefabInstance: {fileID: 576860353}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &576860355 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 378450582134075640, guid: f0a33af8d70c918459b6f4965795481d, type: 3}
-  m_PrefabInstance: {fileID: 576860353}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &576860356
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 576860355}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b29815d23d1014e1299514d0bf312968, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FishPatrol
-  points:
-  - {fileID: 1274489167}
-  - {fileID: 1067816030}
 --- !u!1001 &591586106
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1235,31 +1229,11 @@ Transform:
   - {fileID: 1000946676}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &870381395 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 378450582134075640, guid: f0a33af8d70c918459b6f4965795481d, type: 3}
-  m_PrefabInstance: {fileID: 4662464137329057071}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &870381400 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4810044118576488118, guid: f0a33af8d70c918459b6f4965795481d, type: 3}
   m_PrefabInstance: {fileID: 4662464137329057071}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &870381403
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 870381395}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b29815d23d1014e1299514d0bf312968, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FishPatrol
-  points:
-  - {fileID: 389199393}
-  - {fileID: 1000946676}
 --- !u!1 &959106803
 GameObject:
   m_ObjectHideFlags: 0
@@ -1791,43 +1765,40 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8698176918246863798, guid: f0a33af8d70c918459b6f4965795481d, type: 3}
-      propertyPath: _isAvoidanceEnabled
-      value: 1
+    - target: {fileID: 5316940220055949786, guid: f0a33af8d70c918459b6f4965795481d, type: 3}
+      propertyPath: points.Array.size
+      value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 5316940220055949786, guid: f0a33af8d70c918459b6f4965795481d, type: 3}
+      propertyPath: _points.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5316940220055949786, guid: f0a33af8d70c918459b6f4965795481d, type: 3}
+      propertyPath: 'points.Array.data[0]'
+      value: 
+      objectReference: {fileID: 142996809}
+    - target: {fileID: 5316940220055949786, guid: f0a33af8d70c918459b6f4965795481d, type: 3}
+      propertyPath: 'points.Array.data[1]'
+      value: 
+      objectReference: {fileID: 462523676}
+    - target: {fileID: 5316940220055949786, guid: f0a33af8d70c918459b6f4965795481d, type: 3}
+      propertyPath: '_points.Array.data[0]'
+      value: 
+      objectReference: {fileID: 142996809}
+    - target: {fileID: 5316940220055949786, guid: f0a33af8d70c918459b6f4965795481d, type: 3}
+      propertyPath: '_points.Array.data[1]'
+      value: 
+      objectReference: {fileID: 462523676}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 378450582134075640, guid: f0a33af8d70c918459b6f4965795481d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1166679753}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f0a33af8d70c918459b6f4965795481d, type: 3}
 --- !u!4 &1166679751 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4810044118576488118, guid: f0a33af8d70c918459b6f4965795481d, type: 3}
   m_PrefabInstance: {fileID: 1166679750}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1166679752 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 378450582134075640, guid: f0a33af8d70c918459b6f4965795481d, type: 3}
-  m_PrefabInstance: {fileID: 1166679750}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1166679753
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1166679752}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b29815d23d1014e1299514d0bf312968, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FishPatrol
-  points:
-  - {fileID: 142996809}
-  - {fileID: 462523676}
 --- !u!1 &1177002740
 GameObject:
   m_ObjectHideFlags: 0
@@ -2012,43 +1983,40 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8698176918246863798, guid: f0a33af8d70c918459b6f4965795481d, type: 3}
-      propertyPath: _isAvoidanceEnabled
-      value: 1
+    - target: {fileID: 5316940220055949786, guid: f0a33af8d70c918459b6f4965795481d, type: 3}
+      propertyPath: points.Array.size
+      value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 5316940220055949786, guid: f0a33af8d70c918459b6f4965795481d, type: 3}
+      propertyPath: _points.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5316940220055949786, guid: f0a33af8d70c918459b6f4965795481d, type: 3}
+      propertyPath: 'points.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1273765204}
+    - target: {fileID: 5316940220055949786, guid: f0a33af8d70c918459b6f4965795481d, type: 3}
+      propertyPath: 'points.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1577403516}
+    - target: {fileID: 5316940220055949786, guid: f0a33af8d70c918459b6f4965795481d, type: 3}
+      propertyPath: '_points.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1273765204}
+    - target: {fileID: 5316940220055949786, guid: f0a33af8d70c918459b6f4965795481d, type: 3}
+      propertyPath: '_points.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1577403516}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 378450582134075640, guid: f0a33af8d70c918459b6f4965795481d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1274463044}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f0a33af8d70c918459b6f4965795481d, type: 3}
 --- !u!4 &1274463042 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4810044118576488118, guid: f0a33af8d70c918459b6f4965795481d, type: 3}
   m_PrefabInstance: {fileID: 1274463041}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1274463043 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 378450582134075640, guid: f0a33af8d70c918459b6f4965795481d, type: 3}
-  m_PrefabInstance: {fileID: 1274463041}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1274463044
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1274463043}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b29815d23d1014e1299514d0bf312968, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FishPatrol
-  points:
-  - {fileID: 1273765204}
-  - {fileID: 1577403516}
 --- !u!1 &1274489166
 GameObject:
   m_ObjectHideFlags: 0
@@ -2766,17 +2734,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8698176918246863798, guid: f0a33af8d70c918459b6f4965795481d, type: 3}
-      propertyPath: _isAvoidanceEnabled
-      value: 1
+    - target: {fileID: 5316940220055949786, guid: f0a33af8d70c918459b6f4965795481d, type: 3}
+      propertyPath: _points.Array.size
+      value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 5316940220055949786, guid: f0a33af8d70c918459b6f4965795481d, type: 3}
+      propertyPath: '_points.Array.data[0]'
+      value: 
+      objectReference: {fileID: 389199393}
+    - target: {fileID: 5316940220055949786, guid: f0a33af8d70c918459b6f4965795481d, type: 3}
+      propertyPath: '_points.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1000946676}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 378450582134075640, guid: f0a33af8d70c918459b6f4965795481d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 870381403}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f0a33af8d70c918459b6f4965795481d, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

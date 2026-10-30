@@ -45,9 +45,10 @@ GameObject:
   - component: {fileID: 3302018698303295502}
   - component: {fileID: 2387734138922933652}
   - component: {fileID: 4967738895849806852}
+  - component: {fileID: 608792385728725388}
   m_Layer: 6
   m_Name: Submarine
-  m_TagString: Untagged
+  m_TagString: Submarine
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -191,3 +192,19 @@ MonoBehaviour:
   _turnSpeed: 0.5
   _netPrefab: {fileID: 6169549296702479894, guid: 5fdc1581350ece642acabb23c885e0fb, type: 3}
   _netSpawn: {fileID: 990744854063247525}
+--- !u!114 &608792385728725388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6463232538905686888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0af29dc2341d0ab4e9a9f201691d445a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NavVolume.NavVolumeObstacle
+  _shape: 1
+  _center: {x: 0, y: 0, z: 0}
+  _radius: 0.5
+  _size: {x: 1, y: 2, z: 1}
