@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 8698176918246863798}
   - component: {fileID: 5366770937096661553}
   - component: {fileID: 5316940220055949786}
+  - component: {fileID: 8165957635584016824}
   m_Layer: 6
   m_Name: Patrolling Fish
   m_TagString: Untagged
@@ -161,5 +162,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b29815d23d1014e1299514d0bf312968, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FishPatrol
-  detectionRadius: 10
-  points: []
+  _points: []
+--- !u!114 &8165957635584016824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 378450582134075640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 353fbe6bfa01a46f18d94a7fafa8095a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Fish
+  _detectionRadius: 10

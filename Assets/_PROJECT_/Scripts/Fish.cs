@@ -1,3 +1,4 @@
+using System;
 using NavVolume;
 using UnityEngine;
 
@@ -7,41 +8,40 @@ public class Fish : MonoBehaviour
     // Fields
     [SerializeField] private float _detectionRadius;
 
-    protected NavVolumeAgent _agent;
+    private NavVolumeAgent _agent;
     private Vector3 _lastDestination = Vector3.positiveInfinity;
+    private bool _hasDestination;
 
     // Properties
 
     // Events / Delegates
+    public event Action DestinationReached;
 
     // Monobehaviour Methods (Awake, Start, Update, ...)
-    protected virtual void Awake()
+    private void Awake()
     {
         _agent = GetComponent<NavVolumeAgent>();
     }
 
-    protected virtual void Update()
+    private void Update()
     {
-        if (Vector3.Distance(transform.position, _lastDestination) < 1f)
+        if (_hasDestination && Vector3.Distance(transform.position, _lastDestination) < 1f)
         {
-            OnReachDestination();
+            _hasDestination = false;
+            DestinationReached?.Invoke();
         }
     }
 
     // Public Methods
-
-    // Private Methods
-    protected void SetDestination(Vector3 destination)
+    public void SetDestination(Vector3 destination)
     {
         if (_lastDestination != destination)
         {
             _lastDestination = destination;
+            _hasDestination = true;
             _agent.SetDestination(destination);
         }
     }
 
-    protected virtual void OnReachDestination()
-    {
-        // to be overriden by subclasses
-    }
+    // Private Methods
 }
