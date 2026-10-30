@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 
 [RequireComponent(typeof(Fish))]
 public class PatrollingFish : MonoBehaviour
@@ -23,11 +22,13 @@ public class PatrollingFish : MonoBehaviour
     private void OnEnable()
     {
         _fish.DestinationReached += GoNextPoint;
+        _fish.DetectedSubmarine += OnDetectedSubmarine;
     }
 
     private void OnDisable()
     {
         _fish.DestinationReached -= GoNextPoint;
+        _fish.DetectedSubmarine -= OnDetectedSubmarine;
     }
 
     private void Update()
@@ -56,5 +57,10 @@ public class PatrollingFish : MonoBehaviour
         }
 
         _currentPoint = (_currentPoint + 1) % _points.Length;
+    }
+
+    private void OnDetectedSubmarine(GameObject submarine)
+    {
+        Debug.Log("fish heard submarine");
     }
 }

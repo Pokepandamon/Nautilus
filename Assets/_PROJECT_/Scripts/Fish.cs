@@ -16,6 +16,7 @@ public class Fish : MonoBehaviour
 
     // Events / Delegates
     public event Action DestinationReached;
+    public event Action<GameObject> DetectedSubmarine;
 
     // Monobehaviour Methods (Awake, Start, Update, ...)
     private void Awake()
@@ -25,6 +26,8 @@ public class Fish : MonoBehaviour
 
     private void Update()
     {
+        CheckForSubmarine();
+
         if (_hasDestination && Vector3.Distance(transform.position, _lastDestination) < 1f)
         {
             _hasDestination = false;
@@ -44,4 +47,16 @@ public class Fish : MonoBehaviour
     }
 
     // Private Methods
+    private void CheckForSubmarine()
+    {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, _detectionRadius);
+        foreach (Collider collider in colliders)
+        {
+            if (collider.CompareTag("Submarine"))
+            {
+                DetectedSubmarine?.Invoke(collider.gameObject);
+                return;
+            }
+        }
+    }
 }
