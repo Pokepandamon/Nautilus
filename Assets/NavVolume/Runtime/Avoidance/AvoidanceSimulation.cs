@@ -284,6 +284,7 @@ namespace NavVolume.Runtime.Avoidance
                     grid.Origin = settings.Origin;
                     grid.VoxelSize = settings.VoxelSize;
                     grid.NodeSize = settings.VoxelSize * SVOLeaf.GRID_SIZE;
+                    grid.BakedAgentRadius = settings.AgentRadius;
 
                     for (var i = 0; i < nodes.Length; i++)
                     {

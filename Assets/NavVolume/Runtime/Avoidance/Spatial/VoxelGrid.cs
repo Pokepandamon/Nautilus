@@ -33,5 +33,16 @@ namespace NavVolume.Runtime.Avoidance
         /// World size of a layer-0 node (4 voxels).
         /// </summary>
         public float NodeSize;
+
+        /// <summary>
+        /// Agent radius already included in this grid's occupied voxels when it was built.
+        /// </summary>
+        public float BakedAgentRadius;
+
+        /// <summary>
+        /// Returns the clearance still needed beyond the radius included in the bake.
+        /// </summary>
+        public readonly float GetAdditionalRadius(float agentRadius) =>
+            math.max(0f, agentRadius - BakedAgentRadius);
     }
 }
