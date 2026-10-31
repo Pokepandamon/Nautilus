@@ -220,12 +220,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88cc9a2081cacf64694450b4faa33615, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SubmarineMovement
-  _speed: 2
   _turnSpeed: 0.5
   _netPrefab: {fileID: 6169549296702479894, guid: 5fdc1581350ece642acabb23c885e0fb, type: 3}
   _netSpawn: {fileID: 990744854063247525}
   _harpoonPrefab: {fileID: 5054189905302412742, guid: 86b920010052a024b93d0a653e2dcc0a, type: 3}
   _harpoonSpawn: {fileID: 8125114588858736424}
+  _subUpgrades: {fileID: 11400000, guid: 5db957ce134242d4a8db7523336e114e, type: 2}
+  _speedUpgrades:
+  - 2
+  - 4
+  - 8
 --- !u!114 &608792385728725388
 MonoBehaviour:
   m_ObjectHideFlags: 0

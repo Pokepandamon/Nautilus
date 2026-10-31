@@ -7,12 +7,14 @@ using UnityEngine.InputSystem;
 public class SubmarineMovement : MonoBehaviour
 {
     // Fields
-    [SerializeField] private float _speed;
+    //[SerializeField] private float _speed;
     [SerializeField] private float _turnSpeed;
     [SerializeField] private GameObject _netPrefab;
     [SerializeField] private Transform _netSpawn;
     [SerializeField] private GameObject _harpoonPrefab;
     [SerializeField] private Transform _harpoonSpawn;
+    [SerializeField] private SubUpgrades _subUpgrades;
+    [SerializeField] private float[] _speedUpgrades;
     private Rigidbody _rigidbody;
     private InputAction _linearMovementAction;
     private InputAction _rotationalMovementAction;
@@ -57,7 +59,7 @@ public class SubmarineMovement : MonoBehaviour
     
     private void FixedUpdate()
     {
-        _rigidbody.AddRelativeForce(_linearMovement.y * _speed, _linearMovement.x * _speed, 0f);
+        _rigidbody.AddRelativeForce(_linearMovement.y * _speedUpgrades[_subUpgrades.Speed], _linearMovement.x * _speedUpgrades[_subUpgrades.Speed], 0f);
         _rigidbody.AddTorque(0f, _rotationalMovement * _turnSpeed, 0f);
     }
     
