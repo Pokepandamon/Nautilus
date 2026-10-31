@@ -45,9 +45,10 @@ public class SubmarineMovement : MonoBehaviour
             Instantiate(_netPrefab, _netSpawn);
         }
 
-        if (_harpoonAction.WasPressedThisFrame())
+        if (_harpoonAction.WasPressedThisFrame() && _currentHarpoon == null)
         {
            _currentHarpoon = Instantiate(_harpoonPrefab, _harpoonSpawn);
+           _currentHarpoon.GetComponent<Harpoon>().SetSub(gameObject);
            _currentHarpoon.transform.SetParent(null);
            _currentHarpoonSource = _currentHarpoon.GetComponent<Harpoon>().GetRopeSource();
            _currentHarpoonSource.transform.SetParent(_harpoonSpawn);
