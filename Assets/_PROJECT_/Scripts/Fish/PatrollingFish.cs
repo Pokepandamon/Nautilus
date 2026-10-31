@@ -23,12 +23,14 @@ public class PatrollingFish : MonoBehaviour
     {
         _fish.DestinationReached += GoNextPoint;
         _fish.DetectedSubmarine += OnDetectedSubmarine;
+        _fish.LostSubmarine += OnLostSubmarine;
     }
 
     private void OnDisable()
     {
         _fish.DestinationReached -= GoNextPoint;
         _fish.DetectedSubmarine -= OnDetectedSubmarine;
+        _fish.LostSubmarine -= OnLostSubmarine;
     }
 
     private void Update()
@@ -61,6 +63,13 @@ public class PatrollingFish : MonoBehaviour
 
     private void OnDetectedSubmarine(GameObject submarine)
     {
+        // TODO: run away
         Debug.Log("fish heard submarine");
+    }
+    
+    private void OnLostSubmarine()
+    {
+        // TODO: return to patrolling
+        Debug.Log("fish lost submarine");
     }
 }

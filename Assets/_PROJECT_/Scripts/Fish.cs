@@ -10,13 +10,15 @@ public class Fish : MonoBehaviour
 
     private NavVolumeAgent _agent;
     private Vector3 _lastDestination = Vector3.positiveInfinity;
-    private bool _hasDestination;
+    private bool _hasDestination = false;
+    private bool _isSubmarineCurrentlyDetected = false;
 
     // Properties
 
     // Events / Delegates
     public event Action DestinationReached;
     public event Action<GameObject> DetectedSubmarine;
+    public event Action LostSubmarine;
 
     // Monobehaviour Methods (Awake, Start, Update, ...)
     private void Awake()
@@ -54,9 +56,19 @@ public class Fish : MonoBehaviour
         {
             if (collider.CompareTag("Submarine"))
             {
-                DetectedSubmarine?.Invoke(collider.gameObject);
+                if (!_isSubmarineCurrentlyDetected)
+                {
+                    _isSubmarineCurrentlyDetected = true;
+                    DetectedSubmarine?.Invoke(collider.gameObject);
+                }
                 return;
             }
+        }
+        
+        if (_isSubmarineCurrentlyDetected)
+        {
+            _isSubmarineCurrentlyDetected = false;
+            LostSubmarine?.Invoke();
         }
     }
 }
