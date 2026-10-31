@@ -16,6 +16,9 @@ public class Harpoon : MonoBehaviour
     
     // Harpoon Distances
     [SerializeField] private float[] _harpoonUpgrades;
+    
+    //
+    [SerializeField] private GameObject _ropeSource;
 
     private float _initialTime;
     private bool _reachedEnd;
@@ -34,16 +37,26 @@ public class Harpoon : MonoBehaviour
     {
         if (!_reachedEnd)
         {
-            _harpoon.transform.position = new Vector3(Mathf.Lerp(0, _harpoonUpgrades[_subUpgrades.Harpoon], 2 * (Time.fixedTime - _initialTime) / _harpoonTime), _harpoon.transform.position.y, _harpoon.transform.position.z);
+            _harpoon.transform.Translate(2 * _harpoonUpgrades[_subUpgrades.Harpoon] * Time.deltaTime / _harpoonTime, 0, 0);
+            //_harpoon.transform.position = transform.position + new Vector3(Mathf.Lerp(0, _harpoonUpgrades[_subUpgrades.Harpoon], 2 * (Time.fixedTime - _initialTime) / _harpoonTime), _harpoon.transform.position.y, _harpoon.transform.position.z);
         }
         else
         {
-            _harpoon.transform.position = new Vector3(Mathf.Lerp(_harpoonUpgrades[_subUpgrades.Harpoon], 0, 2 * ((Time.fixedTime - _initialTime) / _harpoonTime - 1)), _harpoon.transform.position.y, _harpoon.transform.position.z);
+            _harpoon.transform.Translate(-2 * _harpoonUpgrades[_subUpgrades.Harpoon] * Time.deltaTime / _harpoonTime, 0, 0);
+            if (Time.fixedTime - _initialTime >= _harpoonTime)
+            {
+                Destroy(gameObject);
+            }
+            //_harpoon.transform.position = new Vector3(Mathf.Lerp(_harpoonUpgrades[_subUpgrades.Harpoon], 0, 2 * ((Time.fixedTime - _initialTime) / _harpoonTime - 1)), _harpoon.transform.position.y, _harpoon.transform.position.z) + transform.position;
         }
         _reachedEnd = 2 * (Time.fixedTime - _initialTime) / _harpoonTime > 1;
     }
     
     // Public Methods
+    public GameObject GetRopeSource()
+    {
+        return _ropeSource;
+    }
     
     // Private Methods
     

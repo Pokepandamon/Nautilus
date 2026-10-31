@@ -11,12 +11,17 @@ public class SubmarineMovement : MonoBehaviour
     [SerializeField] private float _turnSpeed;
     [SerializeField] private GameObject _netPrefab;
     [SerializeField] private Transform _netSpawn;
+    [SerializeField] private GameObject _harpoonPrefab;
+    [SerializeField] private Transform _harpoonSpawn;
     private Rigidbody _rigidbody;
     private InputAction _linearMovementAction;
     private InputAction _rotationalMovementAction;
     private InputAction _netAction;
+    private InputAction _harpoonAction;
     private Vector2 _linearMovement;
     private float _rotationalMovement;
+    private GameObject _currentHarpoon;
+    private GameObject _currentHarpoonSource;
     
     // Properties
     
@@ -29,6 +34,7 @@ public class SubmarineMovement : MonoBehaviour
         _linearMovementAction = InputSystem.actions.FindAction("ForwardBackUpDown");
         _rotationalMovementAction = InputSystem.actions.FindAction("Move");
         _netAction = InputSystem.actions.FindAction("Attack");
+        _harpoonAction = InputSystem.actions.FindAction("RightClick");
     }
     
     private void Update()
@@ -38,6 +44,14 @@ public class SubmarineMovement : MonoBehaviour
         if (_netAction.WasPressedThisFrame())
         {
             Instantiate(_netPrefab, _netSpawn);
+        }
+
+        if (_harpoonAction.WasPressedThisFrame())
+        {
+           _currentHarpoon = Instantiate(_harpoonPrefab, _harpoonSpawn);
+           _currentHarpoon.transform.SetParent(null);
+           _currentHarpoonSource = _currentHarpoon.GetComponent<Harpoon>().GetRopeSource();
+           _currentHarpoonSource.transform.SetParent(_harpoonSpawn);
         }
     }
     
