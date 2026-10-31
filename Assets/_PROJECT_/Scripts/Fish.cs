@@ -6,7 +6,8 @@ using UnityEngine;
 public class Fish : MonoBehaviour
 {
     // Fields
-    [SerializeField] private float _detectionRadius;
+    [SerializeField] private float _baseDetectionRadius;
+    [SerializeField] private SubUpgrades _subUpgrades;
 
     private NavVolumeAgent _agent;
     private Vector3 _lastDestination = Vector3.positiveInfinity;
@@ -51,7 +52,11 @@ public class Fish : MonoBehaviour
     // Private Methods
     private void CheckForSubmarine()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, _detectionRadius);
+        float radius = _baseDetectionRadius * (6f - _subUpgrades.Stealth) / 6f;
+     
+        // TODO: look into using layers and LayerMask.GetMask("Submarine")
+        // might speed up check?
+        Collider[] colliders = Physics.OverlapSphere(transform.position, radius);
         foreach (Collider collider in colliders)
         {
             if (collider.CompareTag("Submarine"))
