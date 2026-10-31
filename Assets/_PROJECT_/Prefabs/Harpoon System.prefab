@@ -150,7 +150,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 213393316435035480}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0cd329f2d24170241a06e154ed38fc1e, type: 3}
   m_Name: 
@@ -166,6 +166,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5006423516493345914}
+  - component: {fileID: 6366650011855587773}
   m_Layer: 0
   m_Name: Harpoon
   m_TagString: Harpoon
@@ -188,9 +189,35 @@ Transform:
   m_Children:
   - {fileID: 580594852880061998}
   - {fileID: 3945706463631057580}
-  - {fileID: 6012927301578776591}
   m_Father: {fileID: 1904190491390893508}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &6366650011855587773
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 359972659343487604}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &799830036730136792
 GameObject:
   m_ObjectHideFlags: 0
@@ -215,12 +242,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 799830036730136792}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.6000001, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1.2499995, y: 20, z: 20}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5006423516493345914}
+  m_Father: {fileID: 580594852880061998}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1841561149373496314
 GameObject:
@@ -247,7 +274,7 @@ Transform:
   m_GameObject: {fileID: 1841561149373496314}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.8, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -326,10 +353,17 @@ MonoBehaviour:
   _subUpgrades: {fileID: 11400000, guid: 5db957ce134242d4a8db7523336e114e, type: 2}
   _harpoon: {fileID: 359972659343487604}
   _harpoonTime: 5
-  _harpoonUpgrades:
+  _maxLengthUpgrades:
   - 5
   - 10
+  _impulseUpgrades:
+  - 5
+  - 10
+  _retractSpeed: 1
+  _ropeVisual: {fileID: 6278336049800141222}
   _ropeSource: {fileID: 1841561149373496314}
+  _harpoonButt: {fileID: 799830036730136792}
+  _harpoonDamping: 0.05
 --- !u!1 &5493192653027664060
 GameObject:
   m_ObjectHideFlags: 0
@@ -361,7 +395,8 @@ Transform:
   m_LocalPosition: {x: 0.2, y: 0, z: 0}
   m_LocalScale: {x: 0.05, y: 0.8000001, z: 0.05}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 6012927301578776591}
   m_Father: {fileID: 5006423516493345914}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!33 &6742061732510559330
