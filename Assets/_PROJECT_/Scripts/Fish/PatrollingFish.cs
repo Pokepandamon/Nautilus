@@ -5,8 +5,12 @@ public class PatrollingFish : MonoBehaviour
 {
     // Fields
     [SerializeField] private Transform[] _points;
+    [SerializeField] private float _fleeDistance = 6f;
+    [SerializeField] private float _fleeRepathInterval = 0.5f;
 
     private Fish _fish;
+    private Transform _submarine;
+    private float _nextFleeRepathTime;
     private int _currentPoint = 0;
 
     // Properties
@@ -35,6 +39,17 @@ public class PatrollingFish : MonoBehaviour
 
     private void Update()
     {
+        if (_submarine != null)
+        {
+            if (Time.time >= _nextFleeRepathTime)
+            {
+                _nextFleeRepathTime = Time.time + _fleeRepathInterval;
+                Flee();
+            }
+
+            return;
+        }
+
         if (_points == null || _points.Length == 0)
         {
             return;
@@ -53,7 +68,7 @@ public class PatrollingFish : MonoBehaviour
     // Private Methods
     private void GoNextPoint()
     {
-        if (_points == null || _points.Length == 0)
+        if (_submarine != null || _points == null || _points.Length == 0)
         {
             return;
         }
@@ -63,13 +78,19 @@ public class PatrollingFish : MonoBehaviour
 
     private void OnDetectedSubmarine(GameObject submarine)
     {
-        // TODO: run away
-        Debug.Log("fish heard submarine");
+        _submarine = submarine.transform;
+        _nextFleeRepathTime = 0f;
     }
-    
+
     private void OnLostSubmarine()
     {
-        // TODO: return to patrolling
-        Debug.Log("fish lost submarine");
+        _submarine = null;
+    }
+
+    private void Flee()
+    {
+        Vector3 direction = (transform.position - _submarine.position).normalized;
+        Vector3 destination = transform.position + direction * _fleeDistance;
+        _fish.SetDestination(destination);
     }
 }
