@@ -21,6 +21,7 @@ public class SubmarineMovement : MonoBehaviour
     private float _rotationalMovement;
     private GameObject _currentHarpoon;
     private GameObject _currentHarpoonSource;
+    public static SubmarineMovement Instance;
     
     // Properties
     
@@ -29,6 +30,14 @@ public class SubmarineMovement : MonoBehaviour
     // Monobehaviour Methods (Awake, Start, Update, ...)
     private void Awake()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
         _rigidbody = GetComponent<Rigidbody>();
         _linearMovementAction = InputSystem.actions.FindAction("ForwardBackUpDown");
         _rotationalMovementAction = InputSystem.actions.FindAction("Move");
@@ -62,6 +71,10 @@ public class SubmarineMovement : MonoBehaviour
     }
     
     // Public Methods
+    public Transform GetHarpoonSpawn()
+    {
+        return _harpoonSpawn;
+    }
     
     // Private Methods
     
