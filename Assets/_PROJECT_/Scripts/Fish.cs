@@ -38,6 +38,12 @@ public class Fish : MonoBehaviour
         }
     }
 
+    private void OnDrawGizmos()
+    {
+        float radius = _baseDetectionRadius * (6f - _subUpgrades.Stealth) / 6f;
+        Gizmos.DrawSphere(transform.position, radius);
+    }
+
     // Public Methods
     public void SetDestination(Vector3 destination)
     {

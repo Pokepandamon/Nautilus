@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SubUpgrades
   Speed: 0
   Stealth: 0
-  Harpoon: 0
+  Harpoon: 1
