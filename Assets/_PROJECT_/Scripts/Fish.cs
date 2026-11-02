@@ -41,6 +41,19 @@ public class Fish : MonoBehaviour
     // Public Methods
     public void SetDestination(Vector3 destination)
     {
+        NavVolumeSpace space = _agent.NavVolumeSpace;
+
+        if (space == null || !space.IsReady)
+        {
+            return;
+        }
+
+        if (!space.IsNavigable(destination)
+            && !space.TrySnapToNavigable(destination, 10f, out destination))
+        {
+            return;
+        }
+
         if (_lastDestination != destination)
         {
             _lastDestination = destination;
@@ -53,7 +66,7 @@ public class Fish : MonoBehaviour
     private void CheckForSubmarine()
     {
         float radius = _baseDetectionRadius * (6f - _subUpgrades.Stealth) / 6f;
-     
+
         // TODO: look into using layers and LayerMask.GetMask("Submarine")
         // might speed up check?
         Collider[] colliders = Physics.OverlapSphere(transform.position, radius);
@@ -66,10 +79,11 @@ public class Fish : MonoBehaviour
                     _isSubmarineCurrentlyDetected = true;
                     DetectedSubmarine?.Invoke(collider.gameObject);
                 }
+
                 return;
             }
         }
-        
+
         if (_isSubmarineCurrentlyDetected)
         {
             _isSubmarineCurrentlyDetected = false;
