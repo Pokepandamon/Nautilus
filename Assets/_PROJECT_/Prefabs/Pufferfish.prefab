@@ -150,6 +150,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Fish
   _baseDetectionRadius: 3
   _subUpgrades: {fileID: 11400000, guid: 5db957ce134242d4a8db7523336e114e, type: 2}
+  _debugFlags: {fileID: 11400000, guid: bb70b872d8c4c0142b160ad4da45c50c, type: 2}
 --- !u!114 &-6486654496648789038
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -163,6 +164,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Pufferfish
   _puffSize: 2
+  _puffSpeed: 5
 --- !u!114 &1187111344120867760
 MonoBehaviour:
   m_ObjectHideFlags: 0
