@@ -1,24 +1,26 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Fish))]
+[RequireComponent(typeof(Fish), typeof(FishNetHandler))]
 public class Pufferfish : MonoBehaviour
 {
     // Fields
     [SerializeField] private float _puffSize;
     [SerializeField] private float _puffSpeed = 5f;
-    
+
     private Fish _fish;
+    private FishNetHandler _fishNetHandler;
     private Vector3 _initialScale;
     private Vector3 _targetScale;
-    
+
     // Properties
-    
+
     // Events / Delegates
-    
+
     // Monobehaviour Methods (Awake, Start, Update, ...)
     private void Awake()
     {
         _fish = GetComponent<Fish>();
+        _fishNetHandler = GetComponent<FishNetHandler>();
         _initialScale = transform.localScale;
         _targetScale = _initialScale;
     }
@@ -42,15 +44,17 @@ public class Pufferfish : MonoBehaviour
     }
 
     // Public Methods
-    
+
     // Private Methods
     private void Puff(GameObject _)
     {
         _targetScale = Vector3.one * _puffSize;
+        _fishNetHandler.IsCatchable = false;
     }
 
     private void Deflate()
     {
         _targetScale = _initialScale;
+        _fishNetHandler.IsCatchable = true;
     }
 }
