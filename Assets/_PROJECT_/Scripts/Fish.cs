@@ -8,6 +8,7 @@ public class Fish : MonoBehaviour
     // Fields
     [SerializeField] private float _baseDetectionRadius;
     [SerializeField] private SubUpgrades _subUpgrades;
+    [SerializeField] private DebugFlags _debugFlags;
 
     private NavVolumeAgent _agent;
     private Vector3 _lastDestination = Vector3.positiveInfinity;
@@ -40,8 +41,12 @@ public class Fish : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        float radius = _baseDetectionRadius * (6f - _subUpgrades.Stealth) / 6f;
-        Gizmos.DrawSphere(transform.position, radius);
+        if (_debugFlags.ShowDetectionRadiusSpheres)
+        {
+            float radius = _baseDetectionRadius * (6f - _subUpgrades.Stealth) / 6f;
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, radius);
+        }
     }
 
     // Public Methods

@@ -7,6 +7,7 @@ using UnityEngine;
 public class FishNetHandler : MonoBehaviour
 {
     // Fields
+    public bool IsCatchable = true;
     
     // Properties
     
@@ -15,7 +16,7 @@ public class FishNetHandler : MonoBehaviour
     // Monobehaviour Methods (Awake, Start, Update, ...)
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Net"))
+        if (IsCatchable && other.CompareTag("Net"))
         {
             UIManager.FishCount++;
             UIManager.Instance.FishBagUpdate(0);
