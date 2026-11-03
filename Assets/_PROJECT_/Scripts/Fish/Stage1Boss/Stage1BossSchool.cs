@@ -35,7 +35,7 @@ public class Stage1BossSchool : MonoBehaviour
         }
 
         // 5 is a place holder for how close we want them
-        _currentOffsets = PackMinVolume(_members.Length, 5.0f).ToArray();
+        _currentOffsets = PackMinVolume(_members.Length + 1, 0.5f).ToArray()[1..];
         
         _currentPoint = (_currentPoint + 1) % _points.Length;
         for (int i = 0; i < _members.Length; i++)
@@ -69,6 +69,18 @@ public class Stage1BossSchool : MonoBehaviour
         }
     }
 
+    private void OnDrawGizmos()
+    {
+        if (_currentOffsets != null)
+        {
+            foreach (Vector3 schoolTarget in _currentOffsets)
+            {
+                //Debug.Log("Tried placing at " + (schoolTarget + _points[_currentPoint].position));
+                Gizmos.DrawWireSphere(schoolTarget + _points[_currentPoint].position, 0.5f);
+            }   
+        }
+    }
+
     // Public Methods
 
     // Private Methods
@@ -90,9 +102,10 @@ public class Stage1BossSchool : MonoBehaviour
             bool anyNotInPosition = false;
             for (int i = 0; i < _members.Length; i++)
             {
-                if (_memberBoss[i].CurrentState == Stage1Boss.Stage1BossStates.Patrolling && (!_memberFish[i].GetHasDestination() || Vector3.Distance(_members[i].transform.position, _memberFish[i].GetLastDestination()) >= 1f))
+                if (_memberBoss[i].CurrentState == Stage1Boss.Stage1BossStates.Patrolling && Vector3.Distance(_members[i].transform.position, _memberFish[i].GetLastDestination()) >= 1f)
                 {
                     anyNotInPosition = true;
+                    //Debug.Log("Stuck waiting for a group member. It was " + Vector3.Distance(_members[i].transform.position, _memberFish[i].GetLastDestination()) + " away");
                     i = _members.Length;
                 }
             }

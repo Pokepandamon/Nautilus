@@ -143,7 +143,7 @@ public class Stage1Boss : MonoBehaviour
     private void PatrollingUpdate()
     {
         _fish.SetDestination(_currentPatrolTarget);
-        Debug.Log(_fish.GetLastDestination());
+        //Debug.Log(_fish.GetLastDestination());
     }
 
     private void PursuingUpdate()
