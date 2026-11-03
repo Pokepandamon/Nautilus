@@ -127,6 +127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fef645aaeb223a41a006f4e4634b9f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FishNetHandler
+  IsCatchable: 1
 --- !u!114 &5316940220055949786
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,6 +141,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PatrollingFish
   _points: []
+  _fleeDistance: 6
+  _fleeRepathInterval: 0.5
 --- !u!114 &8165957635584016824
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,6 +157,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Fish
   _baseDetectionRadius: 4
   _subUpgrades: {fileID: 11400000, guid: 5db957ce134242d4a8db7523336e114e, type: 2}
+  _debugFlags: {fileID: 11400000, guid: bb70b872d8c4c0142b160ad4da45c50c, type: 2}
 --- !u!65 &1215515366142160718
 BoxCollider:
   m_ObjectHideFlags: 0
