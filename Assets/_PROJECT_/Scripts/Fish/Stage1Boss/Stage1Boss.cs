@@ -3,7 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(Fish))]
 public class Stage1Boss : MonoBehaviour
 {
-    private enum Stage1BossStates
+    public enum Stage1BossStates
     {
         Patrolling,
         Pursuing,
@@ -13,15 +13,18 @@ public class Stage1Boss : MonoBehaviour
     }
     
     // Fields
-    [SerializeField] private Transform[] _points;
     [SerializeField] private float _fleeDistance = 6f;
     [SerializeField] private float _fleeRepathInterval = 0.5f;
+    [SerializeField] private GameObject[] _school;
 
     private Fish _fish;
     private Transform _submarine;
     private float _nextFleeRepathTime;
-    private int _currentPoint = 0;
-    private Stage1BossStates _currentState = Stage1BossStates.Patrolling;
+    private Stage1Boss[] _schoolBoss;
+    private Vector3 _currentPatrolTarget;
+    private float _fleeTime;
+    
+    public Stage1BossStates CurrentState = Stage1BossStates.Patrolling;
 
     // Properties
 
@@ -33,50 +36,136 @@ public class Stage1Boss : MonoBehaviour
         _fish = GetComponent<Fish>();
     }
 
-    private void OnEnable()
+    private void FixedUpdate()
     {
-        _fish.DestinationReached += GoNextPoint;
-        _fish.DetectedSubmarine += OnDetectedSubmarine;
-        _fish.LostSubmarine += OnLostSubmarine;
-    }
-
-    private void OnDisable()
-    {
-        _fish.DestinationReached -= GoNextPoint;
-        _fish.DetectedSubmarine -= OnDetectedSubmarine;
-        _fish.LostSubmarine -= OnLostSubmarine;
-    }
-
-    private void Update()
-    {
-        if (_submarine != null)
+        ChangeState();
+        if (CurrentState == Stage1BossStates.Patrolling)
         {
-            if (Time.time >= _nextFleeRepathTime)
-            {
-                _nextFleeRepathTime = Time.time + _fleeRepathInterval;
-                Flee();
-            }
-
-            return;
+            PatrollingUpdate();
+        }else if (CurrentState == Stage1BossStates.Pursuing)
+        {
+            PursuingUpdate();
+        }else if (CurrentState == Stage1BossStates.Fleeing)
+        {
+            FleeingUpdate();
+        }else if (CurrentState == Stage1BossStates.Tiring)
+        {
+            TiringUpdate();
         }
-
-        if (_points == null || _points.Length == 0)
+        else
         {
-            return;
-        }
-
-        Transform destination = _points[_currentPoint];
-
-        if (destination != null)
-        {
-            _fish.SetDestination(destination.position);
+            DefensiveUpdate();
         }
     }
 
     // Public Methods
+    public void SetPatrolTarget(Vector3 target)
+    {
+        _currentPatrolTarget = target;
+    }
 
     // Private Methods
-    private void GoNextPoint()
+    private void ChangeState()
+    {
+        float subDistance = DistanceToSub();
+        if (CurrentState == Stage1BossStates.Patrolling)
+        {
+            if (subDistance <= _fish.GetDetectionRadius())
+            {
+                bool foundFleeing = false;
+                foreach (Stage1Boss member in _schoolBoss)
+                {
+                    if (member.CurrentState == Stage1BossStates.Fleeing)
+                    {
+                        CurrentState = Stage1BossStates.Pursuing;
+                        foundFleeing = true;
+                    }
+                }
+                
+                if (!foundFleeing)
+                {
+                    CurrentState = Stage1BossStates.Fleeing;
+                }
+            }
+        }else if (CurrentState == Stage1BossStates.Pursuing)
+        {
+            if (subDistance > _fish.GetDetectionRadius())
+            {
+                CurrentState = Stage1BossStates.Patrolling;
+            }
+        }else if (CurrentState == Stage1BossStates.Fleeing)
+        {
+            if (subDistance <= _fish.GetDetectionRadius())
+            {
+                // 10 is a placeholder for how many seconds we want to have them flee for before tiring
+                if (_fleeTime > 10f)
+                {
+                    CurrentState = Stage1BossStates.Tiring;
+                }
+            }
+            else
+            {
+                CurrentState = Stage1BossStates.Patrolling;
+            }
+        }else if (CurrentState == Stage1BossStates.Tiring)
+        {
+            if (subDistance <= _fish.GetDetectionRadius())
+            {
+                // 10 is a placeholder for the threat distance when they turn around and engage defences and atatack
+                if (subDistance <= 10f)
+                {
+                    CurrentState = Stage1BossStates.Defensive;
+                }
+                else
+                {
+                    CurrentState = Stage1BossStates.Tiring;
+                }
+            }
+            else
+            {
+                CurrentState = Stage1BossStates.Patrolling;
+            }
+        }
+        else if(CurrentState == Stage1BossStates.Defensive)
+        {
+            if (subDistance > _fish.GetDetectionRadius())
+            {
+                CurrentState = Stage1BossStates.Patrolling;
+            }
+        }
+    }
+
+    private float DistanceToSub()
+    {
+        return Vector3.Magnitude(transform.position - SubmarineMovement.Instance.gameObject.transform.position);
+    }
+
+    private void PatrollingUpdate()
+    {
+        
+    }
+
+    private void PursuingUpdate()
+    {
+        
+    }
+
+    private void FleeingUpdate()
+    {
+        
+    }
+
+    private void TiringUpdate()
+    {
+        
+    }
+
+    private void DefensiveUpdate()
+    {
+        
+    }
+    
+    /*private void GoNextPoint()
     {
         if (_submarine != null || _points == null || _points.Length == 0)
         {
@@ -102,5 +191,5 @@ public class Stage1Boss : MonoBehaviour
         Vector3 direction = (transform.position - _submarine.position).normalized;
         Vector3 destination = transform.position + direction * _fleeDistance;
         _fish.SetDestination(destination);
-    }
+    }*/
 }
