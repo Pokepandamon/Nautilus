@@ -38,7 +38,7 @@ public class Stage1Boss : MonoBehaviour
 
     private void FixedUpdate()
     {
-        ChangeState();
+        // ChangeState();
         if (CurrentState == Stage1BossStates.Patrolling)
         {
             PatrollingUpdate();
@@ -142,7 +142,8 @@ public class Stage1Boss : MonoBehaviour
 
     private void PatrollingUpdate()
     {
-        
+        _fish.SetDestination(_currentPatrolTarget);
+        Debug.Log(_fish.GetLastDestination());
     }
 
     private void PursuingUpdate()

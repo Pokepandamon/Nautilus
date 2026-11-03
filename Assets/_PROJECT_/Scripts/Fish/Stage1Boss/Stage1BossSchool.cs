@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -14,6 +15,7 @@ public class Stage1BossSchool : MonoBehaviour
     private Transform _submarine;
     private int _currentPoint = 0;
     private Stage1Boss[] _memberBoss;
+    private Fish[] _memberFish;
     private Vector3[] _currentOffsets;
 
     // Properties
@@ -24,13 +26,22 @@ public class Stage1BossSchool : MonoBehaviour
     private void Awake()
     {
         _fish = GetComponent<Fish>();
+        _memberBoss = new Stage1Boss[_members.Length];
+        _memberFish = new Fish[_members.Length];
         for(int i = 0; i < _members.Length; i++)
         {
             _memberBoss[i] = _members[i].GetComponent<Stage1Boss>();
+            _memberFish[i] = _members[i].GetComponent<Fish>();
         }
 
         // 5 is a place holder for how close we want them
         _currentOffsets = PackMinVolume(_members.Length, 5.0f).ToArray();
+        
+        _currentPoint = (_currentPoint + 1) % _points.Length;
+        for (int i = 0; i < _members.Length; i++)
+        {
+            _memberBoss[i].SetPatrolTarget(_currentOffsets[i] + _points[_currentPoint].position);
+        }
     }
 
     private void OnEnable()
@@ -68,11 +79,43 @@ public class Stage1BossSchool : MonoBehaviour
             return;
         }
 
+        StartCoroutine(WaitForTheSchool());
+    }
+
+    private IEnumerator WaitForTheSchool()
+    {
+        bool allInPosition = false;
+        while (!allInPosition)
+        {
+            bool anyNotInPosition = false;
+            for (int i = 0; i < _members.Length; i++)
+            {
+                if (_memberBoss[i].CurrentState == Stage1Boss.Stage1BossStates.Patrolling && (!_memberFish[i].GetHasDestination() || Vector3.Distance(_members[i].transform.position, _memberFish[i].GetLastDestination()) >= 1f))
+                {
+                    anyNotInPosition = true;
+                    i = _members.Length;
+                }
+            }
+
+            if (anyNotInPosition)
+            {
+                yield return new WaitForFixedUpdate();
+            }
+            else
+            {
+                allInPosition = true;
+            }
+        }
+        
         _currentPoint = (_currentPoint + 1) % _points.Length;
+        for (int i = 0; i < _members.Length; i++)
+        {
+            _memberBoss[i].SetPatrolTarget(_currentOffsets[i] + _points[_currentPoint].position);
+        }
     }
     
     // This is an algorithm to calculate the packing in the school
-    public static List<Vector3> PackMinVolume(int sphereCount, float radius)
+    private static List<Vector3> PackMinVolume(int sphereCount, float radius)
     {
         float d = radius * 2.0f;
         

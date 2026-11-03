@@ -106,4 +106,14 @@ public class Fish : MonoBehaviour
             LostSubmarine?.Invoke();
         }
     }
+    
+    public bool GetHasDestination()
+    {
+        return _hasDestination;
+    }
+
+    public Vector3 GetLastDestination()
+    {
+        return _lastDestination;
+    }
 }
