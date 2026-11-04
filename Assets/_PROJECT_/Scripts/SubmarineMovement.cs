@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -22,6 +23,7 @@ public class SubmarineMovement : MonoBehaviour
     private GameObject _currentHarpoon;
     private GameObject _currentHarpoonSource;
     public static SubmarineMovement Instance;
+    public int Health = 3;
     
     // Properties
     
@@ -69,7 +71,15 @@ public class SubmarineMovement : MonoBehaviour
         _rigidbody.AddRelativeForce(_linearMovement.y * _speedUpgrades[_subUpgrades.Speed], _linearMovement.x * _speedUpgrades[_subUpgrades.Speed], 0f);
         _rigidbody.AddTorque(0f, _rotationalMovement * _turnSpeed, 0f);
     }
-    
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Hurts"))
+        {
+            Health -= 1;
+        }
+    }
+
     // Public Methods
     public Transform GetHarpoonSpawn()
     {

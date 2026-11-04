@@ -35,7 +35,7 @@ public class Stage1BossSchool : MonoBehaviour
         }
 
         // 5 is a place holder for how close we want them
-        _currentOffsets = PackMinVolume(_members.Length + 1, 0.5f).ToArray()[1..];
+        _currentOffsets = PackMinVolume(_members.Length + 1, 1.5f).ToArray()[1..];
         
         _currentPoint = (_currentPoint + 1) % _points.Length;
         for (int i = 0; i < _members.Length; i++)
@@ -82,6 +82,10 @@ public class Stage1BossSchool : MonoBehaviour
     }
 
     // Public Methods
+    public Stage1Boss[] GetSchoolStage1Bosses()
+    {
+        return _memberBoss;
+    }
 
     // Private Methods
     private void GoNextPoint()
@@ -102,7 +106,7 @@ public class Stage1BossSchool : MonoBehaviour
             bool anyNotInPosition = false;
             for (int i = 0; i < _members.Length; i++)
             {
-                if (_memberBoss[i].CurrentState == Stage1Boss.Stage1BossStates.Patrolling && Vector3.Distance(_members[i].transform.position, _memberFish[i].GetLastDestination()) >= 1f)
+                if (_memberBoss[i].CurrentState == Stage1Boss.Stage1BossStates.Patrolling && Vector3.Distance(_members[i].transform.position, _currentOffsets[i] + _points[_currentPoint].position) >= 1f)
                 {
                     anyNotInPosition = true;
                     //Debug.Log("Stuck waiting for a group member. It was " + Vector3.Distance(_members[i].transform.position, _memberFish[i].GetLastDestination()) + " away");
