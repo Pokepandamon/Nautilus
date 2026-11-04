@@ -21,6 +21,19 @@ public class Guppy : MonoBehaviour
         _fish = GetComponent<Fish>();
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Net"))
+        {
+            if (_fish != null && _fish.FishData != null)
+            {
+                InventoryManager.instance.AddFish(_fish.FishData);
+            }
+
+            Destroy(gameObject); 
+        }
+    }
+
     // Public Methods
     
     // Private Methods
