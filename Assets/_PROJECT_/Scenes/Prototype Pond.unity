@@ -129,6 +129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 127476467}
   - component: {fileID: 127476466}
+  - component: {fileID: 127476468}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -165,6 +166,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &127476468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 127476465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4432fe946abf40b09ba034e695dbb35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InventoryManager
+  fishBag: []
+  maxBagCapacity: 5
+  playerCoins: 0
 --- !u!1 &142996808
 GameObject:
   m_ObjectHideFlags: 0
@@ -586,6 +602,10 @@ PrefabInstance:
       propertyPath: '_points.Array.data[1]'
       value: 
       objectReference: {fileID: 1337645412}
+    - target: {fileID: 8165957635584016824, guid: f0a33af8d70c918459b6f4965795481d, type: 3}
+      propertyPath: _fishData
+      value: 
+      objectReference: {fileID: 11400000, guid: f78d437e38383420d97d9636da8c6196, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1091,6 +1111,10 @@ PrefabInstance:
       propertyPath: '_points.Array.data[1]'
       value: 
       objectReference: {fileID: 1067816030}
+    - target: {fileID: 8165957635584016824, guid: f0a33af8d70c918459b6f4965795481d, type: 3}
+      propertyPath: _fishData
+      value: 
+      objectReference: {fileID: 11400000, guid: f78d437e38383420d97d9636da8c6196, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1789,6 +1813,10 @@ PrefabInstance:
       propertyPath: '_points.Array.data[1]'
       value: 
       objectReference: {fileID: 462523676}
+    - target: {fileID: 8165957635584016824, guid: f0a33af8d70c918459b6f4965795481d, type: 3}
+      propertyPath: _fishData
+      value: 
+      objectReference: {fileID: 11400000, guid: f78d437e38383420d97d9636da8c6196, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2007,6 +2035,10 @@ PrefabInstance:
       propertyPath: '_points.Array.data[1]'
       value: 
       objectReference: {fileID: 1577403516}
+    - target: {fileID: 8165957635584016824, guid: f0a33af8d70c918459b6f4965795481d, type: 3}
+      propertyPath: _fishData
+      value: 
+      objectReference: {fileID: 11400000, guid: f78d437e38383420d97d9636da8c6196, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2746,6 +2778,10 @@ PrefabInstance:
       propertyPath: '_points.Array.data[1]'
       value: 
       objectReference: {fileID: 1000946676}
+    - target: {fileID: 8165957635584016824, guid: f0a33af8d70c918459b6f4965795481d, type: 3}
+      propertyPath: _fishData
+      value: 
+      objectReference: {fileID: 11400000, guid: f78d437e38383420d97d9636da8c6196, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

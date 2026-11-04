@@ -6,6 +6,7 @@ using UnityEngine;
 public class Fish : MonoBehaviour
 {
     // Fields
+    [SerializeField] private FishData _fishData;
     [SerializeField] private float _baseDetectionRadius;
     [SerializeField] private SubUpgrades _subUpgrades;
     [SerializeField] private DebugFlags _debugFlags;
@@ -15,6 +16,7 @@ public class Fish : MonoBehaviour
     private bool _hasDestination = false;
     private bool _isSubmarineCurrentlyDetected = false;
 
+    public FishData FishData => _fishData;
     // Properties
 
     // Events / Delegates

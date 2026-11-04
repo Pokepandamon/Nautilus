@@ -52,6 +52,11 @@ public class Clam : MonoBehaviour
             if (!Physics.Linecast(_netChecker.position, SubmarineMovement.Instance.GetHarpoonSpawn().position, _shellMask))
             {
                 //Debug.Log("Nothing in between ");
+                if (_fish != null && _fish.FishData != null)
+            {
+                InventoryManager.instance.AddFish(_fish.FishData);
+            }
+
                 Destroy(_clamParent);
             }
         }
