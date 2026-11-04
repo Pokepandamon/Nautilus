@@ -1,11 +1,7 @@
-
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using NavVolume;
 
-[RequireComponent(typeof(Fish))]
-[RequireComponent(typeof(NavVolumeAgent))]
+[RequireComponent(typeof(Fish), typeof(NavVolumeAgent))]
 public class Swordfish : MonoBehaviour
 {
     [SerializeField] private float _updateInterval = 2f;
