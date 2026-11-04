@@ -169,3 +169,6 @@ Packages/packages-lock.json linguist-generated
 
 # Exceptions for .asset files such as lightning pre-baking
 LightingData.asset     binary
+
+# Treat filenames containing "terrain" as binary, regardless of capitalization.
+*[Tt][Ee][Rr][Rr][Aa][Ii][Nn]* binary
