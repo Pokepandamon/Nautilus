@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e1b5248abe82ea40b6dfc75462c04c8, type: 3}
   m_Name: DebugFlags
   m_EditorClassIdentifier: Assembly-CSharp::DebugFlags
-  ShowDetectionRadiusSpheres: 1
+  ShowDetectionRadiusSpheres: 0

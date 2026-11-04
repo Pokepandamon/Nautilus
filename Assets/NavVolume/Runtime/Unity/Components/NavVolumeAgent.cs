@@ -22,7 +22,7 @@ namespace NavVolume
 
         [Tooltip("Movement speed in world units per second.")]
         [SerializeField]
-        float _speed = 1;
+        public float _speed = 1;
 
         [Tooltip(
             "Maximum rotation speed in degrees per second when turning to face the movement direction."

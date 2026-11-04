@@ -73,10 +73,15 @@ public class Fish : MonoBehaviour
         }
     }
 
+    public float GetDetectionRadius()
+    {
+        return _baseDetectionRadius * (6f - _subUpgrades.Stealth) / 6f;
+    }
+
     // Private Methods
     private void CheckForSubmarine()
     {
-        float radius = _baseDetectionRadius * (6f - _subUpgrades.Stealth) / 6f;
+        float radius = GetDetectionRadius();
 
         // TODO: look into using layers and LayerMask.GetMask("Submarine")
         // might speed up check?
@@ -100,5 +105,15 @@ public class Fish : MonoBehaviour
             _isSubmarineCurrentlyDetected = false;
             LostSubmarine?.Invoke();
         }
+    }
+    
+    public bool GetHasDestination()
+    {
+        return _hasDestination;
+    }
+
+    public Vector3 GetLastDestination()
+    {
+        return _lastDestination;
     }
 }
