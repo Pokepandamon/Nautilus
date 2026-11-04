@@ -19,6 +19,7 @@ public class Narwhal : MonoBehaviour
     private Vector3 _lastRequestedPosition;
     private bool _hasRequestedPath;
     private float _lastShotTime;
+    private float _noseLifetime = 5f;
 
     private void Awake()
     {
@@ -58,7 +59,7 @@ public class Narwhal : MonoBehaviour
         {
             RequestChasePath(targetPosition);
         }
-        
+
         if (Time.time - _lastShotTime >= _shootCooldown)
         {
             ShootNose();
@@ -95,13 +96,11 @@ public class Narwhal : MonoBehaviour
 
     private void ShootNose()
     {
-        GameObject noseInstance = Instantiate(_nosePrefab, _noseMount.position, Quaternion.identity);
+        GameObject noseInstance = Instantiate(_nosePrefab, _noseMount);
         Rigidbody noseRigidbody = noseInstance.GetComponent<Rigidbody>();
 
-        if (noseRigidbody != null)
-        {
-            Vector3 direction = (_submarine.transform.position - _noseMount.position).normalized;
-            noseRigidbody.linearVelocity = direction * _noseSpeed;
-        }
+        noseRigidbody.linearVelocity = _noseMount.up * _noseSpeed;
+
+        Destroy(noseInstance, _noseLifetime);
     }
 }
