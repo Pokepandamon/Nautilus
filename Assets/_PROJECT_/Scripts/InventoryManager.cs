@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class InventoryManager : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class InventoryManager : MonoBehaviour
     public int playerCoins = 0;
 
     public static event Action OnInventoryChange;
+
+    [SerializeField] private TextMeshProUGUI coinsAmount;
 
     public void Awake(){
         if(instance == null){
@@ -56,10 +59,17 @@ public class InventoryManager : MonoBehaviour
         }
 
         playerCoins += totalEarnings;
+        UpdateCoins(playerCoins);
         fishBag.Clear();
 
         Debug.Log($"Sold all fish for {totalEarnings}");
-        
+
         OnInventoryChange?.Invoke();
+    }
+
+    public void UpdateCoins(int coins){
+        if(coinsAmount != null){
+            coinsAmount.text = "Coins: " + coins;
+        }
     }
 }
