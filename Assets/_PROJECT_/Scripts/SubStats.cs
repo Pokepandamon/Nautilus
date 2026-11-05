@@ -26,6 +26,7 @@ public class SubStats : MonoBehaviour
 
         if(InventoryManager.instance.playerCoins >= costToUpgrade){
             InventoryManager.instance.playerCoins -= costToUpgrade;
+            InventoryManager.instance.UpdateCoins(InventoryManager.instance.playerCoins);
             speedLevel++;
             Debug.Log($"Speed is now Level {speedLevel}");
         }else{
@@ -42,6 +43,7 @@ public class SubStats : MonoBehaviour
 
         if(InventoryManager.instance.playerCoins >= costToUpgrade){
             InventoryManager.instance.playerCoins -= costToUpgrade;
+            InventoryManager.instance.UpdateCoins(InventoryManager.instance.playerCoins);
             stealthLevel++;
             Debug.Log($"Stealth is now Level {stealthLevel}");
         }else{
@@ -58,6 +60,7 @@ public class SubStats : MonoBehaviour
 
         if(InventoryManager.instance.playerCoins >= costToUpgrade){
             InventoryManager.instance.playerCoins -= costToUpgrade;
+            InventoryManager.instance.UpdateCoins(InventoryManager.instance.playerCoins);
             harpoonLevel++;
             Debug.Log($"Harpoon is now Level {harpoonLevel}");
         }else{
