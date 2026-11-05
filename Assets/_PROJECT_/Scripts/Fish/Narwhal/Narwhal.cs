@@ -96,7 +96,7 @@ public class Narwhal : MonoBehaviour
 
     private void ShootNose()
     {
-        GameObject noseInstance = Instantiate(_nosePrefab, _noseMount);
+        GameObject noseInstance = Instantiate(_nosePrefab, _noseMount.position, _noseMount.rotation);
         Rigidbody noseRigidbody = noseInstance.GetComponent<Rigidbody>();
 
         noseRigidbody.linearVelocity = _noseMount.up * _noseSpeed;
