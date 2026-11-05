@@ -14,8 +14,6 @@ public class InventoryManager : MonoBehaviour
 
     public static event Action OnInventoryChange;
 
-    [SerializeField] private TextMeshProUGUI coinsAmount;
-
     public void Awake(){
         if(instance == null){
             instance = this;
@@ -68,8 +66,8 @@ public class InventoryManager : MonoBehaviour
     }
 
     public void UpdateCoins(int coins){
-        if(coinsAmount != null){
-            coinsAmount.text = "Coins: " + coins;
+        if(VillageUIManager.instance != null && VillageUIManager.instance.coinsText != null){
+            VillageUIManager.instance.coinsText.text = "Coins: " + coins;
         }
     }
 }
