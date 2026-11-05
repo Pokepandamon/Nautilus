@@ -20,11 +20,6 @@ public class Projectile : MonoBehaviour
         transform.Translate(_speed * Time.fixedDeltaTime * Vector3.forward, Space.Self);
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        Destroy(gameObject, 0.1f);
-    }
-
     // Public Methods
     
     // Private Methods

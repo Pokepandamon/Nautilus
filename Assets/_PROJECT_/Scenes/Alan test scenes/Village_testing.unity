@@ -277,6 +277,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   _speed: 2
+  _camera: {fileID: 1631955235}
 --- !u!114 &313691825
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1705,7 +1706,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCamera
   _playerBody: {fileID: 313691822}
   _look: {fileID: -5630151704836100654, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  _mouseSensitivity: 100
+  _mouseSensitivity: 10
   _minimumPitch: -80
   _maximumPitch: 80
 --- !u!1 &1678209825

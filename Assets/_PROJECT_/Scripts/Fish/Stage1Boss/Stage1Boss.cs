@@ -39,6 +39,9 @@ public class Stage1Boss : MonoBehaviour
     private NavVolumeAgent _navVolumeAgent;
     float _speedModifier = 1.0f;
     private float _currentShotCooldown;
+    private float _effectiveCommunicationDistance;
+    private float _effectiveDetectionDistance;
+    private float _effectiveDisengageDistance;
     
     public Stage1BossStates CurrentState = Stage1BossStates.Patrolling;
 

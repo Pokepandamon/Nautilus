@@ -3,7 +3,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float _speed = 5f; 
+    [SerializeField] private float _speed = 5f;
+    [SerializeField] private GameObject _camera;
 
     private Rigidbody _playerRigidbody;
     private InputAction _moveAction;
@@ -32,7 +33,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Vector3 movement3D = new Vector3(_movement.x, 0f, _movement.y);
+        Vector3 movement3D = Quaternion.Euler(Vector3.Project(_camera.transform.rotation.eulerAngles,Vector3.up)) * new Vector3(_movement.x, 0f, _movement.y);
         _playerRigidbody.linearVelocity = movement3D * _speed;
     }
 }

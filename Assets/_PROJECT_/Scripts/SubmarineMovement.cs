@@ -76,7 +76,9 @@ public class SubmarineMovement : MonoBehaviour
     {
         if (other.CompareTag("Hurts"))
         {
+            Debug.Log("Ow");
             Health -= 1;
+            Destroy(other.gameObject);
         }
     }
 

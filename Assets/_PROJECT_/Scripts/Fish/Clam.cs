@@ -22,6 +22,7 @@ public class Clam : MonoBehaviour
     [SerializeField] private Transform _hinge;
     [SerializeField] private Transform _netChecker;
     [SerializeField] private LayerMask _shellMask;
+    [SerializeField] private float _closingFrames;
     private Fish _fish;
     private Vector3 _initialPosition;
     private ShellState _shellState = ShellState.Opening;
@@ -71,8 +72,8 @@ public class Clam : MonoBehaviour
             }
             else
             {
-                _topShell.transform.RotateAround(_hinge.position, Vector3.forward, -90f/100f);
-                _shellAngle -= 90f / 100f;
+                _topShell.transform.RotateAround(_hinge.position, Vector3.forward, -90f/_closingFrames);
+                _shellAngle -= 90f / _closingFrames;
             }
         }
         if (_shellState == ShellState.Opening)
@@ -83,8 +84,8 @@ public class Clam : MonoBehaviour
             }
             else
             {
-                _topShell.transform.RotateAround(_hinge.position, Vector3.forward, 90f/100f);
-                _shellAngle += 90f / 100f;
+                _topShell.transform.RotateAround(_hinge.position, Vector3.forward, 90f/_closingFrames);
+                _shellAngle += 90f / _closingFrames;
             }
         }
     }
