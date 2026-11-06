@@ -86,7 +86,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: eecb52b67e94e4427b5ebae9d044d9e7, type: 2}
     - target: {fileID: 8717935038299278495, guid: 1ab256e20ecc24dc49bf668999b2dc95, type: 3}
       propertyPath: m_Name
-      value: Guppy 1
+      value: Guppy Fish
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5828248965228378122, guid: 1ab256e20ecc24dc49bf668999b2dc95, type: 3}
