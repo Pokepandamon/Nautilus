@@ -5,8 +5,8 @@ using UnityEngine;
 // TODO: add patrolling, maybe chasing too, depends if its useful to other fish or if they're implementing their own logic
 public enum FishMode
 {
-    Roaming,
-    Custom
+    Custom,
+    Roaming
 }
 
 [RequireComponent(typeof(NavVolumeAgent))]

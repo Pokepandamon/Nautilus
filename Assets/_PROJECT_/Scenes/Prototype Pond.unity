@@ -1092,7 +1092,7 @@ GameObject:
   m_Component:
   - component: {fileID: 787048346}
   m_Layer: 0
-  m_Name: Patrolling Fish
+  m_Name: Roaming Fish
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2298,7 +2298,7 @@ PrefabInstance:
       objectReference: {fileID: 1000946676}
     - target: {fileID: 8165957635584016824, guid: f0a33af8d70c918459b6f4965795481d, type: 3}
       propertyPath: Mode
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8165957635584016824, guid: f0a33af8d70c918459b6f4965795481d, type: 3}
       propertyPath: _fishData
