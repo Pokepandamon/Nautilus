@@ -22,11 +22,12 @@ public class Clam : MonoBehaviour
     [SerializeField] private Transform _hinge;
     [SerializeField] private Transform _netChecker;
     [SerializeField] private LayerMask _shellMask;
-    [SerializeField] private float _closingFrames;
+    [SerializeField] private float _closingTime;
     private Fish _fish;
     private Vector3 _initialPosition;
     private ShellState _shellState = ShellState.Opening;
     private float _shellAngle = 0;
+    private float _lastShellUpdate;
     
     // Properties
     
@@ -40,6 +41,11 @@ public class Clam : MonoBehaviour
         _fish.DetectedSubmarine += OnDetectedSubmarine;
         _fish.LostSubmarine += OnLostSubmarine;
         _initialPosition = transform.position;
+    }
+
+    private void Start()
+    {
+        StartCoroutine(ShellChange());
     }
 
     private void OnTriggerEnter(Collider other)
@@ -58,34 +64,6 @@ public class Clam : MonoBehaviour
             }
 
                 Destroy(_clamParent);
-            }
-        }
-    }
-
-    private void Update()
-    {
-        if (_shellState == ShellState.Closing)
-        {
-            if (_shellAngle <= 0)
-            {
-                _shellState = ShellState.Closed;
-            }
-            else
-            {
-                _topShell.transform.RotateAround(_hinge.position, Vector3.forward, -90f/_closingFrames);
-                _shellAngle -= 90f / _closingFrames;
-            }
-        }
-        if (_shellState == ShellState.Opening)
-        {
-            if (_shellAngle >= 90)
-            {
-                _shellState = ShellState.Open;
-            }
-            else
-            {
-                _topShell.transform.RotateAround(_hinge.position, Vector3.forward, 90f/_closingFrames);
-                _shellAngle += 90f / _closingFrames;
             }
         }
     }
@@ -134,5 +112,41 @@ public class Clam : MonoBehaviour
         }
         _shellChanging = false;
     }*/
+
+    private IEnumerator ShellChange()
+    {
+        while (isActiveAndEnabled)
+        {
+            if (_shellState == ShellState.Closing)
+            {
+                if (_shellAngle <= 0)
+                {
+                    _shellState = ShellState.Closed;
+                }
+                else
+                {
+                    float angleDelta = Mathf.Clamp(90f * ((Time.realtimeSinceStartup - _lastShellUpdate) / _closingTime), 0f, _shellAngle);
+                    _topShell.transform.RotateAround(_hinge.position, Vector3.forward, -angleDelta);
+                    _shellAngle -= angleDelta;
+                }
+            }
+            if (_shellState == ShellState.Opening)
+            {
+                if (_shellAngle >= 90)
+                {
+                    _shellState = ShellState.Open;
+                }
+                else
+                {
+                    float angleDelta = Mathf.Clamp(90f * ((Time.realtimeSinceStartup - _lastShellUpdate) / _closingTime), 0f, 90f - _shellAngle);
+                    _topShell.transform.RotateAround(_hinge.position, Vector3.forward, angleDelta);
+                    _shellAngle += angleDelta;
+                }
+            }
+
+            _lastShellUpdate = Time.realtimeSinceStartup;
+            yield return new WaitForSeconds(0.02f);
+        }
+    }
     
 }
