@@ -13,6 +13,14 @@ public class SubStats : MonoBehaviour
     private int stealthLevel = 0; 
     private int harpoonLevel = 0; 
 
+    public int SpeedLevel => speedLevel;
+    public int StealthLevel => stealthLevel;
+    public int HarpoonLevel => harpoonLevel;
+
+    public List<int> SpeedUpgradeCosts => speedUpgradeCosts;
+    public List<int> StealthUpgradeCosts => stealthUpgradeCosts;
+    public List<int> HarpoonUpgradeCosts => harpoonUpgradeCosts;
+
     public float currentSpeed => _subUpgrades.Speed + speedLevel; 
     public float currentSleath => _subUpgrades.Stealth + stealthLevel; 
     public float currentHarpoon => _subUpgrades.Harpoon + harpoonLevel; 
@@ -29,6 +37,10 @@ public class SubStats : MonoBehaviour
             InventoryManager.instance.UpdateCoins(InventoryManager.instance.playerCoins);
             speedLevel++;
             Debug.Log($"Speed is now Level {speedLevel}");
+
+            if(VillageUIManager.instance != null){
+                VillageUIManager.instance.UpdateUpgradeCosts();
+            }
         }else{
             Debug.Log($"Not enough coins");
         }
@@ -46,6 +58,10 @@ public class SubStats : MonoBehaviour
             InventoryManager.instance.UpdateCoins(InventoryManager.instance.playerCoins);
             stealthLevel++;
             Debug.Log($"Stealth is now Level {stealthLevel}");
+
+            if(VillageUIManager.instance != null){
+                VillageUIManager.instance.UpdateUpgradeCosts();
+            }
         }else{
             Debug.Log($"Not enough coins");
         }
@@ -63,10 +79,12 @@ public class SubStats : MonoBehaviour
             InventoryManager.instance.UpdateCoins(InventoryManager.instance.playerCoins);
             harpoonLevel++;
             Debug.Log($"Harpoon is now Level {harpoonLevel}");
+
+            if(VillageUIManager.instance != null){
+                VillageUIManager.instance.UpdateUpgradeCosts();
+            }
         }else{
             Debug.Log($"Not enough coins");
         }
     }
-
-
 }
