@@ -2,10 +2,19 @@ using System;
 using NavVolume;
 using UnityEngine;
 
+// TODO: add patrolling, maybe chasing too, depends if its useful to other fish or if they're implementing their own logic
+public enum FishMode
+{
+    Roaming,
+    Custom
+}
+
 [RequireComponent(typeof(NavVolumeAgent))]
 public class Fish : MonoBehaviour
 {
     // Fields
+    public FishMode Mode = FishMode.Custom;
+
     [SerializeField] private FishData _fishData;
     [SerializeField] private float _baseDetectionRadius;
     [SerializeField] private SubUpgrades _subUpgrades;
@@ -17,6 +26,7 @@ public class Fish : MonoBehaviour
     private Vector3 _lastDestination = Vector3.positiveInfinity;
     private bool _hasDestination = false;
     private bool _isSubmarineCurrentlyDetected = false;
+    private Vector3 _initialPosition;
 
     // Properties
     public FishData FishData => _fishData;
@@ -33,6 +43,7 @@ public class Fish : MonoBehaviour
     {
         _agent = GetComponent<NavVolumeAgent>();
         _rb = GetComponent<Rigidbody>(); // may be null, that's fine
+        _initialPosition = transform.position;
     }
 
     private void Update()
@@ -44,7 +55,29 @@ public class Fish : MonoBehaviour
         if (_hasDestination && Vector3.Distance(transform.position, _lastDestination) < 1f)
         {
             _hasDestination = false;
-            DestinationReached?.Invoke();
+            DestinationReached?.Invoke(); // TODO: only invoke if patrolling mode
+        }
+
+        if (Mode == FishMode.Roaming)
+        {
+            while (!_hasDestination)
+            {
+                Vector3 randomDirection = GetAlmostRandomDirection();
+
+                // retry if raycast goes through ground
+                if (Physics.Raycast(transform.position, randomDirection - transform.position, out _,
+                        Vector3.Distance(transform.position, randomDirection)))
+                {
+                    continue;
+                }
+
+                bool success = SetDestination(randomDirection);
+
+                if (!success)
+                {
+                    Debug.Log("failed to set destination while roaming");
+                }
+            }
         }
     }
 
@@ -59,21 +92,21 @@ public class Fish : MonoBehaviour
     }
 
     // Public Methods
-    public void SetDestination(Vector3 destination)
+    public bool SetDestination(Vector3 destination)
     {
-        if (IsHooked) return;
+        if (IsHooked) return false;
 
         NavVolumeSpace space = _agent.NavVolumeSpace;
 
         if (space == null || !space.IsReady)
         {
-            return;
+            return false;
         }
 
         if (!space.IsNavigable(destination)
             && !space.TrySnapToNavigable(destination, 10f, out destination))
         {
-            return;
+            return false;
         }
 
         if (_lastDestination != destination)
@@ -82,6 +115,8 @@ public class Fish : MonoBehaviour
             _hasDestination = true;
             _agent.SetDestination(destination);
         }
+
+        return true;
     }
 
     public void Hook()
@@ -96,7 +131,7 @@ public class Fish : MonoBehaviour
 
         if (_rb != null)
         {
-            _rb.linearVelocity = Vector3.zero;   // zero BEFORE going kinematic
+            _rb.linearVelocity = Vector3.zero; // zero BEFORE going kinematic
             _rb.angularVelocity = Vector3.zero;
             _wasKinematic = _rb.isKinematic;
             _rb.isKinematic = true;
@@ -158,5 +193,17 @@ public class Fish : MonoBehaviour
             _isSubmarineCurrentlyDetected = false;
             LostSubmarine?.Invoke();
         }
+    }
+
+    // random but sends you towards initial position over time
+    private Vector3 GetAlmostRandomDirection()
+    {
+        Vector3 randomDir = UnityEngine.Random.insideUnitSphere * 10f;
+
+        // bias towards initial position
+        Vector3 toInitial = (_initialPosition - transform.position).normalized;
+        randomDir += toInitial * 5f;
+
+        return transform.position + randomDir;
     }
 }
