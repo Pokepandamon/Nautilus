@@ -155,7 +155,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 353fbe6bfa01a46f18d94a7fafa8095a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Fish
-  Mode: 1
+  Mode: 0
   _fishData: {fileID: 11400000, guid: f78d437e38383420d97d9636da8c6196, type: 2}
   _baseDetectionRadius: 4
   _subUpgrades: {fileID: 11400000, guid: 5db957ce134242d4a8db7523336e114e, type: 2}

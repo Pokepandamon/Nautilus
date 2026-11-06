@@ -21,6 +21,7 @@ public class Guppy : MonoBehaviour
         _fish = GetComponent<Fish>();
     }
 
+    // TODO: move this to Fish?
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Net"))
