@@ -202,7 +202,7 @@ MonoBehaviour:
   _shellMask:
     serializedVersion: 2
     m_Bits: 128
-  _closingFrames: 20
+  _closingFrames: 500
 --- !u!1 &7876825033926409408
 GameObject:
   m_ObjectHideFlags: 0
