@@ -11713,7 +11713,7 @@ GameObject:
   - component: {fileID: 991953297}
   - component: {fileID: 991953296}
   m_Layer: 5
-  m_Name: Fish Count
+  m_Name: FishBagText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
