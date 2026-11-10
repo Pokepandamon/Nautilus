@@ -16,8 +16,8 @@ public class Fish : MonoBehaviour
     public FishMode Mode = FishMode.Custom;
 
     [SerializeField] private FishData _fishData;
-    [SerializeField] private float[] _detectionRadius;
-    [SerializeField] private float[] _harpoonDetectionRadius = new float[]{0,0,0,0,0,0,0};
+    [SerializeField] private float[] _detectionRadius = { 0, 0, 0, 0, 0, 0, 0 };
+    [SerializeField] private float[] _harpoonDetectionRadius = { 0, 0, 0, 0, 0, 0, 0 };
     [SerializeField] private SubUpgrades _subUpgrades;
     [SerializeField] private DebugFlags _debugFlags;
 
@@ -160,7 +160,7 @@ public class Fish : MonoBehaviour
     {
         return _detectionRadius[_subUpgrades.Stealth];
     }
-    
+
     public float GetHarpoonDetectionRadius()
     {
         return _harpoonDetectionRadius[_subUpgrades.Stealth];
@@ -219,7 +219,9 @@ public class Fish : MonoBehaviour
             LostHarpoon?.Invoke();
             return;
         }
-        if (Vector3.Magnitude(SubmarineMovement.Instance.GetHarpoon().transform.position - transform.position) <= GetHarpoonDetectionRadius())
+
+        if (Vector3.Magnitude(SubmarineMovement.Instance.GetHarpoon().transform.position - transform.position) <=
+            GetHarpoonDetectionRadius())
         {
             _isHarpoonCurrentlyDetected = false;
             DetectedHarpoon?.Invoke(SubmarineMovement.Instance.GetHarpoon());

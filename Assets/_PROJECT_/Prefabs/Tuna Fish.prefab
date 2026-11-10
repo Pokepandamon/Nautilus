@@ -423,12 +423,20 @@ MonoBehaviour:
   Mode: 0
   _fishData: {fileID: 0}
   _detectionRadius:
+  - 30
+  - 25
+  - 20
+  - 15
+  - 10
+  - 5
   - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
+  _harpoonDetectionRadius:
+  - 30
+  - 25
+  - 20
+  - 15
+  - 10
+  - 5
   - 0
   _subUpgrades: {fileID: 11400000, guid: 33ac9b2785d6140d8ab10e225d7a2168, type: 2}
   _debugFlags: {fileID: 11400000, guid: bb70b872d8c4c0142b160ad4da45c50c, type: 2}
