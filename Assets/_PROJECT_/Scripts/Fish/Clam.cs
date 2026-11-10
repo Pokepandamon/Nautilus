@@ -28,6 +28,7 @@ public class Clam : MonoBehaviour
     private ShellState _shellState = ShellState.Opening;
     private float _shellAngle = 0;
     private float _lastShellUpdate;
+    private float _shellSpeedModifier = 1;
     
     // Properties
     
@@ -40,6 +41,8 @@ public class Clam : MonoBehaviour
         _fish = GetComponent<Fish>();
         _fish.DetectedSubmarine += OnDetectedSubmarine;
         _fish.LostSubmarine += OnLostSubmarine;
+        _fish.DetectedHarpoon += OnDetectedHarpoon;
+        _fish.LostHarpoon += OnLostHarpoon;
         _initialPosition = transform.position;
     }
 
@@ -93,6 +96,26 @@ public class Clam : MonoBehaviour
         }
     }
     
+    private void OnDetectedHarpoon(GameObject submarine)
+    {
+        if (_shellState != ShellState.Closed)
+        {
+            _shellState = ShellState.Closing;
+        }
+
+        _shellSpeedModifier = 2;
+    }
+    
+    private void OnLostHarpoon()
+    {
+        if (_shellState != ShellState.Open)
+        {
+            _shellState = ShellState.Opening;
+        }
+        
+        _shellSpeedModifier = 1;
+    }
+    
     /*private IEnumerator OpenShell()
     {
         for (int i = 0; i < 100; i++)
@@ -125,7 +148,7 @@ public class Clam : MonoBehaviour
                 }
                 else
                 {
-                    float angleDelta = Mathf.Clamp(90f * ((Time.realtimeSinceStartup - _lastShellUpdate) / _closingTime), 0f, _shellAngle);
+                    float angleDelta = Mathf.Clamp(90f * ((Time.realtimeSinceStartup - _lastShellUpdate) / (_closingTime / _shellSpeedModifier)), 0f, _shellAngle);
                     _topShell.transform.RotateAround(_hinge.position, Vector3.forward, -angleDelta);
                     _shellAngle -= angleDelta;
                 }
@@ -138,7 +161,7 @@ public class Clam : MonoBehaviour
                 }
                 else
                 {
-                    float angleDelta = Mathf.Clamp(90f * ((Time.realtimeSinceStartup - _lastShellUpdate) / _closingTime), 0f, 90f - _shellAngle);
+                    float angleDelta = Mathf.Clamp(90f * ((Time.realtimeSinceStartup - _lastShellUpdate) / (_closingTime / _shellSpeedModifier)), 0f, 90f - _shellAngle);
                     _topShell.transform.RotateAround(_hinge.position, Vector3.forward, angleDelta);
                     _shellAngle += angleDelta;
                 }

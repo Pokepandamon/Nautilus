@@ -16,7 +16,8 @@ public class Fish : MonoBehaviour
     public FishMode Mode = FishMode.Custom;
 
     [SerializeField] private FishData _fishData;
-    [SerializeField] private float _baseDetectionRadius;
+    [SerializeField] private float[] _detectionRadius;
+    [SerializeField] private float[] _harpoonDetectionRadius = new float[]{0,0,0,0,0,0,0};
     [SerializeField] private SubUpgrades _subUpgrades;
     [SerializeField] private DebugFlags _debugFlags;
 
@@ -26,6 +27,7 @@ public class Fish : MonoBehaviour
     private Vector3 _lastDestination = Vector3.positiveInfinity;
     private bool _hasDestination = false;
     private bool _isSubmarineCurrentlyDetected = false;
+    private bool _isHarpoonCurrentlyDetected = false;
     private Vector3 _initialPosition;
 
     // Properties
@@ -36,6 +38,8 @@ public class Fish : MonoBehaviour
     public event Action DestinationReached;
     public event Action<GameObject> DetectedSubmarine;
     public event Action LostSubmarine;
+    public event Action<GameObject> DetectedHarpoon;
+    public event Action LostHarpoon;
     public event Action Hooked;
 
     // Monobehaviour Methods (Awake, Start, Update, ...)
@@ -51,6 +55,7 @@ public class Fish : MonoBehaviour
         if (IsHooked) return; // frozen: no detection, no destination events
 
         CheckForSubmarine();
+        CheckForHarpoon();
 
         if (_hasDestination && Vector3.Distance(transform.position, _lastDestination) < 1f)
         {
@@ -85,7 +90,7 @@ public class Fish : MonoBehaviour
     {
         if (_debugFlags.ShowDetectionRadiusSpheres)
         {
-            float radius = _baseDetectionRadius * (6f - _subUpgrades.Stealth) / 6f;
+            float radius = _detectionRadius[_subUpgrades.Stealth];
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(transform.position, radius);
         }
@@ -153,7 +158,12 @@ public class Fish : MonoBehaviour
 
     public float GetDetectionRadius()
     {
-        return _baseDetectionRadius * (6f - _subUpgrades.Stealth) / 6f;
+        return _detectionRadius[_subUpgrades.Stealth];
+    }
+    
+    public float GetHarpoonDetectionRadius()
+    {
+        return _harpoonDetectionRadius[_subUpgrades.Stealth];
     }
 
     public bool GetHasDestination()
@@ -173,7 +183,7 @@ public class Fish : MonoBehaviour
 
         // TODO: look into using layers and LayerMask.GetMask("Submarine")
         // might speed up check?
-        Collider[] colliders = Physics.OverlapSphere(transform.position, radius);
+        /*Collider[] colliders = Physics.OverlapSphere(transform.position, radius);
         foreach (Collider collider in colliders)
         {
             if (collider.CompareTag("Submarine"))
@@ -186,12 +196,40 @@ public class Fish : MonoBehaviour
 
                 return;
             }
+        }*/
+        if (Vector3.Magnitude(SubmarineMovement.Instance.transform.position - transform.position) <= radius)
+        {
+            _isSubmarineCurrentlyDetected = true;
+            DetectedSubmarine?.Invoke(SubmarineMovement.Instance.gameObject);
+            return;
         }
 
         if (_isSubmarineCurrentlyDetected)
         {
             _isSubmarineCurrentlyDetected = false;
             LostSubmarine?.Invoke();
+        }
+    }
+
+    private void CheckForHarpoon()
+    {
+        if (SubmarineMovement.Instance.GetHarpoon() == null)
+        {
+            _isHarpoonCurrentlyDetected = false;
+            LostHarpoon?.Invoke();
+            return;
+        }
+        if (Vector3.Magnitude(SubmarineMovement.Instance.GetHarpoon().transform.position - transform.position) <= GetHarpoonDetectionRadius())
+        {
+            _isHarpoonCurrentlyDetected = false;
+            DetectedHarpoon?.Invoke(SubmarineMovement.Instance.GetHarpoon());
+            return;
+        }
+
+        if (_isHarpoonCurrentlyDetected)
+        {
+            _isHarpoonCurrentlyDetected = false;
+            LostHarpoon?.Invoke();
         }
     }
 

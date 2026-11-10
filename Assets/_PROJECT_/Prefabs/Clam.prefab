@@ -178,8 +178,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 353fbe6bfa01a46f18d94a7fafa8095a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Fish
-  _fishData: {fileID: 0}
-  _baseDetectionRadius: 15.5
+  Mode: 0
+  _fishData: {fileID: 11400000, guid: 6fe984d4c1fc44c2c82efda48092224a, type: 2}
+  _detectionRadius:
+  - 30
+  - 8
+  - 5
+  - 3
+  - 3
+  - 3
+  - 3
+  _harpoonDetectionRadius:
+  - 60
+  - 60
+  - 30
+  - 30
+  - 15
+  - 15
+  - 5
   _subUpgrades: {fileID: 11400000, guid: 5db957ce134242d4a8db7523336e114e, type: 2}
   _debugFlags: {fileID: 11400000, guid: bb70b872d8c4c0142b160ad4da45c50c, type: 2}
 --- !u!114 &3754602956650673113
@@ -202,7 +218,7 @@ MonoBehaviour:
   _shellMask:
     serializedVersion: 2
     m_Bits: 128
-  _closingTime: 0.5
+  _closingTime: 1.5
 --- !u!1 &7876825033926409408
 GameObject:
   m_ObjectHideFlags: 0

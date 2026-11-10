@@ -354,12 +354,12 @@ MonoBehaviour:
   _harpoon: {fileID: 359972659343487604}
   _harpoonTime: 5
   _maxLengthUpgrades:
-  - 5
   - 10
+  - 20
   _impulseUpgrades:
-  - 5
-  - 10
-  _retractSpeed: 1
+  - 30
+  - 60
+  _retractSpeed: 5
   _ropeVisual: {fileID: 6278336049800141222}
   _ropeSource: {fileID: 1841561149373496314}
   _harpoonButt: {fileID: 799830036730136792}

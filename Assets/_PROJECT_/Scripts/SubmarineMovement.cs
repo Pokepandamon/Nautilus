@@ -144,5 +144,10 @@ public class SubmarineMovement : MonoBehaviour
         return _harpoonSpawn;
     }
 
+    public GameObject GetHarpoon()
+    {
+        return _currentHarpoon;
+    }
+
     // Private Methods
 }
