@@ -1,10 +1,11 @@
 using UnityEngine;
 using NavVolume;
+using UnityEngine.Serialization;
 
 [RequireComponent(typeof(Fish), typeof(NavVolumeAgent))]
 public class Narwhal : MonoBehaviour
 {
-    [SerializeField] private float _updateInterval = 2f;
+    [SerializeField] private float _pathUpdateInterval = 2f;
     [SerializeField] private float _targetMoveThreshold = 3f;
     [SerializeField] private GameObject _nosePrefab;
     [SerializeField] private Transform _noseMount;
@@ -15,10 +16,10 @@ public class Narwhal : MonoBehaviour
     private NavVolumeAgent _agent;
     private GameObject _submarine;
 
-    private float _timer;
+    private float _pathTimer;
     private Vector3 _lastRequestedPosition;
     private bool _hasRequestedPath;
-    private float _lastShotTime;
+    private float _lastShotTime = 0f;
     private float _noseLifetime = 5f;
 
     private void Awake()
@@ -44,23 +45,24 @@ public class Narwhal : MonoBehaviour
         if (_submarine == null || _agent.NavVolumeSpace == null)
             return;
 
-        _timer += Time.deltaTime;
+        _pathTimer += Time.deltaTime;
 
-        if (_timer < _updateInterval)
-            return;
-
-        _timer = 0f;
-
-        Vector3 targetPosition = _submarine.transform.position;
-        float targetMovement =
-            Vector3.Distance(targetPosition, _lastRequestedPosition);
-
-        if (!_hasRequestedPath || targetMovement >= _targetMoveThreshold)
+        if (_pathTimer >= _pathUpdateInterval)
         {
-            RequestChasePath(targetPosition);
+            _pathTimer = 0f;
+
+            Vector3 targetPosition = _submarine.transform.position;
+            float targetMovement =
+                Vector3.Distance(targetPosition, _lastRequestedPosition);
+
+            if (!_hasRequestedPath || targetMovement >= _targetMoveThreshold)
+            {
+                RequestChasePath(targetPosition);
+            }
         }
 
-        if (Time.time - _lastShotTime >= _shootCooldown)
+
+        if (Time.time - _lastShotTime >= _shootCooldown && !_fish.IsHooked)
         {
             ShootNose();
             _lastShotTime = Time.time;
@@ -70,7 +72,7 @@ public class Narwhal : MonoBehaviour
     private void OnSubmarineDetected(GameObject submarine)
     {
         _submarine = submarine;
-        _timer = 0f;
+        _pathTimer = 0f;
         _hasRequestedPath = false;
 
         if (_agent.NavVolumeSpace != null)
@@ -97,8 +99,9 @@ public class Narwhal : MonoBehaviour
     private void ShootNose()
     {
         GameObject noseInstance = Instantiate(_nosePrefab, _noseMount.position, _noseMount.rotation);
-        Rigidbody noseRigidbody = noseInstance.GetComponent<Rigidbody>();
+        noseInstance.transform.localScale = Vector3.Scale(noseInstance.transform.localScale, _noseMount.lossyScale);
 
+        Rigidbody noseRigidbody = noseInstance.GetComponent<Rigidbody>();
         noseRigidbody.linearVelocity = _noseMount.up * _noseSpeed;
 
         Destroy(noseInstance, _noseLifetime);

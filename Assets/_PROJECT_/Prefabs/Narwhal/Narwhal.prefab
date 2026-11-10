@@ -183,7 +183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b615468d3a464112a6c627bfe07997af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Narwhal
-  _updateInterval: 1
+  _pathUpdateInterval: 1
   _targetMoveThreshold: 1
   _nosePrefab: {fileID: 3890448506338263733, guid: 7a464607cc6d34980a8e0848ca6f299b, type: 3}
   _noseMount: {fileID: 5372373389988319462}
