@@ -30,7 +30,8 @@ public class SubmarineMovement : MonoBehaviour
     private GameObject _currentHarpoonSource;
 
     public static SubmarineMovement Instance;
-    public int Health = 3;
+
+    private SubmarineHealth _submarineHealth;
 
     // Properties
 
@@ -71,6 +72,8 @@ public class SubmarineMovement : MonoBehaviour
         {
             Debug.LogError("SubmarineMovement: Move input action not found!");
         }
+
+        _submarineHealth = GetComponent<SubmarineHealth>();
     }
 
     private void Update()
@@ -118,14 +121,12 @@ public class SubmarineMovement : MonoBehaviour
         );
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision other)
     {
-        if (other.CompareTag("Hurts"))
-        {
             Debug.Log("Ow");
-            Health -= 1;
-            Destroy(other.gameObject);
-        }
+            if(_submarineHealth != null){
+                _submarineHealth.TakeDamage(1);
+            }
     }
 
     private void OnDestroy()
