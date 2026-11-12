@@ -14,10 +14,13 @@ public class Fish : MonoBehaviour
 {
     // Fields
     public FishMode Mode = FishMode.Custom;
+    public bool IsCatchable = true;
+    public bool AutoCollectInNet = true; // some fish (clams) do their own checks
 
     [SerializeField] private FishData _fishData;
-    [SerializeField] private float[] _detectionRadius;
-    [SerializeField] private float[] _harpoonDetectionRadius = new float[]{0,0,0,0,0,0,0};
+    [SerializeField] private float[] _detectionRadius = { 0, 0, 0, 0, 0, 0, 0 };
+    [SerializeField] private float[] _harpoonDetectionRadius = { 0, 0, 0, 0, 0, 0, 0 };
+    [SerializeField] private float _maxRoamDistance = 10f;
     [SerializeField] private SubUpgrades _subUpgrades;
     [SerializeField] private DebugFlags _debugFlags;
 
@@ -86,6 +89,14 @@ public class Fish : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (AutoCollectInNet && IsCatchable && other.CompareTag("Net"))
+        {
+            Collect();
+        }
+    }
+
     private void OnDrawGizmos()
     {
         if (_debugFlags.ShowDetectionRadiusSpheres)
@@ -97,6 +108,16 @@ public class Fish : MonoBehaviour
     }
 
     // Public Methods
+    public void Collect()
+    {
+        if (_fishData != null)
+        {
+            InventoryManager.instance.AddFish(_fishData);
+        }
+
+        Destroy(gameObject);
+    }
+
     public bool SetDestination(Vector3 destination)
     {
         if (IsHooked) return false;
@@ -160,7 +181,7 @@ public class Fish : MonoBehaviour
     {
         return _detectionRadius[_subUpgrades.Stealth];
     }
-    
+
     public float GetHarpoonDetectionRadius()
     {
         return _harpoonDetectionRadius[_subUpgrades.Stealth];
@@ -219,7 +240,9 @@ public class Fish : MonoBehaviour
             LostHarpoon?.Invoke();
             return;
         }
-        if (Vector3.Magnitude(SubmarineMovement.Instance.GetHarpoon().transform.position - transform.position) <= GetHarpoonDetectionRadius())
+
+        if (Vector3.Magnitude(SubmarineMovement.Instance.GetHarpoon().transform.position - transform.position) <=
+            GetHarpoonDetectionRadius())
         {
             _isHarpoonCurrentlyDetected = false;
             DetectedHarpoon?.Invoke(SubmarineMovement.Instance.GetHarpoon());
@@ -236,11 +259,12 @@ public class Fish : MonoBehaviour
     // random but sends you towards initial position over time
     private Vector3 GetAlmostRandomDirection()
     {
-        Vector3 randomDir = UnityEngine.Random.insideUnitSphere * 10f;
+        // TODO: make good
+        Vector3 randomDir = UnityEngine.Random.insideUnitSphere * _maxRoamDistance;
 
         // bias towards initial position
         Vector3 toInitial = (_initialPosition - transform.position).normalized;
-        randomDir += toInitial * 5f;
+        randomDir += toInitial * UnityEngine.Random.Range(0f, _maxRoamDistance);
 
         return transform.position + randomDir;
     }

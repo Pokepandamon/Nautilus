@@ -179,6 +179,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Fish
   Mode: 0
+  AutoCollectInNet: 0
   _fishData: {fileID: 11400000, guid: 6fe984d4c1fc44c2c82efda48092224a, type: 2}
   _detectionRadius:
   - 30

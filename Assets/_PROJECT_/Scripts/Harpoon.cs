@@ -45,7 +45,6 @@ public class Harpoon : MonoBehaviour
     // Monobehaviour Methods
     private void Awake()
     {
-
         _tip = _harpoon.GetComponent<HarpoonTip>();
         if (_tip == null)
             _tip = _harpoon.AddComponent<HarpoonTip>();
@@ -94,7 +93,8 @@ public class Harpoon : MonoBehaviour
         // Add the sub momentum to the harpoon so we don't ever outpace it
         if (!_appliedSubMomentum && _subRigidbody != null)
         {
-            _harpoonRigidbody.linearVelocity += Vector3.Project(_subRigidbody.linearVelocity, _harpoonRigidbody.linearVelocity);
+            _harpoonRigidbody.linearVelocity +=
+                Vector3.Project(_subRigidbody.linearVelocity, _harpoonRigidbody.linearVelocity);
             _appliedSubMomentum = true;
         }
 
@@ -115,11 +115,12 @@ public class Harpoon : MonoBehaviour
             _ropeLength = Mathf.MoveTowards(_ropeLength, 0f, _retractSpeed * Time.fixedDeltaTime);
             if (_ropeLength <= 0)
             {
-                CollectFish(); 
+                CollectFish();
                 Destroy(_ropeSource);
                 Destroy(gameObject);
-                return;        
+                return;
             }
+
             SetRopeLength();
         }
     }
@@ -167,7 +168,7 @@ public class Harpoon : MonoBehaviour
 
     private void OnHitFish(Fish fish)
     {
-        if (_hookedFish != null || fish.IsHooked) return; 
+        if (_hookedFish != null || fish.IsHooked || !fish.IsCatchable) return;
 
         _hookedFish = fish;
         fish.Hook(); // freezes the fish
@@ -189,10 +190,7 @@ public class Harpoon : MonoBehaviour
     {
         if (_hookedFish == null) return;
 
-        if (_hookedFish.FishData != null)
-            InventoryManager.instance.AddFish(_hookedFish.FishData);
-
-        Destroy(_hookedFish.gameObject);
+        _hookedFish.Collect();
         _hookedFish = null;
     }
 }

@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 4305311584010383535}
   - component: {fileID: 4721120917642666930}
   - component: {fileID: -6486654496648789038}
-  - component: {fileID: 1187111344120867760}
   m_Layer: 6
   m_Name: Pufferfish
   m_TagString: Hurts
@@ -149,13 +148,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Fish
   Mode: 1
+  IsCatchable: 1
   _fishData: {fileID: 11400000, guid: 94b46f7e0ae5949c8bf90e0e4a71f609, type: 2}
   _detectionRadius:
+  - 20
+  - 16
+  - 12
+  - 8
+  - 4
   - 0
   - 0
-  - 0
-  - 0
-  - 0
+  _harpoonDetectionRadius:
+  - 20
+  - 16
+  - 12
+  - 8
+  - 4
   - 0
   - 0
   _subUpgrades: {fileID: 11400000, guid: 5db957ce134242d4a8db7523336e114e, type: 2}
@@ -174,16 +182,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Pufferfish
   _puffSize: 2
   _puffSpeed: 5
---- !u!114 &1187111344120867760
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8649639110407040998}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1fef645aaeb223a41a006f4e4634b9f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FishNetHandler
-  IsCatchable: 1
