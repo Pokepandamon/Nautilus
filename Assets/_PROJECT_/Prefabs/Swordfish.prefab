@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 4688018441066785591}
   - component: {fileID: 9161000619271321693}
   - component: {fileID: 721923650434909784}
-  - component: {fileID: 6855173401984197194}
   - component: {fileID: 2782120112830780301}
   m_Layer: 6
   m_Name: Swordfish
@@ -149,6 +148,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Fish
   Mode: 0
+  IsCatchable: 1
   _fishData: {fileID: 11400000, guid: 3a08a3463699142809ed1c22fb91cfdc, type: 2}
   _detectionRadius:
   - 30
@@ -168,19 +168,6 @@ MonoBehaviour:
   - 0
   _subUpgrades: {fileID: 11400000, guid: 5db957ce134242d4a8db7523336e114e, type: 2}
   _debugFlags: {fileID: 11400000, guid: bb70b872d8c4c0142b160ad4da45c50c, type: 2}
---- !u!114 &6855173401984197194
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1363420293139660949}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1fef645aaeb223a41a006f4e4634b9f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FishNetHandler
-  IsCatchable: 1
 --- !u!114 &2782120112830780301
 MonoBehaviour:
   m_ObjectHideFlags: 0

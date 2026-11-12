@@ -104,26 +104,5 @@ PrefabInstance:
     - {fileID: 5828248965228378122, guid: 1ab256e20ecc24dc49bf668999b2dc95, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8717935038299278495, guid: 1ab256e20ecc24dc49bf668999b2dc95, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 203937154619815097}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1ab256e20ecc24dc49bf668999b2dc95, type: 3}
---- !u!1 &3907040635818418940 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8717935038299278495, guid: 1ab256e20ecc24dc49bf668999b2dc95, type: 3}
-  m_PrefabInstance: {fileID: 5675885147862052451}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &203937154619815097
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3907040635818418940}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dbbd910c2f9cf4901a88526726a9eb19, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Guppy
-  _speed: 3

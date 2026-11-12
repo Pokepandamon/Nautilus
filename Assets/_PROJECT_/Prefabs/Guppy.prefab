@@ -1033,8 +1033,6 @@ GameObject:
   - component: {fileID: 967714975699986836}
   - component: {fileID: 3501441921965443609}
   - component: {fileID: 1578256116088761458}
-  - component: {fileID: 5828248965228378122}
-  - component: {fileID: 6849819218062960806}
   - component: {fileID: 3794064791826464421}
   m_Layer: 6
   m_Name: Guppy
@@ -1100,6 +1098,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Fish
   Mode: 1
+  IsCatchable: 1
+  AutoCollectInNet: 1
   _fishData: {fileID: 11400000, guid: f78d437e38383420d97d9636da8c6196, type: 2}
   _detectionRadius:
   - 0
@@ -1117,34 +1117,9 @@ MonoBehaviour:
   - 0
   - 0
   - 0
+  _maxRoamDistance: 10
   _subUpgrades: {fileID: 11400000, guid: 5db957ce134242d4a8db7523336e114e, type: 2}
   _debugFlags: {fileID: 11400000, guid: bb70b872d8c4c0142b160ad4da45c50c, type: 2}
---- !u!114 &5828248965228378122
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8717935038299278495}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dbbd910c2f9cf4901a88526726a9eb19, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Guppy
-  _speed: 3
---- !u!114 &6849819218062960806
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8717935038299278495}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1fef645aaeb223a41a006f4e4634b9f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FishNetHandler
-  IsCatchable: 1
 --- !u!136 &3794064791826464421
 CapsuleCollider:
   m_ObjectHideFlags: 0

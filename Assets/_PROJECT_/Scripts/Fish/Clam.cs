@@ -39,6 +39,7 @@ public class Clam : MonoBehaviour
     private void Awake()
     {
         _fish = GetComponent<Fish>();
+        _fish.AutoCollectInNet = false; // clam handles its own collection logic
         _fish.DetectedSubmarine += OnDetectedSubmarine;
         _fish.LostSubmarine += OnLostSubmarine;
         _fish.DetectedHarpoon += OnDetectedHarpoon;
@@ -53,7 +54,7 @@ public class Clam : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Net"))
+        if (_fish.IsCatchable && other.gameObject.CompareTag("Net"))
         {
             //Debug.Log(other.gameObject.GetComponentInParent<Transform>().position);
             Physics.queriesHitBackfaces = true;
@@ -61,10 +62,7 @@ public class Clam : MonoBehaviour
             if (!Physics.Linecast(_netChecker.position, SubmarineMovement.Instance.GetHarpoonSpawn().position, _shellMask))
             {
                 //Debug.Log("Nothing in between ");
-                if (_fish != null && _fish.FishData != null)
-            {
-                InventoryManager.instance.AddFish(_fish.FishData);
-            }
+                _fish.Collect();
 
                 Destroy(_clamParent);
             }

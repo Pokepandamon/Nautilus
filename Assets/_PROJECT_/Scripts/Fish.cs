@@ -14,6 +14,8 @@ public class Fish : MonoBehaviour
 {
     // Fields
     public FishMode Mode = FishMode.Custom;
+    public bool IsCatchable = true;
+    public bool AutoCollectInNet = true; // some fish (clams) do their own checks
 
     [SerializeField] private FishData _fishData;
     [SerializeField] private float[] _detectionRadius = { 0, 0, 0, 0, 0, 0, 0 };
@@ -87,6 +89,14 @@ public class Fish : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (AutoCollectInNet && IsCatchable && other.CompareTag("Net"))
+        {
+            Collect();
+        }
+    }
+
     private void OnDrawGizmos()
     {
         if (_debugFlags.ShowDetectionRadiusSpheres)
@@ -98,6 +108,16 @@ public class Fish : MonoBehaviour
     }
 
     // Public Methods
+    public void Collect()
+    {
+        if (_fishData != null)
+        {
+            InventoryManager.instance.AddFish(_fishData);
+        }
+
+        Destroy(gameObject);
+    }
+
     public bool SetDestination(Vector3 destination)
     {
         if (IsHooked) return false;

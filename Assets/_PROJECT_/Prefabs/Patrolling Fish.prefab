@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 2360671988887952826}
   - component: {fileID: 7443167706481742630}
   - component: {fileID: 8698176918246863798}
-  - component: {fileID: 5366770937096661553}
   - component: {fileID: 5316940220055949786}
   - component: {fileID: 8165957635584016824}
   - component: {fileID: 1215515366142160718}
@@ -115,19 +114,6 @@ MonoBehaviour:
   _freezeRotationY: 0
   _freezeRotationZ: 0
   _isAvoidanceEnabled: 1
---- !u!114 &5366770937096661553
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 378450582134075640}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1fef645aaeb223a41a006f4e4634b9f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FishNetHandler
-  IsCatchable: 1
 --- !u!114 &5316940220055949786
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -156,6 +142,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Fish
   Mode: 0
+  IsCatchable: 1
   _fishData: {fileID: 11400000, guid: f78d437e38383420d97d9636da8c6196, type: 2}
   _detectionRadius:
   - 0

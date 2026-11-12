@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 2388574476616271373}
   - component: {fileID: 5179632407321166798}
   - component: {fileID: 1358858535039751544}
-  - component: {fileID: 1206830364399190678}
   m_Layer: 6
   m_Name: Narwhal
   m_TagString: Untagged
@@ -152,6 +151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Fish
   Mode: 0
+  IsCatchable: 1
   _fishData: {fileID: 11400000, guid: 5ceb1ce98d1db466999fc8e5f957b7b5, type: 2}
   _detectionRadius:
   - 30
@@ -189,19 +189,6 @@ MonoBehaviour:
   _noseMount: {fileID: 5372373389988319462}
   _noseSpeed: 5
   _shootCooldown: 4
---- !u!114 &1206830364399190678
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1471828758021267872}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1fef645aaeb223a41a006f4e4634b9f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FishNetHandler
-  IsCatchable: 1
 --- !u!1 &6319335298407389286
 GameObject:
   m_ObjectHideFlags: 0

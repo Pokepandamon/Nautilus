@@ -1375,7 +1375,6 @@ GameObject:
   - component: {fileID: 8867895966062566415}
   - component: {fileID: 6472846208695436093}
   - component: {fileID: 8694023196906155063}
-  - component: {fileID: 1796652517859166905}
   - component: {fileID: 7217591696235997326}
   - component: {fileID: 3214106063331790855}
   m_Layer: 6
@@ -1445,6 +1444,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Fish
   Mode: 0
+  IsCatchable: 1
   _fishData: {fileID: 11400000, guid: b3c02f433c326475bacb9a9769be4ec4, type: 2}
   _detectionRadius:
   - 30
@@ -1464,19 +1464,6 @@ MonoBehaviour:
   - 0
   _subUpgrades: {fileID: 11400000, guid: 5db957ce134242d4a8db7523336e114e, type: 2}
   _debugFlags: {fileID: 11400000, guid: bb70b872d8c4c0142b160ad4da45c50c, type: 2}
---- !u!114 &1796652517859166905
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9038938966687722353}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1fef645aaeb223a41a006f4e4634b9f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FishNetHandler
-  IsCatchable: 1
 --- !u!136 &7217591696235997326
 CapsuleCollider:
   m_ObjectHideFlags: 0
