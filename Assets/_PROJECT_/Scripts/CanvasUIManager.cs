@@ -53,12 +53,16 @@ public class CanvasUIManager : MonoBehaviour {
     }
 
     public void ResumeGame(){
+		Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         _isPaused = false; 
         _pauseMenu.SetActive(false);
         Time.timeScale = 1f;
     }
 
     public void PauseGame(){
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         _isPaused = true; 
         _pauseMenu.SetActive(true);
         Time.timeScale = 0f;
