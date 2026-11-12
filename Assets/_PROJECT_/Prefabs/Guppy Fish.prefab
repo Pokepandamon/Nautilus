@@ -53,8 +53,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1578256116088761458, guid: 1ab256e20ecc24dc49bf668999b2dc95, type: 3}
-      propertyPath: _detectionRadius.Array.size
-      value: 7
+      propertyPath: _maxRoamDistance
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 3162295165626748234, guid: 1ab256e20ecc24dc49bf668999b2dc95, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -62,7 +62,15 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 75b200e60edf543e6a2ed697019bf76f, type: 2}
     - target: {fileID: 3501441921965443609, guid: 1ab256e20ecc24dc49bf668999b2dc95, type: 3}
       propertyPath: _speed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3501441921965443609, guid: 1ab256e20ecc24dc49bf668999b2dc95, type: 3}
+      propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3501441921965443609, guid: 1ab256e20ecc24dc49bf668999b2dc95, type: 3}
+      propertyPath: _rotationOffset.y
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 4089908369081444116, guid: 1ab256e20ecc24dc49bf668999b2dc95, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'

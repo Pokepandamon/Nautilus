@@ -18,6 +18,7 @@ public class Fish : MonoBehaviour
     [SerializeField] private FishData _fishData;
     [SerializeField] private float[] _detectionRadius = { 0, 0, 0, 0, 0, 0, 0 };
     [SerializeField] private float[] _harpoonDetectionRadius = { 0, 0, 0, 0, 0, 0, 0 };
+    [SerializeField] private float _maxRoamDistance = 10f;
     [SerializeField] private SubUpgrades _subUpgrades;
     [SerializeField] private DebugFlags _debugFlags;
 
@@ -238,11 +239,12 @@ public class Fish : MonoBehaviour
     // random but sends you towards initial position over time
     private Vector3 GetAlmostRandomDirection()
     {
-        Vector3 randomDir = UnityEngine.Random.insideUnitSphere * 10f;
+        // TODO: make good
+        Vector3 randomDir = UnityEngine.Random.insideUnitSphere * _maxRoamDistance;
 
         // bias towards initial position
         Vector3 toInitial = (_initialPosition - transform.position).normalized;
-        randomDir += toInitial * 5f;
+        randomDir += toInitial * UnityEngine.Random.Range(0f, _maxRoamDistance);
 
         return transform.position + randomDir;
     }
