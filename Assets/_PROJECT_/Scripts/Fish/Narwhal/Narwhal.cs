@@ -42,7 +42,7 @@ public class Narwhal : MonoBehaviour
 
     private void Update()
     {
-        if (_submarine == null || _agent.NavVolumeSpace == null)
+        if (_fish.Mode != FishMode.Custom || _submarine == null || _agent.NavVolumeSpace == null)
             return;
 
         _pathTimer += Time.deltaTime;
@@ -71,6 +71,7 @@ public class Narwhal : MonoBehaviour
 
     private void OnSubmarineDetected(GameObject submarine)
     {
+        _fish.Mode = FishMode.Custom;
         _submarine = submarine;
         _pathTimer = 0f;
         _hasRequestedPath = false;
@@ -81,6 +82,7 @@ public class Narwhal : MonoBehaviour
 
     private void OnSubmarineLost()
     {
+        _fish.Mode = FishMode.Roaming;
         _submarine = null;
         _hasRequestedPath = false;
     }
