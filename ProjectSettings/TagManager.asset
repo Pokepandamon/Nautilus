@@ -8,6 +8,7 @@ TagManager:
   - Submarine
   - Harpoon
   - Hurts
+  - Interactable
   layers:
   - Default
   - TransparentFX
