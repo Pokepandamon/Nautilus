@@ -1395,6 +1395,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: f1b41f1ad1274464ba2ec39ec9113ed1, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: edb3cf31a40cbd547afc0ddcab4ba4f4, type: 2}
     - target: {fileID: 919132149155446097, guid: f1b41f1ad1274464ba2ec39ec9113ed1, type: 3}
       propertyPath: m_Name
       value: BarnacleWall
@@ -1904,6 +1908,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 3f77d881029481f4f870555aaf9430c3, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 7f4f88e38068da149b140a61e83191f2, type: 2}
     - target: {fileID: 919132149155446097, guid: 3f77d881029481f4f870555aaf9430c3, type: 3}
       propertyPath: m_Name
       value: BarnacleMouth (1)
@@ -2409,6 +2417,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 3f77d881029481f4f870555aaf9430c3, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 7f4f88e38068da149b140a61e83191f2, type: 2}
     - target: {fileID: 919132149155446097, guid: 3f77d881029481f4f870555aaf9430c3, type: 3}
       propertyPath: m_Name
       value: BarnacleMouth (1)
