@@ -48,16 +48,12 @@ public class Clam : MonoBehaviour
 
     private void OnEnable()
     {
-        _fish.DetectedSubmarine += OnDetectedSubmarine;
-        _fish.LostSubmarine += OnLostSubmarine;
         _fish.DetectedHarpoon += OnDetectedHarpoon;
         _fish.LostHarpoon += OnLostHarpoon;
     }
 
     private void OnDisable()
     {
-        _fish.DetectedSubmarine -= OnDetectedSubmarine;
-        _fish.LostSubmarine -= OnLostSubmarine;
         _fish.DetectedHarpoon -= OnDetectedHarpoon;
         _fish.LostHarpoon -= OnLostHarpoon;
     }
@@ -80,6 +76,24 @@ public class Clam : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (_fish.IsSubmarineDetected || _fish.IsHarpoonDetected)
+        {
+            if (_shellState != ShellState.Closed)
+            {
+                _shellState = ShellState.Closing;
+            }
+        }
+        else
+        {
+            if (_shellState != ShellState.Open)
+            {
+                _shellState = ShellState.Opening;
+            }
+        }
+    }
+
     private void LateUpdate()
     {
         // I don't know why but it keeps wanting to move when the sub gets too close
@@ -89,39 +103,13 @@ public class Clam : MonoBehaviour
     // Public Methods
 
     // Private Methods
-    private void OnDetectedSubmarine(GameObject submarine)
+    private void OnDetectedHarpoon(GameObject harpoon)
     {
-        if (_shellState != ShellState.Closed)
-        {
-            _shellState = ShellState.Closing;
-        }
-    }
-
-    private void OnLostSubmarine()
-    {
-        if (_shellState != ShellState.Open)
-        {
-            _shellState = ShellState.Opening;
-        }
-    }
-
-    private void OnDetectedHarpoon(GameObject submarine)
-    {
-        if (_shellState != ShellState.Closed)
-        {
-            _shellState = ShellState.Closing;
-        }
-
         _shellSpeedModifier = 2;
     }
 
     private void OnLostHarpoon()
     {
-        if (_shellState != ShellState.Open)
-        {
-            _shellState = ShellState.Opening;
-        }
-
         _shellSpeedModifier = 1;
     }
 

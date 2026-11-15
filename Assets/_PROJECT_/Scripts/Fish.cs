@@ -29,13 +29,13 @@ public class Fish : MonoBehaviour
     private bool _wasKinematic;
     private Vector3 _lastDestination = Vector3.positiveInfinity;
     private bool _hasDestination = false;
-    private bool _isSubmarineCurrentlyDetected = false;
-    private bool _isHarpoonCurrentlyDetected = false;
     private Vector3 _initialPosition;
 
     // Properties
     public FishData FishData => _fishData;
     public bool IsHooked { get; private set; }
+    public bool IsSubmarineDetected { get; private set; } = false;
+    public bool IsHarpoonDetected { get; private set; } = false;
 
     // Events / Delegates
     public event Action DestinationReached;
@@ -173,7 +173,7 @@ public class Fish : MonoBehaviour
 
         if (_rb != null) _rb.isKinematic = _wasKinematic;
 
-        _isSubmarineCurrentlyDetected = false; // re-detect cleanly after release
+        IsSubmarineDetected = false; // re-detect cleanly after release
         _agent.enabled = true;
     }
 
@@ -205,15 +205,15 @@ public class Fish : MonoBehaviour
 
         if (Vector3.Magnitude(SubmarineMovement.Instance.transform.position - transform.position) <= radius)
         {
-            if (!_isSubmarineCurrentlyDetected)
+            if (!IsSubmarineDetected)
             {
-                _isSubmarineCurrentlyDetected = true;
+                IsSubmarineDetected = true;
                 DetectedSubmarine?.Invoke(SubmarineMovement.Instance.gameObject);
             }
         }
-        else if (_isSubmarineCurrentlyDetected)
+        else if (IsSubmarineDetected)
         {
-            _isSubmarineCurrentlyDetected = false;
+            IsSubmarineDetected = false;
             LostSubmarine?.Invoke();
         }
     }
@@ -222,9 +222,9 @@ public class Fish : MonoBehaviour
     {
         if (SubmarineMovement.Instance.GetHarpoon() == null)
         {
-            if (_isHarpoonCurrentlyDetected)
+            if (IsHarpoonDetected)
             {
-                _isHarpoonCurrentlyDetected = false;
+                IsHarpoonDetected = false;
                 LostHarpoon?.Invoke();
             }
 
@@ -234,15 +234,15 @@ public class Fish : MonoBehaviour
         if (Vector3.Magnitude(SubmarineMovement.Instance.GetHarpoon().transform.position - transform.position) <=
             GetHarpoonDetectionRadius())
         {
-            if (!_isHarpoonCurrentlyDetected)
+            if (!IsHarpoonDetected)
             {
-                _isHarpoonCurrentlyDetected = true;
+                IsHarpoonDetected = true;
                 DetectedHarpoon?.Invoke(SubmarineMovement.Instance.GetHarpoon());
             }
         }
-        else if (_isHarpoonCurrentlyDetected)
+        else if (IsHarpoonDetected)
         {
-            _isHarpoonCurrentlyDetected = false;
+            IsHarpoonDetected = false;
             LostHarpoon?.Invoke();
         }
     }
