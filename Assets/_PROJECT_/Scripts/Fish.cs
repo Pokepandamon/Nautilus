@@ -202,30 +202,16 @@ public class Fish : MonoBehaviour
     {
         float radius = GetDetectionRadius();
 
-        // TODO: look into using layers and LayerMask.GetMask("Submarine")
-        // might speed up check?
-        /*Collider[] colliders = Physics.OverlapSphere(transform.position, radius);
-        foreach (Collider collider in colliders)
-        {
-            if (collider.CompareTag("Submarine"))
-            {
-                if (!_isSubmarineCurrentlyDetected)
-                {
-                    _isSubmarineCurrentlyDetected = true;
-                    DetectedSubmarine?.Invoke(collider.gameObject);
-                }
 
-                return;
-            }
-        }*/
         if (Vector3.Magnitude(SubmarineMovement.Instance.transform.position - transform.position) <= radius)
         {
-            _isSubmarineCurrentlyDetected = true;
-            DetectedSubmarine?.Invoke(SubmarineMovement.Instance.gameObject);
-            return;
+            if (!_isSubmarineCurrentlyDetected)
+            {
+                _isSubmarineCurrentlyDetected = true;
+                DetectedSubmarine?.Invoke(SubmarineMovement.Instance.gameObject);
+            }
         }
-
-        if (_isSubmarineCurrentlyDetected)
+        else if (_isSubmarineCurrentlyDetected)
         {
             _isSubmarineCurrentlyDetected = false;
             LostSubmarine?.Invoke();
@@ -236,20 +222,25 @@ public class Fish : MonoBehaviour
     {
         if (SubmarineMovement.Instance.GetHarpoon() == null)
         {
-            _isHarpoonCurrentlyDetected = false;
-            LostHarpoon?.Invoke();
+            if (_isHarpoonCurrentlyDetected)
+            {
+                _isHarpoonCurrentlyDetected = false;
+                LostHarpoon?.Invoke();
+            }
+
             return;
         }
 
         if (Vector3.Magnitude(SubmarineMovement.Instance.GetHarpoon().transform.position - transform.position) <=
             GetHarpoonDetectionRadius())
         {
-            _isHarpoonCurrentlyDetected = false;
-            DetectedHarpoon?.Invoke(SubmarineMovement.Instance.GetHarpoon());
-            return;
+            if (!_isHarpoonCurrentlyDetected)
+            {
+                _isHarpoonCurrentlyDetected = true;
+                DetectedHarpoon?.Invoke(SubmarineMovement.Instance.GetHarpoon());
+            }
         }
-
-        if (_isHarpoonCurrentlyDetected)
+        else if (_isHarpoonCurrentlyDetected)
         {
             _isHarpoonCurrentlyDetected = false;
             LostHarpoon?.Invoke();
