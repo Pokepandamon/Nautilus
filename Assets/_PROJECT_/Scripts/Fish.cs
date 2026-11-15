@@ -29,13 +29,13 @@ public class Fish : MonoBehaviour
     private bool _wasKinematic;
     private Vector3 _lastDestination = Vector3.positiveInfinity;
     private bool _hasDestination = false;
-    private bool _isSubmarineCurrentlyDetected = false;
-    private bool _isHarpoonCurrentlyDetected = false;
     private Vector3 _initialPosition;
 
     // Properties
     public FishData FishData => _fishData;
     public bool IsHooked { get; private set; }
+    public bool IsSubmarineDetected { get; private set; } = false;
+    public bool IsHarpoonDetected { get; private set; } = false;
 
     // Events / Delegates
     public event Action DestinationReached;
@@ -173,7 +173,7 @@ public class Fish : MonoBehaviour
 
         if (_rb != null) _rb.isKinematic = _wasKinematic;
 
-        _isSubmarineCurrentlyDetected = false; // re-detect cleanly after release
+        IsSubmarineDetected = false; // re-detect cleanly after release
         _agent.enabled = true;
     }
 
@@ -202,32 +202,18 @@ public class Fish : MonoBehaviour
     {
         float radius = GetDetectionRadius();
 
-        // TODO: look into using layers and LayerMask.GetMask("Submarine")
-        // might speed up check?
-        /*Collider[] colliders = Physics.OverlapSphere(transform.position, radius);
-        foreach (Collider collider in colliders)
-        {
-            if (collider.CompareTag("Submarine"))
-            {
-                if (!_isSubmarineCurrentlyDetected)
-                {
-                    _isSubmarineCurrentlyDetected = true;
-                    DetectedSubmarine?.Invoke(collider.gameObject);
-                }
 
-                return;
-            }
-        }*/
         if (Vector3.Magnitude(SubmarineMovement.Instance.transform.position - transform.position) <= radius)
         {
-            _isSubmarineCurrentlyDetected = true;
-            DetectedSubmarine?.Invoke(SubmarineMovement.Instance.gameObject);
-            return;
+            if (!IsSubmarineDetected)
+            {
+                IsSubmarineDetected = true;
+                DetectedSubmarine?.Invoke(SubmarineMovement.Instance.gameObject);
+            }
         }
-
-        if (_isSubmarineCurrentlyDetected)
+        else if (IsSubmarineDetected)
         {
-            _isSubmarineCurrentlyDetected = false;
+            IsSubmarineDetected = false;
             LostSubmarine?.Invoke();
         }
     }
@@ -236,22 +222,27 @@ public class Fish : MonoBehaviour
     {
         if (SubmarineMovement.Instance.GetHarpoon() == null)
         {
-            _isHarpoonCurrentlyDetected = false;
-            LostHarpoon?.Invoke();
+            if (IsHarpoonDetected)
+            {
+                IsHarpoonDetected = false;
+                LostHarpoon?.Invoke();
+            }
+
             return;
         }
 
         if (Vector3.Magnitude(SubmarineMovement.Instance.GetHarpoon().transform.position - transform.position) <=
             GetHarpoonDetectionRadius())
         {
-            _isHarpoonCurrentlyDetected = false;
-            DetectedHarpoon?.Invoke(SubmarineMovement.Instance.GetHarpoon());
-            return;
+            if (!IsHarpoonDetected)
+            {
+                IsHarpoonDetected = true;
+                DetectedHarpoon?.Invoke(SubmarineMovement.Instance.GetHarpoon());
+            }
         }
-
-        if (_isHarpoonCurrentlyDetected)
+        else if (IsHarpoonDetected)
         {
-            _isHarpoonCurrentlyDetected = false;
+            IsHarpoonDetected = false;
             LostHarpoon?.Invoke();
         }
     }
