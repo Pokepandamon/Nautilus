@@ -70,7 +70,7 @@ public class Fish : MonoBehaviour
         if (_hasDestination && Vector3.Distance(transform.position, _lastDestination) < 1f)
         {
             _hasDestination = false;
-            DestinationReached?.Invoke(); // TODO: only invoke if patrolling mode
+            DestinationReached?.Invoke();
         }
 
         if (Mode == FishMode.Roaming)

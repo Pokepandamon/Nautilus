@@ -331,7 +331,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NavVolume.NavVolumeAgent
   <AgentType>k__BackingField: {fileID: 11400000, guid: 3443e49ddce354edc84bae0ee399dd4e, type: 2}
   _speed: 4
-  _angularSpeed: 45
+  _angularSpeed: 90
   _rotationOffset: {x: 0, y: 0, z: 0}
   _freezeRotationX: 0
   _freezeRotationY: 0
