@@ -129,7 +129,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NavVolume.NavVolumeAgent
   <AgentType>k__BackingField: {fileID: 11400000, guid: 3443e49ddce354edc84bae0ee399dd4e, type: 2}
   _speed: 1
-  _angularSpeed: 360
+  _angularSpeed: 90
   _rotationOffset: {x: 0, y: 0, z: 0}
   _freezeRotationX: 0
   _freezeRotationY: 0
@@ -149,6 +149,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Fish
   Mode: 1
   IsCatchable: 1
+  AutoCollectInNet: 1
   _fishData: {fileID: 11400000, guid: 94b46f7e0ae5949c8bf90e0e4a71f609, type: 2}
   _detectionRadius:
   - 20
@@ -166,6 +167,7 @@ MonoBehaviour:
   - 4
   - 0
   - 0
+  _maxRoamDistance: 10
   _subUpgrades: {fileID: 11400000, guid: 5db957ce134242d4a8db7523336e114e, type: 2}
   _debugFlags: {fileID: 11400000, guid: bb70b872d8c4c0142b160ad4da45c50c, type: 2}
 --- !u!114 &-6486654496648789038

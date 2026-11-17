@@ -54,17 +54,14 @@ public class Fish : MonoBehaviour
         _initialPosition = transform.position;
     }
 
-    private void Start()
-    {
-        if (_agent.NavVolumeSpace == null || !_agent.NavVolumeSpace.IsReady)
-        {
-            Debug.LogError("Fish requires a NavVolumeSpace. Disabling...");
-            enabled = false;
-        }
-    }
-
     private void Update()
     {
+        if (_agent.NavVolumeSpace == null)
+        {
+            Debug.LogError($"Fish \"{name}\" requires a NavVolumeSpace. Disabling...");
+            enabled = false;
+        }
+        
         if (IsHooked) return; // frozen: no detection, no destination events
 
         CheckForSubmarine();
@@ -73,7 +70,7 @@ public class Fish : MonoBehaviour
         if (_hasDestination && Vector3.Distance(transform.position, _lastDestination) < 1f)
         {
             _hasDestination = false;
-            DestinationReached?.Invoke(); // TODO: only invoke if patrolling mode
+            DestinationReached?.Invoke();
         }
 
         if (Mode == FishMode.Roaming)
