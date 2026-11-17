@@ -112,8 +112,7 @@ public class Fish : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (Application.isPlaying && Mode == FishMode.Roaming && !IsHooked &&
-            _attemptingRoamingDestination != Vector3.positiveInfinity)
+        if (Mode == FishMode.Roaming && !IsHooked && _attemptingRoamingDestination != Vector3.positiveInfinity)
         {
             Gizmos.color = Color.yellow;
             Gizmos.DrawLine(transform.position, _attemptingRoamingDestination);
