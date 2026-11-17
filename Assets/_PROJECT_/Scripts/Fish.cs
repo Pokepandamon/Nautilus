@@ -60,6 +60,7 @@ public class Fish : MonoBehaviour
         {
             Debug.LogError($"Fish \"{name}\" requires a NavVolumeSpace. Disabling...");
             enabled = false;
+            return;
         }
         
         if (IsHooked) return; // frozen: no detection, no destination events
@@ -75,9 +76,9 @@ public class Fish : MonoBehaviour
 
         if (Mode == FishMode.Roaming)
         {
-            int tryCount = 0;
+            const int maxRoamAttempts = 5;
 
-            while (!_hasDestination)
+            for (int tryCount = 0; tryCount < maxRoamAttempts && !_hasDestination; tryCount++)
             {
                 Vector3 destination = GetAlmostRandomDestination();
 
@@ -85,9 +86,7 @@ public class Fish : MonoBehaviour
                 if (Physics.Raycast(transform.position, destination - transform.position, out var hitInfo,
                         Vector3.Distance(transform.position, destination)))
                 {
-                    tryCount++;
-
-                    if (tryCount >= 5)
+                    if (tryCount == maxRoamAttempts - 1)
                     {
                         destination = Vector3.Lerp(transform.position, hitInfo.point, 0.8f);
                     }
@@ -102,7 +101,7 @@ public class Fish : MonoBehaviour
 
                 if (!success)
                 {
-                    Debug.Log("failed to set destination while roaming");
+                    continue;
                 }
             }
         }
