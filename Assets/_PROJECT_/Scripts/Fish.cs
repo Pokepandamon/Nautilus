@@ -28,6 +28,7 @@ public class Fish : MonoBehaviour
     private Rigidbody _rb;
     private bool _wasKinematic;
     private Vector3 _lastDestination = Vector3.positiveInfinity;
+    private Vector3 _attemptingRoamingDestination = Vector3.positiveInfinity;
     private bool _hasDestination = false;
     private Vector3 _initialPosition;
 
@@ -91,6 +92,7 @@ public class Fish : MonoBehaviour
                 }
 
                 bool success = SetDestination(destination);
+                _attemptingRoamingDestination = destination;
 
                 if (!success)
                 {
@@ -110,6 +112,13 @@ public class Fish : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        if (Mode == FishMode.Roaming && !IsHooked && _attemptingRoamingDestination != Vector3.positiveInfinity)
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawLine(transform.position, _attemptingRoamingDestination);
+            Gizmos.DrawWireSphere(_attemptingRoamingDestination, 0.5f);
+        }
+
         if (_debugFlags.ShowDetectionRadiusSpheres)
         {
             float radius = _detectionRadius[_subUpgrades.Stealth];
