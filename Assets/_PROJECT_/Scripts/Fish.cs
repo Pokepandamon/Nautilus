@@ -68,18 +68,29 @@ public class Fish : MonoBehaviour
 
         if (Mode == FishMode.Roaming)
         {
+            int tryCount = 0;
+
             while (!_hasDestination)
             {
-                Vector3 randomDirection = GetAlmostRandomDirection();
+                Vector3 destination = GetAlmostRandomDestination();
 
                 // retry if raycast goes through ground
-                if (Physics.Raycast(transform.position, randomDirection - transform.position, out _,
-                        Vector3.Distance(transform.position, randomDirection)))
+                if (Physics.Raycast(transform.position, destination - transform.position, out var hitInfo,
+                        Vector3.Distance(transform.position, destination)))
                 {
-                    continue;
+                    tryCount++;
+
+                    if (tryCount >= 5)
+                    {
+                        destination = Vector3.Lerp(transform.position, hitInfo.point, 0.8f);
+                    }
+                    else
+                    {
+                        continue;
+                    }
                 }
 
-                bool success = SetDestination(randomDirection);
+                bool success = SetDestination(destination);
 
                 if (!success)
                 {
@@ -248,9 +259,8 @@ public class Fish : MonoBehaviour
     }
 
     // random but sends you towards initial position over time
-    private Vector3 GetAlmostRandomDirection()
+    private Vector3 GetAlmostRandomDestination()
     {
-        // TODO: make good
         Vector3 randomDir = UnityEngine.Random.insideUnitSphere * _maxRoamDistance;
 
         // bias towards initial position
