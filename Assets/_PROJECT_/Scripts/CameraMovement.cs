@@ -1,8 +1,11 @@
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.GlobalIllumination;
 using UnityEngine.InputSystem;
+using RenderSettings = UnityEngine.RenderSettings;
 
 public class CameraMovement : MonoBehaviour
 {
@@ -10,9 +13,17 @@ public class CameraMovement : MonoBehaviour
     [SerializeField] private float _distance;
     [SerializeField] private Transform _playerTransform;
     [SerializeField] private float _sensitivity;
+    [SerializeField] private Light _light;
+    [SerializeField] private float _maxLight;
+    [SerializeField] private float _minLight;
+    [SerializeField] private float _maxHeight;
+    [SerializeField] private float _minHeight;
+    
     private float _theta = 180;
     private float _phi = 0;
     private InputAction _mouseDelta;
+    private bool _lightInitialized;
+    private Camera _camera;
     
     // Properties
     
@@ -23,6 +34,8 @@ public class CameraMovement : MonoBehaviour
     {
         _mouseDelta = InputSystem.actions.FindAction("Look");
         transform.position = _distance * new Vector3(Mathf.Cos(_theta), Mathf.Sin(_phi), Mathf.Sin(_theta));
+        _lightInitialized = _light != null;
+        _camera = GetComponent<Camera>();
     }
     
     private void Update()
@@ -32,8 +45,14 @@ public class CameraMovement : MonoBehaviour
         //Debug.Log("theta: " + _theta + " | phi: " + _phi);
         transform.position = _playerTransform.position + _distance * new Vector3(Mathf.Cos(_theta), Mathf.Sin(_phi), Mathf.Sin(_theta));
         transform.LookAt(_playerTransform);
+        float[] currentFogColor = SubmarineMovement.Instance.GetFogColor();
+        _camera.backgroundColor = new Color(currentFogColor[0], currentFogColor[1], currentFogColor[2]);
+        if (_lightInitialized)
+        {
+            _light.intensity = Mathf.Lerp(_minLight, _maxLight, (_playerTransform.position.y - _minHeight) / (_maxHeight - _minLight));
+        }
     }
-    
+
     // Public Methods
     
     // Private Methods

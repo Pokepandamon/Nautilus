@@ -16,6 +16,13 @@ public class SubmarineMovement : MonoBehaviour
     [SerializeField] private Transform _harpoonSpawn;
     [SerializeField] private SubUpgrades _subUpgrades;
     [SerializeField] private float[] _speedUpgrades;
+    
+    // 0: Kelp
+    // 1: Sandy Dunes
+    // 2: Barnacle Gardens
+    [SerializeField] private float[] _fogValues;
+    [SerializeField] private Color[] _fogColors;
+    [SerializeField] private float _fogAdjustmentTime;
 
     private Rigidbody _rigidbody;
     private InputAction _linearMovementAction;
@@ -32,6 +39,13 @@ public class SubmarineMovement : MonoBehaviour
     public static SubmarineMovement Instance;
 
     private SubmarineHealth _submarineHealth;
+
+    private float _currentFogDensity;
+    private float _targetFogDensity;
+    private float _currentFogDensityDelta;
+    private float[] _currentFogColor = new float[3];
+    private Color _targetFogColor;
+    private float[] _currentFogColorDelta = new float[3];
 
     // Properties
 
@@ -78,6 +92,16 @@ public class SubmarineMovement : MonoBehaviour
         Cursor.visible = false;
     }
 
+    private void Start()
+    {
+        _currentFogDensity = _fogValues[0];
+        _targetFogDensity = _fogValues[0];
+        _currentFogColor[0] = _fogColors[0].r;
+        _currentFogColor[1] = _fogColors[0].g;
+        _currentFogColor[2] = _fogColors[0].b;
+        _targetFogColor = _fogColors[0];
+    }
+
     private void Update()
     {
         _linearMovement = _linearMovementAction.ReadValue<Vector2>();
@@ -106,6 +130,24 @@ public class SubmarineMovement : MonoBehaviour
 
             _currentHarpoonSource.transform.SetParent(_harpoonSpawn);
         }
+
+        _currentFogDensity = _targetFogDensity - _currentFogDensity > 0 ? Mathf.Clamp(_currentFogDensity + _currentFogDensityDelta * Time.deltaTime, _currentFogDensity, _targetFogDensity) : Mathf.Clamp(_currentFogDensity - _currentFogDensityDelta * Time.deltaTime, _targetFogDensity, _currentFogDensity);
+        _currentFogColor[0] = _targetFogColor.r - _currentFogColor[0] > 0
+            ? Mathf.Clamp(_currentFogColor[0] + _currentFogColorDelta[0] * Time.deltaTime, _currentFogColor[0], _targetFogColor.r)
+            : Mathf.Clamp(_currentFogColor[0] - _currentFogColorDelta[0] * Time.deltaTime, _targetFogColor.r, _currentFogColor[0]);
+        _currentFogColor[1] = _targetFogColor.g - _currentFogColor[1] > 0
+            ? Mathf.Clamp(_currentFogColor[1] + _currentFogColorDelta[1] * Time.deltaTime, _currentFogColor[1], _targetFogColor.g)
+            : Mathf.Clamp(_currentFogColor[1] - _currentFogColorDelta[1] * Time.deltaTime, _targetFogColor.g, _currentFogColor[1]);
+        _currentFogColor[2] = _targetFogColor.b - _currentFogColor[2] > 0
+                ? Mathf.Clamp(_currentFogColor[2] + _currentFogColorDelta[2] * Time.deltaTime, _currentFogColor[2], _targetFogColor.b)
+                : Mathf.Clamp(_currentFogColor[2] - _currentFogColorDelta[2] * Time.deltaTime, _targetFogColor.b, _currentFogColor[2]);
+        RenderSettings.fogDensity = _currentFogDensity;
+        Color newFogColor = new Color(_currentFogColor[0], _currentFogColor[1], _currentFogColor[2]);
+        RenderSettings.fogColor = newFogColor;
+        
+        // Debug.Log(_currentFogColor[0] + ", " + _currentFogColor[1] + ", "+ _currentFogColor[2]);
+        // Debug.Log(RenderSettings.fogDensity + " : " + _currentFogDensity);
+
     }
 
     private void FixedUpdate()
@@ -130,6 +172,38 @@ public class SubmarineMovement : MonoBehaviour
                 _submarineHealth.TakeDamage(1);
             }
     }
+    
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("KelpForest"))
+        {
+            Debug.Log("Entered the Kelp Forest");
+            _targetFogDensity = _fogValues[0];
+            _currentFogDensityDelta = Mathf.Abs(_targetFogDensity - _currentFogDensity) / _fogAdjustmentTime;
+            _targetFogColor = _fogColors[0];
+            _currentFogColorDelta[0] = Mathf.Abs(_targetFogColor.r - _currentFogColor[0]) / _fogAdjustmentTime;
+            _currentFogColorDelta[1] = Mathf.Abs(_targetFogColor.g - _currentFogColor[1]) / _fogAdjustmentTime;
+            _currentFogColorDelta[2] = Mathf.Abs(_targetFogColor.b - _currentFogColor[2]) / _fogAdjustmentTime;
+        }else if (other.CompareTag("SandyRocks"))
+        {
+            _targetFogDensity = _fogValues[1];
+            _currentFogDensityDelta = Mathf.Abs(_targetFogDensity - _currentFogDensity) / _fogAdjustmentTime;
+            _targetFogColor = _fogColors[1];
+            _currentFogColorDelta[0] = Mathf.Abs(_targetFogColor.r - _currentFogColor[0]) / _fogAdjustmentTime;
+            _currentFogColorDelta[1] = Mathf.Abs(_targetFogColor.g - _currentFogColor[1]) / _fogAdjustmentTime;
+            _currentFogColorDelta[2] = Mathf.Abs(_targetFogColor.b - _currentFogColor[2]) / _fogAdjustmentTime;
+            Debug.Log("Entered Sandy Rocks");
+        }else if (other.CompareTag("BarnacleGarden"))
+        {
+            _targetFogDensity = _fogValues[2];
+            _currentFogDensityDelta = Mathf.Abs(_targetFogDensity - _currentFogDensity) / _fogAdjustmentTime;
+            _targetFogColor = _fogColors[2];
+            _currentFogColorDelta[0] = Mathf.Abs(_targetFogColor.r - _currentFogColor[0]) / _fogAdjustmentTime;
+            _currentFogColorDelta[1] = Mathf.Abs(_targetFogColor.g - _currentFogColor[1]) / _fogAdjustmentTime;
+            _currentFogColorDelta[2] = Mathf.Abs(_targetFogColor.b - _currentFogColor[2]) / _fogAdjustmentTime;
+            Debug.Log("Entered the Barnacle Garden");
+        }
+    }
 
     private void OnDestroy()
     {
@@ -149,6 +223,11 @@ public class SubmarineMovement : MonoBehaviour
     public GameObject GetHarpoon()
     {
         return _currentHarpoon;
+    }
+
+    public float[] GetFogColor()
+    {
+        return _currentFogColor;
     }
 
     // Private Methods

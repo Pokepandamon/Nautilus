@@ -8,6 +8,9 @@ TagManager:
   - Submarine
   - Harpoon
   - Hurts
+  - BarnacleGarden
+  - SandyRocks
+  - KelpForest
   layers:
   - Default
   - TransparentFX
