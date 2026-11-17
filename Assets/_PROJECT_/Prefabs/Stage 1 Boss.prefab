@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 3458164495783176931}
   m_Layer: 6
   m_Name: Stage 1 Boss
-  m_TagString: Untagged
+  m_TagString: SB1Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -32,7 +32,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.00328, y: 1.00328, z: 3.3208568}
+  m_LocalScale: {x: 4, y: 4, z: 13.24}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7749506985540945469}
@@ -149,6 +149,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Fish
   Mode: 0
+  IsCatchable: 1
+  AutoCollectInNet: 1
   _fishData: {fileID: 0}
   _detectionRadius:
   - 0
@@ -158,6 +160,15 @@ MonoBehaviour:
   - 0
   - 0
   - 0
+  _harpoonDetectionRadius:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  _maxRoamDistance: 10
   _subUpgrades: {fileID: 11400000, guid: 5db957ce134242d4a8db7523336e114e, type: 2}
   _debugFlags: {fileID: 11400000, guid: bb70b872d8c4c0142b160ad4da45c50c, type: 2}
 --- !u!114 &3458164495783176931

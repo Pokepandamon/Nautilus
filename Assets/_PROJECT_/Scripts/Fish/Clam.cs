@@ -149,7 +149,8 @@ public class Clam : MonoBehaviour
                         Mathf.Clamp(
                             90f * ((Time.realtimeSinceStartup - _lastShellUpdate) /
                                    (_closingTime / _shellSpeedModifier)), 0f, _shellAngle);
-                    _topShell.transform.RotateAround(_hinge.position, Vector3.forward, -angleDelta);
+                    
+                    _topShell.transform.RotateAround(_hinge.position, transform.rotation * Vector3.forward, -angleDelta);
                     _shellAngle -= angleDelta;
                 }
             }
@@ -166,7 +167,7 @@ public class Clam : MonoBehaviour
                         Mathf.Clamp(
                             90f * ((Time.realtimeSinceStartup - _lastShellUpdate) /
                                    (_closingTime / _shellSpeedModifier)), 0f, 90f - _shellAngle);
-                    _topShell.transform.RotateAround(_hinge.position, Vector3.forward, angleDelta);
+                    _topShell.transform.RotateAround(_hinge.position, transform.rotation *Vector3.forward, angleDelta);
                     _shellAngle += angleDelta;
                 }
             }
