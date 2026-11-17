@@ -172,3 +172,6 @@ LightingData.asset     binary
 
 # Treat filenames containing "terrain" as binary, regardless of capitalization.
 *[Tt][Ee][Rr][Rr][Aa][Ii][Nn]* binary
+**/Terrain/** binary
+**/TerrainSplit/** binary
+*[Rr][Ee][Gg][Ii][Oo][Nn]* binary
