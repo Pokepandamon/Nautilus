@@ -151,7 +151,7 @@ MonoBehaviour:
   Mode: 0
   IsCatchable: 1
   AutoCollectInNet: 1
-  _fishData: {fileID: 0}
+  _fishData: {fileID: 11400000, guid: 48f5909d62dd66741993ea4f3c202f28, type: 2}
   _detectionRadius:
   - 0
   - 0
