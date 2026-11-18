@@ -24,6 +24,7 @@ public class CameraMovement : MonoBehaviour
     private InputAction _mouseDelta;
     private bool _lightInitialized;
     private Camera _camera;
+    private bool _paused;
     
     // Properties
     
@@ -32,6 +33,9 @@ public class CameraMovement : MonoBehaviour
     // Monobehaviour Methods (Awake, Start, Update, ...)
     private void Awake()
     {
+        _paused = false;
+        CanvasUIManager.OnPause += OnPause;
+        CanvasUIManager.OnResume += OnResume;
         _mouseDelta = InputSystem.actions.FindAction("Look");
         transform.position = _distance * new Vector3(Mathf.Cos(_theta), Mathf.Sin(_phi), Mathf.Sin(_theta));
         _lightInitialized = _light != null;
@@ -43,8 +47,13 @@ public class CameraMovement : MonoBehaviour
         _theta -= _mouseDelta.ReadValue<Vector2>().x * _sensitivity / 100;
         _phi = Mathf.Clamp(_phi - _mouseDelta.ReadValue<Vector2>().y * _sensitivity / 100, -Mathf.PI/2, Mathf.PI/2);
         //Debug.Log("theta: " + _theta + " | phi: " + _phi);
-        transform.position = _playerTransform.position + _distance * new Vector3(Mathf.Cos(_theta), Mathf.Sin(_phi), Mathf.Sin(_theta));
-        transform.LookAt(_playerTransform);
+        if (!_paused)
+        {
+            transform.position = _playerTransform.position +
+                                 _distance * new Vector3(Mathf.Cos(_theta), Mathf.Sin(_phi), Mathf.Sin(_theta));
+            transform.LookAt(_playerTransform);
+        }
+
         float[] currentFogColor = SubmarineMovement.Instance.GetFogColor();
         _camera.backgroundColor = new Color(currentFogColor[0], currentFogColor[1], currentFogColor[2]);
         if (_lightInitialized)
@@ -56,5 +65,14 @@ public class CameraMovement : MonoBehaviour
     // Public Methods
     
     // Private Methods
+    private void OnPause()
+    {
+        _paused = true;
+    }
+
+    private void OnResume()
+    {
+        _paused = false;
+    }
     
 }

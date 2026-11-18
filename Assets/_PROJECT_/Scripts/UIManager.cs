@@ -107,7 +107,7 @@ public class UIManager : MonoBehaviour
         _fishBagText = null;
         _gameOverGroup = null;
 
-        if (SceneManager.GetActiveScene().name != "UnderwaterEnv")
+        if (SceneManager.GetActiveScene().name != "Master Map")
         {
             return;
         }
