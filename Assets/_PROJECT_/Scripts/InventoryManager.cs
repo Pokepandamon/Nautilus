@@ -70,4 +70,29 @@ public class InventoryManager : MonoBehaviour
             VillageUIManager.instance.coinsText.text = "Coins: " + coins;
         }
     }
+
+    public int SellSpecificFish(FishData targetFish, int pricePerFish){
+        int fishCount = 0;
+        InventoryItem targetItem = null; //will make sure which fish we want
+
+        for(int i = 0; i < fishBag.Count; i++){
+            if(fishBag[i].fishData == targetFish){
+                targetItem = fishBag[i];
+                fishCount = fishBag[i].stackCount;
+                break;
+            }
+        }
+
+        if(fishCount > 0 && targetFish != null){
+            int totalEarnings = fishCount * pricePerFish;
+
+            fishBag.Remove(targetItem);
+            playerCoins += totalEarnings;
+            UpdateCoins(playerCoins);
+
+            OnInventoryChange?.Invoke();
+            return totalEarnings;
+        }
+        return 0;
+    }
 }
