@@ -2511,7 +2511,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1401718537}
+      - m_Target: {fileID: 1885921165}
         m_TargetAssemblyTypeName: NpcVillagers, Assembly-CSharp
         m_MethodName: SellWantedFish
         m_Mode: 1
@@ -4072,7 +4072,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1401718537}
+      - m_Target: {fileID: 647271742}
         m_TargetAssemblyTypeName: NpcVillagers, Assembly-CSharp
         m_MethodName: SellWantedFish
         m_Mode: 1
@@ -5035,7 +5035,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1401718537}
+      - m_Target: {fileID: 820763812}
         m_TargetAssemblyTypeName: NpcVillagers, Assembly-CSharp
         m_MethodName: SellWantedFish
         m_Mode: 1
@@ -8259,7 +8259,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1401718537}
+      - m_Target: {fileID: 1780318567}
         m_TargetAssemblyTypeName: NpcVillagers, Assembly-CSharp
         m_MethodName: SellWantedFish
         m_Mode: 1
@@ -9676,7 +9676,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1401718537}
+      - m_Target: {fileID: 1579439893}
         m_TargetAssemblyTypeName: NpcVillagers, Assembly-CSharp
         m_MethodName: SellWantedFish
         m_Mode: 1
@@ -11628,7 +11628,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1401718537}
+      - m_Target: {fileID: 210267885}
         m_TargetAssemblyTypeName: NpcVillagers, Assembly-CSharp
         m_MethodName: SellWantedFish
         m_Mode: 1
