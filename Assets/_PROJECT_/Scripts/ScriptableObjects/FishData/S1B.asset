@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da93aa89104514e5d8abd95219a12a69, type: 3}
   m_Name: S1B
   m_EditorClassIdentifier: Assembly-CSharp::FishData
-  fishName: 
-  baseSellPrice: 0
+  fishName: Stage1Boss
+  baseSellPrice: 100

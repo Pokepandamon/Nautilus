@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -10,6 +11,9 @@ public class CanvasUIManager : MonoBehaviour {
     [SerializeField] private GameObject _controlsPanel;
     [SerializeField] private GameObject _pauseMenu;
     private InputAction _pauseAction;
+
+    public static event Action OnPause;
+    public static event Action OnResume;
 
     private bool _isPaused = false;
 
@@ -53,6 +57,7 @@ public class CanvasUIManager : MonoBehaviour {
     }
 
     public void ResumeGame(){
+        OnResume?.Invoke();
 		Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         _isPaused = false; 
@@ -60,7 +65,9 @@ public class CanvasUIManager : MonoBehaviour {
         Time.timeScale = 1f;
     }
 
-    public void PauseGame(){
+    public void PauseGame()
+    {
+        OnPause?.Invoke();
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         _isPaused = true; 
