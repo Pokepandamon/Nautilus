@@ -1,3 +1,4 @@
+using System;
 using UnityEngine; 
 
 public class SubmarineHealth : MonoBehaviour
@@ -5,10 +6,19 @@ public class SubmarineHealth : MonoBehaviour
     [SerializeField] private int _maxHealth = 3;
     [SerializeField] private HealthBar _healthBar;
     [SerializeField] private GameObject _deathPanel;
+    
+    [SerializeField] private AudioClip _submarineHurt;
+    [SerializeField] private AudioClip _submarineBreak;
+    
+    private AudioSource _audioSource;
 
-    private int _currentSubHp; 
+    private int _currentSubHp;
 
-    private void Awake(){
+    public static event Action OnDeath;
+
+    private void Awake()
+    {
+        _audioSource = GetComponent<AudioSource>();
         _currentSubHp = _maxHealth; 
 
         if(_healthBar != null){
@@ -27,12 +37,20 @@ public class SubmarineHealth : MonoBehaviour
 
         if(_currentSubHp <= 0){
             Die();
+            _audioSource.PlayOneShot(_submarineBreak);
             Debug.Log("The submarine has sunk");
+        }
+        else
+        {
+            _audioSource.PlayOneShot(_submarineHurt);
         }
 
     }
     private void Die(){
         Time.timeScale = 0f;
+        OnDeath?.Invoke();
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         if(_deathPanel != null){
             _deathPanel.SetActive(true);
         }

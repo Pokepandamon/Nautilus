@@ -9,9 +9,11 @@ public class UpgradeShop : InteractableBase
     [SerializeField] private GameObject _upgradeShopPanel;
     private bool _isShopOpen = false;
     private InputAction _interactAction;
+    private bool _waitTillNextFrame;
 
     private void Awake()
     {
+        _waitTillNextFrame = false;
         _interactAction = InputSystem.actions.FindAction("Interact");
         if (_upgradeShopPanel != null)
         {
@@ -21,10 +23,11 @@ public class UpgradeShop : InteractableBase
     
     public void Update()
     {
-        if (_isShopOpen && _interactAction != null && _interactAction.WasPressedThisFrame())
+        if (_isShopOpen && _interactAction != null && _interactAction.WasPressedThisFrame() && !_waitTillNextFrame)
         {
             CloseShop();
         }
+        _waitTillNextFrame = false;
     }
 
     public override void Interact()
@@ -36,6 +39,7 @@ public class UpgradeShop : InteractableBase
     public void OpenShop()
     {
         if (_upgradeShopPanel == null) return;
+        _waitTillNextFrame = true;
 
         _isShopOpen = true;
         _upgradeShopPanel.SetActive(true);

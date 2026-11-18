@@ -74,4 +74,10 @@ public class CanvasUIManager : MonoBehaviour {
         _pauseMenu.SetActive(true);
         Time.timeScale = 0f;
     }
+
+    public void ReturnToVillage()
+    {
+        Time.timeScale = 1.0f;
+        SceneManager.LoadScene("Village_testing");
+    }
 }
