@@ -81,6 +81,23 @@ namespace NavVolume
         /// </summary>
         public NavVolumeSpace NavVolumeSpace => _navVolumeSpace;
 
+        /// <summary>
+        /// Maximum preferred movement turn rate in degrees per second. Zero disables the limit.
+        /// Local avoidance may override the preferred direction to avoid collisions.
+        /// </summary>
+        public float MovementTurnSpeed { get; set; }
+
+        /// <summary>
+        /// Waypoint look-ahead for curved movement, based on the minimum turning radius.
+        /// Roaming callers should request their next destination within this distance.
+        /// </summary>
+        public float MovementLookAheadDistance => MovementTurnSpeed > 0f
+            ? _speed / (MovementTurnSpeed * Mathf.Deg2Rad) * 1.25f
+            : 0f;
+
+        // Keep navigation intent separate from avoidance deflections, including vertical ones.
+        Vector3 _steeringDirection;
+
         const float _WAYPOINT_TOLERANCE = 0.1f;
 
         List<Vector3> _smoothedWaypoints = new();
@@ -151,6 +168,7 @@ namespace NavVolume
             }
 
             _avoidanceHandle = -1;
+            _steeringDirection = Vector3.zero;
         }
 
         void OnDestroy()
@@ -253,6 +271,12 @@ namespace NavVolume
                 return;
             }
 
+            if (MovementTurnSpeed > 0f)
+            {
+                AdvanceReachedWaypoints();
+                UpdateSteeringDirection(deltaTime);
+            }
+
             var velocity =
                 _isAvoidanceEnabled && _avoidanceHandle >= 0 && AvoidanceSimulation.Instance != null
                     ? MoveWithAvoidance(deltaTime)
@@ -274,12 +298,20 @@ namespace NavVolume
             }
 
             var target = _smoothedWaypoints[_currentWaypointIndex];
-            var toTarget = target - transform.position;
-
-            UpdateRotation(toTarget);
 
             var previousPosition = transform.position;
-            transform.position = Vector3.MoveTowards(previousPosition, target, _speed * deltaTime);
+            var velocity = ComputePreferredVelocity(deltaTime);
+            var nextPosition = previousPosition + velocity * deltaTime;
+
+            // A curved step can leave the straight, navigable path segment.
+            if (MovementTurnSpeed > 0f && _navVolumeSpace != null
+                && !_navVolumeSpace.IsSegmentNavigable(previousPosition, nextPosition))
+            {
+                return Vector3.zero;
+            }
+
+            UpdateRotation(velocity);
+            transform.position = nextPosition;
 
             if (Vector3.Distance(transform.position, target) < _WAYPOINT_TOLERANCE)
             {
@@ -335,9 +367,18 @@ namespace NavVolume
                 var tolerance = isLast
                     ? Mathf.Max(_WAYPOINT_TOLERANCE, radius * 0.5f)
                     : Mathf.Max(_WAYPOINT_TOLERANCE, radius);
+                tolerance = Mathf.Max(tolerance, MovementLookAheadDistance);
                 var target = _smoothedWaypoints[_currentWaypointIndex];
 
                 if (Vector3.Distance(transform.position, target) >= tolerance)
+                {
+                    break;
+                }
+
+                // Look ahead only when the next segment is clear; retain corners around geometry.
+                if (MovementTurnSpeed > 0f && !isLast && _navVolumeSpace != null
+                    && !_navVolumeSpace.IsSegmentNavigable(
+                        transform.position, _smoothedWaypoints[_currentWaypointIndex + 1]))
                 {
                     break;
                 }
@@ -350,8 +391,24 @@ namespace NavVolume
 
         #region Avoidance state exchange
 
+        void UpdateSteeringDirection(float deltaTime)
+        {
+            if (!HasActivePath)
+            {
+                return;
+            }
+
+            var direction = (_smoothedWaypoints[_currentWaypointIndex] - transform.position).normalized;
+            _steeringDirection = _steeringDirection.sqrMagnitude < _MIN_SPEED_SQ
+                ? direction
+                : Vector3.RotateTowards(
+                    _steeringDirection, direction, MovementTurnSpeed * Mathf.Deg2Rad * deltaTime, 0f
+                );
+        }
+
         /// <summary>
-        /// Velocity the agent would take if it were alone: straight toward the current waypoint, slowing down on the final approach so it does not orbit the goal.
+        /// Velocity the agent would take if it were alone. Curved movement keeps cruising speed
+        /// and advances waypoints using look-ahead instead of slowing down through every turn.
         /// </summary>
         Vector3 ComputePreferredVelocity(float deltaTime)
         {
@@ -369,7 +426,14 @@ namespace NavVolume
             }
 
             var desiredSpeed = Mathf.Min(_speed, distance / deltaTime);
-            return toTarget * (desiredSpeed / distance);
+            var direction = toTarget / distance;
+
+            if (MovementTurnSpeed > 0f && _steeringDirection.sqrMagnitude >= _MIN_SPEED_SQ)
+            {
+                direction = _steeringDirection;
+            }
+
+            return direction * desiredSpeed;
         }
 
         void SubmitAvoidanceState(Vector3 velocity, float deltaTime)

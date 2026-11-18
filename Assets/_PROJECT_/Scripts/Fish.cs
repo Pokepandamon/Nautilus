@@ -21,6 +21,7 @@ public class Fish : MonoBehaviour
     [SerializeField] private float[] _detectionRadius = { 0, 0, 0, 0, 0, 0, 0 };
     [SerializeField] private float[] _harpoonDetectionRadius = { 0, 0, 0, 0, 0, 0, 0 };
     [SerializeField] private float _maxRoamDistance = 10f;
+    [SerializeField] private float _roamTurnSpeed = 60f;
     [SerializeField] private SubUpgrades _subUpgrades;
     [SerializeField] private DebugFlags _debugFlags;
 
@@ -52,6 +53,7 @@ public class Fish : MonoBehaviour
         _agent = GetComponent<NavVolumeAgent>();
         _rb = GetComponent<Rigidbody>(); // may be null, that's fine
         _initialPosition = transform.position;
+        _agent.MovementTurnSpeed = Mode == FishMode.Roaming ? _roamTurnSpeed : 0f;
     }
 
     private void Start()
@@ -65,12 +67,25 @@ public class Fish : MonoBehaviour
 
     private void Update()
     {
+        if (_agent.NavVolumeSpace == null)
+        {
+            Debug.LogError($"Fish \"{name}\" requires a NavVolumeSpace. Disabling...");
+            enabled = false;
+            return;
+        }
+
+        _agent.MovementTurnSpeed = Mode == FishMode.Roaming ? _roamTurnSpeed : 0f;
+
         if (IsHooked) return; // frozen: no detection, no destination events
 
         CheckForSubmarine();
         CheckForHarpoon();
 
-        if (_hasDestination && Vector3.Distance(transform.position, _lastDestination) < 1f)
+        float arrivalDistance = Mode == FishMode.Roaming
+            ? Mathf.Max(1f, _agent.MovementLookAheadDistance)
+            : 1f;
+
+        if (_hasDestination && Vector3.Distance(transform.position, _lastDestination) < arrivalDistance)
         {
             _hasDestination = false;
             DestinationReached?.Invoke(); // TODO: only invoke if patrolling mode
