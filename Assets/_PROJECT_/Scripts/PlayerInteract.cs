@@ -30,33 +30,32 @@ public class PlayerInteract : MonoBehaviour
 
     void Update()
     {
+        if(_interactAction == null) return; 
 
-        if(_interactAction != null && _interactAction.WasPressedThisFrame()){
-            if(Time.timeScale == 0f){
-                NpcVillagers openShop = FindAnyObjectByType<NpcVillagers>();
-                if(openShop != null){
-                    openShop.CloseShop();
+        if(Time.timeScale == 0f){ // if shop is open then pressing E will close it 
+            if(_interactAction.WasPressedThisFrame()){
+                
+                Debug.Log("E was pressed closing shop");
+
+                if(NpcVillagers.currentShopOpen != null){
+                    Debug.Log("Shop closing");
+                    NpcVillagers.currentShopOpen.CloseShop();
                 }
-                return;
             }
 
-            CheckForInteractable();
-
-            if(_isLookingAtInteractable && _currentInteractable != null){
-                _currentInteractable.Interact();
-            }
-        }
-
-       if (Time.timeScale == 0f)
-        {
-            if (_interactPrompt != null && _interactPrompt.activeSelf)
-            {
+            if(_interactPrompt!= null){
                 _interactPrompt.SetActive(false);
             }
             return;
         }
 
         CheckForInteractable();
+
+        if(_interactAction.WasPressedThisFrame()){
+            if(_isLookingAtInteractable && _currentInteractable != null){
+                _currentInteractable.Interact();
+            }
+        }
     }
 
 

@@ -6,6 +6,8 @@ using UnityEngine.InputSystem;
 
 public class NpcVillagers : InteractableBase
 {
+    public static NpcVillagers currentShopOpen {get; private set;} // since we have multiple villagers this will be useful to know which shop is open
+
     [SerializeField] private string villagerName;
 
     [SerializeField] private GameObject villagerShopPanel; 
@@ -20,7 +22,6 @@ public class NpcVillagers : InteractableBase
     private AudioSource _audioSource;
     private Animator _animator; 
     private bool _isShopOpen = false;
-    private InputAction _interactAction;
 
     private void Awake(){
         _audioSource = GetComponent<AudioSource>();
@@ -32,11 +33,6 @@ public class NpcVillagers : InteractableBase
         }
     }
 
-    private void Update(){
-        if(_isShopOpen && _interactAction != null && _interactAction.WasPressedThisFrame()){
-            CloseShop();
-        }
-    }
 
     public override void Interact(){
         if(_isShopOpen) return; 
@@ -46,6 +42,8 @@ public class NpcVillagers : InteractableBase
 
     private void OpenShop(){
         _isShopOpen = true; 
+
+        currentShopOpen = this;
 
         if(villagerShopPanel != null){
             villagerShopPanel.SetActive(true);
@@ -62,7 +60,8 @@ public class NpcVillagers : InteractableBase
     }
 
     public void SellWantedFish(){
-        if(fishWanted == null || InventoryManager.instance == null) return;
+        if(fishWanted == null || InventoryManager.instance == null) {
+            return;}
 
         
         int totalEarnings = InventoryManager.instance.SellSpecificFish(fishWanted, bonusSellPrice);
@@ -88,6 +87,8 @@ public class NpcVillagers : InteractableBase
         if(villagerShopPanel != null){
             villagerShopPanel.SetActive(false);
         }
+
+        currentShopOpen = null;
 
         PlayAudio(exitClip);
 
