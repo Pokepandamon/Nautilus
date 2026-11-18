@@ -22,12 +22,14 @@ public class Tuna : MonoBehaviour
     {
         _fish.DetectedSubmarine += SwimAway;
         _fish.LostSubmarine += StopSwimming;
+        _fish.DestinationReached += HandleDestinationReached;
     }
 
     private void OnDisable()
     {
         _fish.DetectedSubmarine -= SwimAway;
         _fish.LostSubmarine -= StopSwimming;
+        _fish.DestinationReached -= HandleDestinationReached;
     }
 
     private void Update()
@@ -50,6 +52,16 @@ public class Tuna : MonoBehaviour
         _submarine = submarine;
         _timer = 0f;
         SetEscapeDestination();
+    }
+
+
+    private void HandleDestinationReached()
+    {
+        if (_fish.Mode == FishMode.Custom)
+        {
+            _timer = 0f;
+            SetEscapeDestination();
+        }
     }
 
     private void SetEscapeDestination()
