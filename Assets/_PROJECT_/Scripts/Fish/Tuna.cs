@@ -1,6 +1,3 @@
-
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using NavVolume;
 
@@ -25,32 +22,46 @@ public class Tuna : MonoBehaviour
     {
         _fish.DetectedSubmarine += SwimAway;
         _fish.LostSubmarine += StopSwimming;
+        _fish.DestinationReached += HandleDestinationReached;
     }
 
     private void OnDisable()
     {
         _fish.DetectedSubmarine -= SwimAway;
         _fish.LostSubmarine -= StopSwimming;
+        _fish.DestinationReached -= HandleDestinationReached;
     }
 
     private void Update()
     {
-        if (_submarine == null) return;
-
-        _timer += Time.deltaTime;
-
-        if (_timer >= _updateInterval)
+        if (_fish.Mode == FishMode.Custom)
         {
-            _timer = 0f;
-            SetEscapeDestination();
+            _timer += Time.deltaTime;
+
+            if (_timer >= _updateInterval)
+            {
+                _timer = 0f;
+                SetEscapeDestination();
+            }
         }
     }
 
     private void SwimAway(GameObject submarine)
     {
+        _fish.Mode = FishMode.Custom;
         _submarine = submarine;
         _timer = 0f;
         SetEscapeDestination();
+    }
+
+
+    private void HandleDestinationReached()
+    {
+        if (_fish.Mode == FishMode.Custom)
+        {
+            _timer = 0f;
+            SetEscapeDestination();
+        }
     }
 
     private void SetEscapeDestination()
@@ -80,7 +91,7 @@ public class Tuna : MonoBehaviour
             destination.y = transform.position.y;
 
             if (_agent.NavVolumeSpace.IsSegmentNavigable(
-                transform.position, destination))
+                    transform.position, destination))
             {
                 _fish.SetDestination(destination);
                 Debug.Log("Tuna escape destination: " + destination);
@@ -93,7 +104,7 @@ public class Tuna : MonoBehaviour
 
     private void StopSwimming()
     {
+        _fish.Mode = FishMode.Roaming;
         _submarine = null;
     }
-    
 }

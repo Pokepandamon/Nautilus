@@ -35,7 +35,7 @@ public class Swordfish : MonoBehaviour
 
     private void Update()
     {
-        if (_submarine == null || _agent.NavVolumeSpace == null)
+        if (_fish.Mode != FishMode.Custom || _submarine == null || _agent.NavVolumeSpace == null)
             return;
 
         _timer += Time.deltaTime;
@@ -57,6 +57,7 @@ public class Swordfish : MonoBehaviour
 
     private void OnSubmarineDetected(GameObject submarine)
     {
+        _fish.Mode = FishMode.Custom;
         _submarine = submarine;
         _timer = 0f;
         _hasRequestedPath = false;
@@ -67,6 +68,7 @@ public class Swordfish : MonoBehaviour
 
     private void OnSubmarineLost()
     {
+        _fish.Mode = FishMode.Roaming;
         _submarine = null;
         _hasRequestedPath = false;
     }

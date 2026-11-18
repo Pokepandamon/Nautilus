@@ -21,6 +21,7 @@ public class Fish : MonoBehaviour
     [SerializeField] private float[] _detectionRadius = { 0, 0, 0, 0, 0, 0, 0 };
     [SerializeField] private float[] _harpoonDetectionRadius = { 0, 0, 0, 0, 0, 0, 0 };
     [SerializeField] private float _maxRoamDistance = 10f;
+    [SerializeField] private float _roamTurnSpeed = 60f;
     [SerializeField] private SubUpgrades _subUpgrades;
     [SerializeField] private DebugFlags _debugFlags;
 
@@ -28,14 +29,15 @@ public class Fish : MonoBehaviour
     private Rigidbody _rb;
     private bool _wasKinematic;
     private Vector3 _lastDestination = Vector3.positiveInfinity;
+    private Vector3 _attemptingRoamingDestination = Vector3.positiveInfinity;
     private bool _hasDestination = false;
-    private bool _isSubmarineCurrentlyDetected = false;
-    private bool _isHarpoonCurrentlyDetected = false;
     private Vector3 _initialPosition;
 
     // Properties
     public FishData FishData => _fishData;
     public bool IsHooked { get; private set; }
+    public bool IsSubmarineDetected { get; private set; } = false;
+    public bool IsHarpoonDetected { get; private set; } = false;
 
     // Events / Delegates
     public event Action DestinationReached;
@@ -51,39 +53,63 @@ public class Fish : MonoBehaviour
         _agent = GetComponent<NavVolumeAgent>();
         _rb = GetComponent<Rigidbody>(); // may be null, that's fine
         _initialPosition = transform.position;
+        _agent.MovementTurnSpeed = Mode == FishMode.Roaming ? _roamTurnSpeed : 0f;
     }
 
     private void Update()
     {
+        if (_agent.NavVolumeSpace == null)
+        {
+            Debug.LogError($"Fish \"{name}\" requires a NavVolumeSpace. Disabling...");
+            enabled = false;
+            return;
+        }
+
+        _agent.MovementTurnSpeed = Mode == FishMode.Roaming ? _roamTurnSpeed : 0f;
+
         if (IsHooked) return; // frozen: no detection, no destination events
 
         CheckForSubmarine();
         CheckForHarpoon();
 
-        if (_hasDestination && Vector3.Distance(transform.position, _lastDestination) < 1f)
+        float arrivalDistance = Mode == FishMode.Roaming
+            ? Mathf.Max(1f, _agent.MovementLookAheadDistance)
+            : 1f;
+
+        if (_hasDestination && Vector3.Distance(transform.position, _lastDestination) < arrivalDistance)
         {
             _hasDestination = false;
-            DestinationReached?.Invoke(); // TODO: only invoke if patrolling mode
+            DestinationReached?.Invoke();
         }
 
         if (Mode == FishMode.Roaming)
         {
-            while (!_hasDestination)
+            const int maxRoamAttempts = 5;
+
+            for (int tryCount = 0; tryCount < maxRoamAttempts && !_hasDestination; tryCount++)
             {
-                Vector3 randomDirection = GetAlmostRandomDirection();
+                Vector3 destination = GetAlmostRandomDestination();
 
                 // retry if raycast goes through ground
-                if (Physics.Raycast(transform.position, randomDirection - transform.position, out _,
-                        Vector3.Distance(transform.position, randomDirection)))
+                if (Physics.Raycast(transform.position, destination - transform.position, out var hitInfo,
+                        Vector3.Distance(transform.position, destination)))
                 {
-                    continue;
+                    if (tryCount == maxRoamAttempts - 1)
+                    {
+                        destination = Vector3.Lerp(transform.position, hitInfo.point, 0.8f);
+                    }
+                    else
+                    {
+                        continue;
+                    }
                 }
 
-                bool success = SetDestination(randomDirection);
+                bool success = SetDestination(destination);
+                _attemptingRoamingDestination = destination;
 
                 if (!success)
                 {
-                    Debug.Log("failed to set destination while roaming");
+                    continue;
                 }
             }
         }
@@ -99,6 +125,13 @@ public class Fish : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        if (Mode == FishMode.Roaming && !IsHooked && _attemptingRoamingDestination != Vector3.positiveInfinity)
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawLine(transform.position, _attemptingRoamingDestination);
+            Gizmos.DrawWireSphere(_attemptingRoamingDestination, 0.5f);
+        }
+
         if (_debugFlags.ShowDetectionRadiusSpheres)
         {
             float radius = _detectionRadius[_subUpgrades.Stealth];
@@ -173,7 +206,7 @@ public class Fish : MonoBehaviour
 
         if (_rb != null) _rb.isKinematic = _wasKinematic;
 
-        _isSubmarineCurrentlyDetected = false; // re-detect cleanly after release
+        IsSubmarineDetected = false; // re-detect cleanly after release
         _agent.enabled = true;
     }
 
@@ -202,32 +235,18 @@ public class Fish : MonoBehaviour
     {
         float radius = GetDetectionRadius();
 
-        // TODO: look into using layers and LayerMask.GetMask("Submarine")
-        // might speed up check?
-        /*Collider[] colliders = Physics.OverlapSphere(transform.position, radius);
-        foreach (Collider collider in colliders)
-        {
-            if (collider.CompareTag("Submarine"))
-            {
-                if (!_isSubmarineCurrentlyDetected)
-                {
-                    _isSubmarineCurrentlyDetected = true;
-                    DetectedSubmarine?.Invoke(collider.gameObject);
-                }
 
-                return;
-            }
-        }*/
         if (Vector3.Magnitude(SubmarineMovement.Instance.transform.position - transform.position) <= radius)
         {
-            _isSubmarineCurrentlyDetected = true;
-            DetectedSubmarine?.Invoke(SubmarineMovement.Instance.gameObject);
-            return;
+            if (!IsSubmarineDetected)
+            {
+                IsSubmarineDetected = true;
+                DetectedSubmarine?.Invoke(SubmarineMovement.Instance.gameObject);
+            }
         }
-
-        if (_isSubmarineCurrentlyDetected)
+        else if (IsSubmarineDetected)
         {
-            _isSubmarineCurrentlyDetected = false;
+            IsSubmarineDetected = false;
             LostSubmarine?.Invoke();
         }
     }
@@ -236,30 +255,34 @@ public class Fish : MonoBehaviour
     {
         if (SubmarineMovement.Instance.GetHarpoon() == null)
         {
-            _isHarpoonCurrentlyDetected = false;
-            LostHarpoon?.Invoke();
+            if (IsHarpoonDetected)
+            {
+                IsHarpoonDetected = false;
+                LostHarpoon?.Invoke();
+            }
+
             return;
         }
 
         if (Vector3.Magnitude(SubmarineMovement.Instance.GetHarpoon().transform.position - transform.position) <=
             GetHarpoonDetectionRadius())
         {
-            _isHarpoonCurrentlyDetected = false;
-            DetectedHarpoon?.Invoke(SubmarineMovement.Instance.GetHarpoon());
-            return;
+            if (!IsHarpoonDetected)
+            {
+                IsHarpoonDetected = true;
+                DetectedHarpoon?.Invoke(SubmarineMovement.Instance.GetHarpoon());
+            }
         }
-
-        if (_isHarpoonCurrentlyDetected)
+        else if (IsHarpoonDetected)
         {
-            _isHarpoonCurrentlyDetected = false;
+            IsHarpoonDetected = false;
             LostHarpoon?.Invoke();
         }
     }
 
     // random but sends you towards initial position over time
-    private Vector3 GetAlmostRandomDirection()
+    private Vector3 GetAlmostRandomDestination()
     {
-        // TODO: make good
         Vector3 randomDir = UnityEngine.Random.insideUnitSphere * _maxRoamDistance;
 
         // bias towards initial position

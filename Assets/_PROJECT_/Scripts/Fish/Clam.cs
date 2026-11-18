@@ -1,8 +1,6 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Fish))]
 public class Clam : MonoBehaviour
@@ -14,7 +12,7 @@ public class Clam : MonoBehaviour
         Open,
         Closed
     }
-    
+
     // Fields
     [SerializeField] private GameObject _topShell;
     [SerializeField] private GameObject _bottomShell;
@@ -29,27 +27,35 @@ public class Clam : MonoBehaviour
     private float _shellAngle = 0;
     private float _lastShellUpdate;
     private float _shellSpeedModifier = 1;
-    
+
     // Properties
-    
+
     // Events / Delegates
-    
+
     // Monobehaviour Methods (Awake, Start, Update, ...)
-    
+
     private void Awake()
     {
         _fish = GetComponent<Fish>();
         _fish.AutoCollectInNet = false; // clam handles its own collection logic
-        _fish.DetectedSubmarine += OnDetectedSubmarine;
-        _fish.LostSubmarine += OnLostSubmarine;
-        _fish.DetectedHarpoon += OnDetectedHarpoon;
-        _fish.LostHarpoon += OnLostHarpoon;
         _initialPosition = transform.position;
     }
 
     private void Start()
     {
         StartCoroutine(ShellChange());
+    }
+
+    private void OnEnable()
+    {
+        _fish.DetectedHarpoon += OnDetectedHarpoon;
+        _fish.LostHarpoon += OnLostHarpoon;
+    }
+
+    private void OnDisable()
+    {
+        _fish.DetectedHarpoon -= OnDetectedHarpoon;
+        _fish.LostHarpoon -= OnLostHarpoon;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -59,12 +65,31 @@ public class Clam : MonoBehaviour
             //Debug.Log(other.gameObject.GetComponentInParent<Transform>().position);
             Physics.queriesHitBackfaces = true;
             //Debug.DrawLine(_netChecker.position, _subNetSpawn.position, Color.red, 10f);
-            if (!Physics.Linecast(_netChecker.position, SubmarineMovement.Instance.GetHarpoonSpawn().position, _shellMask))
+            if (!Physics.Linecast(_netChecker.position, SubmarineMovement.Instance.GetHarpoonSpawn().position,
+                    _shellMask))
             {
                 //Debug.Log("Nothing in between ");
                 _fish.Collect();
 
                 Destroy(_clamParent);
+            }
+        }
+    }
+
+    private void Update()
+    {
+        if (_fish.IsSubmarineDetected || _fish.IsHarpoonDetected)
+        {
+            if (_shellState != ShellState.Closed)
+            {
+                _shellState = ShellState.Closing;
+            }
+        }
+        else
+        {
+            if (_shellState != ShellState.Open)
+            {
+                _shellState = ShellState.Opening;
             }
         }
     }
@@ -76,44 +101,18 @@ public class Clam : MonoBehaviour
     }
 
     // Public Methods
-    
-    // Private Methods
-    private void OnDetectedSubmarine(GameObject submarine)
-    {
-        if (_shellState != ShellState.Closed)
-        {
-            _shellState = ShellState.Closing;
-        }
-    }
-    
-    private void OnLostSubmarine()
-    {
-        if (_shellState != ShellState.Open)
-        {
-            _shellState = ShellState.Opening;
-        }
-    }
-    
-    private void OnDetectedHarpoon(GameObject submarine)
-    {
-        if (_shellState != ShellState.Closed)
-        {
-            _shellState = ShellState.Closing;
-        }
 
+    // Private Methods
+    private void OnDetectedHarpoon(GameObject harpoon)
+    {
         _shellSpeedModifier = 2;
     }
-    
+
     private void OnLostHarpoon()
     {
-        if (_shellState != ShellState.Open)
-        {
-            _shellState = ShellState.Opening;
-        }
-        
         _shellSpeedModifier = 1;
     }
-    
+
     /*private IEnumerator OpenShell()
     {
         for (int i = 0; i < 100; i++)
@@ -123,7 +122,7 @@ public class Clam : MonoBehaviour
         }
         _shellChanging = false;
     }
-    
+
     private IEnumerator CloseShell()
     {
         for (int i = 0; i < 100; i++)
@@ -146,11 +145,16 @@ public class Clam : MonoBehaviour
                 }
                 else
                 {
-                    float angleDelta = Mathf.Clamp(90f * ((Time.realtimeSinceStartup - _lastShellUpdate) / (_closingTime / _shellSpeedModifier)), 0f, _shellAngle);
-                    _topShell.transform.RotateAround(_hinge.position, Vector3.forward, -angleDelta);
+                    float angleDelta =
+                        Mathf.Clamp(
+                            90f * ((Time.realtimeSinceStartup - _lastShellUpdate) /
+                                   (_closingTime / _shellSpeedModifier)), 0f, _shellAngle);
+                    
+                    _topShell.transform.RotateAround(_hinge.position, transform.rotation * Vector3.forward, -angleDelta);
                     _shellAngle -= angleDelta;
                 }
             }
+
             if (_shellState == ShellState.Opening)
             {
                 if (_shellAngle >= 90)
@@ -159,8 +163,11 @@ public class Clam : MonoBehaviour
                 }
                 else
                 {
-                    float angleDelta = Mathf.Clamp(90f * ((Time.realtimeSinceStartup - _lastShellUpdate) / (_closingTime / _shellSpeedModifier)), 0f, 90f - _shellAngle);
-                    _topShell.transform.RotateAround(_hinge.position, Vector3.forward, angleDelta);
+                    float angleDelta =
+                        Mathf.Clamp(
+                            90f * ((Time.realtimeSinceStartup - _lastShellUpdate) /
+                                   (_closingTime / _shellSpeedModifier)), 0f, 90f - _shellAngle);
+                    _topShell.transform.RotateAround(_hinge.position, transform.rotation *Vector3.forward, angleDelta);
                     _shellAngle += angleDelta;
                 }
             }
@@ -169,5 +176,4 @@ public class Clam : MonoBehaviour
             yield return new WaitForSeconds(0.02f);
         }
     }
-    
 }

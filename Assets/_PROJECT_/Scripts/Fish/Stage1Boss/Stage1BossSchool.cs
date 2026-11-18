@@ -10,6 +10,7 @@ public class Stage1BossSchool : MonoBehaviour
     // Fields
     [SerializeField] private Transform[] _points;
     [SerializeField] private GameObject[] _members;
+    [SerializeField] private float _packingRadius;
 
     private Fish _fish;
     private Transform _submarine;
@@ -35,7 +36,7 @@ public class Stage1BossSchool : MonoBehaviour
         }
 
         // 5 is a place holder for how close we want them
-        _currentOffsets = PackMinVolume(_members.Length + 1, 1.5f).ToArray()[1..];
+        _currentOffsets = PackMinVolume(_members.Length + 1, _packingRadius).ToArray()[1..];
         
         _currentPoint = (_currentPoint + 1) % _points.Length;
         for (int i = 0; i < _members.Length; i++)
