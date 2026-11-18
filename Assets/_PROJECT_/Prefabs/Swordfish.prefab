@@ -31,9 +31,9 @@ Transform:
   m_GameObject: {fileID: 1363420293139660949}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 30.2, y: 20.31, z: -44.09}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -152,22 +152,23 @@ MonoBehaviour:
   AutoCollectInNet: 1
   _fishData: {fileID: 11400000, guid: 3a08a3463699142809ed1c22fb91cfdc, type: 2}
   _detectionRadius:
-  - 30
-  - 25
-  - 20
   - 15
   - 10
   - 5
-  - 0
+  - 5
+  - 5
+  - 5
+  - 5
   _harpoonDetectionRadius:
-  - 30
-  - 25
-  - 20
   - 15
   - 10
   - 5
-  - 0
+  - 5
+  - 5
+  - 5
+  - 5
   _maxRoamDistance: 30
+  _roamTurnSpeed: 60
   _subUpgrades: {fileID: 11400000, guid: 5db957ce134242d4a8db7523336e114e, type: 2}
   _debugFlags: {fileID: 11400000, guid: bb70b872d8c4c0142b160ad4da45c50c, type: 2}
 --- !u!114 &2782120112830780301
