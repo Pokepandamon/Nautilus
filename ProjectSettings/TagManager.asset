@@ -9,6 +9,10 @@ TagManager:
   - Harpoon
   - Hurts
   - Interactable
+  - BarnacleGarden
+  - SandyRocks
+  - KelpForest
+  - SB1Boss
   layers:
   - Default
   - TransparentFX
