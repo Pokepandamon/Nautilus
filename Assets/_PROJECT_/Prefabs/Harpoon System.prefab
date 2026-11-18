@@ -356,8 +356,10 @@ MonoBehaviour:
   _maxLengthUpgrades:
   - 10
   - 20
+  - 30
   _impulseUpgrades:
   - 30
+  - 60
   - 60
   _retractSpeed: 5
   _ropeVisual: {fileID: 6278336049800141222}
