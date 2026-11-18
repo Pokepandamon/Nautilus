@@ -56,15 +56,6 @@ public class Fish : MonoBehaviour
         _agent.MovementTurnSpeed = Mode == FishMode.Roaming ? _roamTurnSpeed : 0f;
     }
 
-    private void Start()
-    {
-        if (_agent.NavVolumeSpace == null || !_agent.NavVolumeSpace.IsReady)
-        {
-            Debug.LogError("Fish requires a NavVolumeSpace. Disabling...");
-            enabled = false;
-        }
-    }
-
     private void Update()
     {
         if (_agent.NavVolumeSpace == null)
@@ -88,14 +79,14 @@ public class Fish : MonoBehaviour
         if (_hasDestination && Vector3.Distance(transform.position, _lastDestination) < arrivalDistance)
         {
             _hasDestination = false;
-            DestinationReached?.Invoke(); // TODO: only invoke if patrolling mode
+            DestinationReached?.Invoke();
         }
 
         if (Mode == FishMode.Roaming)
         {
-            int tryCount = 0;
+            const int maxRoamAttempts = 5;
 
-            while (!_hasDestination)
+            for (int tryCount = 0; tryCount < maxRoamAttempts && !_hasDestination; tryCount++)
             {
                 Vector3 destination = GetAlmostRandomDestination();
 
@@ -103,9 +94,7 @@ public class Fish : MonoBehaviour
                 if (Physics.Raycast(transform.position, destination - transform.position, out var hitInfo,
                         Vector3.Distance(transform.position, destination)))
                 {
-                    tryCount++;
-
-                    if (tryCount >= 5)
+                    if (tryCount == maxRoamAttempts - 1)
                     {
                         destination = Vector3.Lerp(transform.position, hitInfo.point, 0.8f);
                     }
@@ -120,7 +109,7 @@ public class Fish : MonoBehaviour
 
                 if (!success)
                 {
-                    Debug.Log("failed to set destination while roaming");
+                    continue;
                 }
             }
         }

@@ -241,7 +241,8 @@ namespace NavVolume
                 if (!result.Succeeded)
                 {
                     Debug.LogError(
-                        $"[NavVolume][NavVolumeAgent] Pathfinding failed: {result.Status} "
+                        $"[NavVolume][NavVolumeAgent] Pathfinding failed for \"{name}\": {result.Status}. "
+                            + $"Start: {request.Start}; Goal: {request.Goal}"
                     );
                     return;
                 }

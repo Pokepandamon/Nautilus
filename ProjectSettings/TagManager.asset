@@ -8,6 +8,10 @@ TagManager:
   - Submarine
   - Harpoon
   - Hurts
+  - BarnacleGarden
+  - SandyRocks
+  - KelpForest
+  - SB1Boss
   layers:
   - Default
   - TransparentFX
@@ -17,7 +21,7 @@ TagManager:
   - UI
   - Ignore NavVolume
   - BlockNet
-  - 
+  - NavBarrier
   - 
   - 
   - 

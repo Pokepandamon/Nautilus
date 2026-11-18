@@ -18,6 +18,7 @@ public class PlayModeEffects : MonoBehaviour
         if (enableBuiltInFog)
         {
             RenderSettings.fog = true;
+            RenderSettings.fogDensity = 0.02f;
         }
 
         // Enable URP/HDRP Volume (for Volumetric Fog or Post-Processing)
