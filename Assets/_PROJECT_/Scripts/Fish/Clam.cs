@@ -69,9 +69,10 @@ public class Clam : MonoBehaviour
                     _shellMask))
             {
                 //Debug.Log("Nothing in between ");
-                _fish.Collect();
-
-                Destroy(_clamParent);
+                if (_fish.Collect())
+                {
+                    Destroy(_clamParent);
+                }
             }
         }
     }

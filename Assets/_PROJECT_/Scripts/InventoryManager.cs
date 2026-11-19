@@ -23,7 +23,35 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    public void AddFish(FishData _fishCaught){
+    public int FishCount
+    {
+        get
+        {
+            int total = 0;
+
+            foreach (InventoryItem item in fishBag)
+            {
+                total += item.stackCount;
+            }
+
+            return total;
+        }
+    }
+
+    public bool IsFishBagFull => FishCount >= maxBagCapacity;
+
+    public bool AddFish(FishData _fishCaught){
+        if (_fishCaught == null)
+        {
+            return false;
+        }
+
+        if (IsFishBagFull)
+        {
+            Debug.Log("Fishbag is full!");
+            return false;
+        }
+
         InventoryItem fish_inside = null; 
 
         for(int i = 0; i < fishBag.Count; i++){
@@ -36,17 +64,13 @@ public class InventoryManager : MonoBehaviour
         if(fish_inside != null){
             fish_inside.stackCount += 1;
         }else{
-            if(fishBag.Count >= maxBagCapacity){
-                Debug.Log("Fishbag is full!");
-                return;
-            }
-
             InventoryItem newFish = new InventoryItem(_fishCaught);
             fishBag.Add(newFish);
         }
         Debug.Log($"Caught {_fishCaught.fishName}!");
 
         OnInventoryChange?.Invoke(); // will trigger event that the inventory has been changed
+        return true;
     }
 
     public void SellFishBag(){
@@ -62,6 +86,17 @@ public class InventoryManager : MonoBehaviour
 
         Debug.Log($"Sold all fish for {totalEarnings}");
 
+        OnInventoryChange?.Invoke();
+    }
+
+    public void ClearFishBag()
+    {
+        if (fishBag.Count == 0)
+        {
+            return;
+        }
+
+        fishBag.Clear();
         OnInventoryChange?.Invoke();
     }
 
