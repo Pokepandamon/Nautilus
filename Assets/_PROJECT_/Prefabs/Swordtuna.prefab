@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5655776914036194127}
   - component: {fileID: 3389546290295596801}
   - component: {fileID: 5967004215941543597}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Capsule (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -236,7 +236,7 @@ GameObject:
   - component: {fileID: 5420255701266689042}
   - component: {fileID: 5950323110292168676}
   - component: {fileID: 4042819516739729411}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Capsule (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -326,7 +326,7 @@ GameObject:
   - component: {fileID: 1503319741332471870}
   - component: {fileID: 6873568667347682346}
   - component: {fileID: 8523026567816643783}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Capsule (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -596,7 +596,7 @@ GameObject:
   - component: {fileID: 4956045452087144663}
   - component: {fileID: 4667103186772587709}
   - component: {fileID: 458291108700842945}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -687,7 +687,7 @@ GameObject:
   - component: {fileID: 8831896246314902952}
   - component: {fileID: 3000497666616394651}
   - component: {fileID: 8321401723473231077}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Nose
   m_TagString: Hurts
   m_Icon: {fileID: 0}
