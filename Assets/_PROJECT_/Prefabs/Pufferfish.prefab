@@ -154,7 +154,7 @@ MonoBehaviour:
   _detectionRadius:
   - 20
   - 16
-  - 4
+  - 0
   - 4
   - 4
   - 4
