@@ -190,7 +190,12 @@ public class Harpoon : MonoBehaviour
     {
         if (_hookedFish == null) return;
 
-        _hookedFish.Collect();
+        if (!_hookedFish.Collect())
+        {
+            _hookedFish.transform.SetParent(null, true);
+            _hookedFish.Release();
+        }
+
         _hookedFish = null;
     }
 }

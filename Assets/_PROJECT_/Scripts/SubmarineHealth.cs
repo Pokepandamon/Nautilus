@@ -47,6 +47,7 @@ public class SubmarineHealth : MonoBehaviour
 
     }
     private void Die(){
+        InventoryManager.instance?.ClearFishBag();
         Time.timeScale = 0f;
         OnDeath?.Invoke();
         Cursor.lockState = CursorLockMode.None;

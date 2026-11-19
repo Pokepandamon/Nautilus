@@ -69,7 +69,9 @@ public class UIManager : MonoBehaviour
 
         if (_gameOverGroup != null)
         {
-            if (FishCount >= 5)
+            InventoryManager inv = InventoryManager.instance;
+
+            if (inv != null && FishCount >= inv.maxBagCapacity)
             {
                 _gameOverGroup.SetActive(true);
             }
@@ -90,7 +92,10 @@ public class UIManager : MonoBehaviour
     {
         if (_fishBagText != null)
         {
-            _fishBagText.text = "Fish Bag: " + FishCount + "/5";
+            int capacity = InventoryManager.instance != null
+                ? InventoryManager.instance.maxBagCapacity
+                : 5;
+            _fishBagText.text = "Fish Bag: " + fish + "/" + capacity;
         }
     }
 
@@ -166,14 +171,7 @@ public class UIManager : MonoBehaviour
             return;
         }
 
-        int total = 0;
-
-        foreach (InventoryItem item in inv.fishBag)
-        {
-            total += item.stackCount;
-        }
-
-        FishCount = total;
-        FishBagUpdate(total);
+        FishCount = inv.FishCount;
+        FishBagUpdate(FishCount);
     }
 }
