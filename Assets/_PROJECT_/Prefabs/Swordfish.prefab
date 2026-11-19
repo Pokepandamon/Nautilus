@@ -79,16 +79,16 @@ MonoBehaviour:
   AutoCollectInNet: 1
   _fishData: {fileID: 11400000, guid: 3a08a3463699142809ed1c22fb91cfdc, type: 2}
   _detectionRadius:
-  - 15
   - 10
+  - 5
   - 5
   - 5
   - 5
   - 5
   - 5
   _harpoonDetectionRadius:
-  - 15
   - 10
+  - 5
   - 5
   - 5
   - 5
@@ -163,8 +163,8 @@ Transform:
   m_GameObject: {fileID: 1838420980186168164}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1.51}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 1.5}
+  m_LocalPosition: {x: 0, y: -0, z: 1.9843}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 2.4486}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1396697297433425366}

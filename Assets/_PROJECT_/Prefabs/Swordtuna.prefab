@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 1030209882891950204}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -30.2, y: -20.31, z: 42.54}
+  m_LocalPosition: {x: 0, y: 0, z: -1.5499992}
   m_LocalScale: {x: 0.5494479, y: 0.46189293, z: 0.5494479}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -102,6 +102,7 @@ GameObject:
   - component: {fileID: 9161000619271321693}
   - component: {fileID: 721923650434909784}
   - component: {fileID: 2782120112830780301}
+  - component: {fileID: 8349568290891605159}
   m_Layer: 6
   m_Name: Swordtuna
   m_TagString: Untagged
@@ -168,17 +169,17 @@ MonoBehaviour:
   AutoCollectInNet: 1
   _fishData: {fileID: 11400000, guid: b3943f5e72c2c43c9a60572e06153188, type: 2}
   _detectionRadius:
-  - 25
-  - 15
+  - 20
   - 10
+  - 5
   - 5
   - 5
   - 5
   - 5
   _harpoonDetectionRadius:
-  - 25
-  - 15
+  - 20
   - 10
+  - 5
   - 5
   - 5
   - 5
@@ -201,6 +202,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Swordfish
   _updateInterval: 2
   _targetMoveThreshold: 3
+--- !u!136 &8349568290891605159
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1363420293139660949}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5552887
+  m_Height: 3.5683787
+  m_Direction: 2
+  m_Center: {x: -0.055288672, y: 0, z: -0.78292334}
 --- !u!1 &3961664041288022922
 GameObject:
   m_ObjectHideFlags: 0
@@ -228,8 +252,8 @@ Transform:
   m_GameObject: {fileID: 3961664041288022922}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -30.2, y: -20.31, z: 43.19}
-  m_LocalScale: {x: 0.77570575, y: 0.65209633, z: 0.7757058}
+  m_LocalPosition: {x: 0, y: 0, z: -0.9000015}
+  m_LocalScale: {x: 0.77570575, y: 0.6520962, z: 0.77570593}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1396697297433425366}
@@ -318,7 +342,7 @@ Transform:
   m_GameObject: {fileID: 3977435973256265465}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -30.2, y: -20.31, z: 42.001}
+  m_LocalPosition: {x: 0, y: 0, z: -2.0890007}
   m_LocalScale: {x: 0.4, y: 0.5584747, z: 0.4}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -408,7 +432,7 @@ Transform:
   m_GameObject: {fileID: 4396242675132554338}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -29.817001, y: -20.063234, z: 44.787}
+  m_LocalPosition: {x: 0.38299942, y: 0.24676514, z: 0.6969986}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -498,7 +522,7 @@ Transform:
   m_GameObject: {fileID: 6242312823922947300}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -30.583, y: -20.063234, z: 44.787}
+  m_LocalPosition: {x: -0.38299942, y: 0.24676514, z: 0.6969986}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -588,7 +612,7 @@ Transform:
   m_GameObject: {fileID: 7225552311995000039}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -30.2, y: -20.31, z: 44.09}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -679,8 +703,8 @@ Transform:
   m_GameObject: {fileID: 7556470805683995084}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -30.2, y: -20.31, z: 45.6}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 1.5}
+  m_LocalPosition: {x: 0, y: -0, z: 1.9843}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 2.4486}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1396697297433425366}
