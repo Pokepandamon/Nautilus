@@ -25,12 +25,14 @@ public class Swordfish : MonoBehaviour
     {
         _fish.DetectedSubmarine += OnSubmarineDetected;
         _fish.LostSubmarine += OnSubmarineLost;
+        _fish.DestinationReached += HandleDestinationReached;
     }
 
     private void OnDisable()
     {
         _fish.DetectedSubmarine -= OnSubmarineDetected;
         _fish.LostSubmarine -= OnSubmarineLost;
+        _fish.DestinationReached -= HandleDestinationReached;
     }
 
     private void Update()
@@ -71,6 +73,15 @@ public class Swordfish : MonoBehaviour
         _fish.Mode = FishMode.Roaming;
         _submarine = null;
         _hasRequestedPath = false;
+    }
+
+    private void HandleDestinationReached()
+    {
+        if (_fish.Mode != FishMode.Custom || _submarine == null)
+            return;
+
+        _timer = 0f;
+        RequestChasePath(_submarine.transform.position);
     }
 
     private void RequestChasePath(Vector3 destination)
