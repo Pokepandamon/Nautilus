@@ -141,14 +141,24 @@ public class Fish : MonoBehaviour
     }
 
     // Public Methods
-    public void Collect()
+    public bool Collect()
     {
         if (_fishData != null)
         {
-            InventoryManager.instance.AddFish(_fishData);
+            if (InventoryManager.instance == null)
+            {
+                Debug.LogError($"Fish \"{name}\" cannot be collected because no InventoryManager is active.");
+                return false;
+            }
+
+            if (!InventoryManager.instance.AddFish(_fishData))
+            {
+                return false;
+            }
         }
 
         Destroy(gameObject);
+        return true;
     }
 
     public bool SetDestination(Vector3 destination)

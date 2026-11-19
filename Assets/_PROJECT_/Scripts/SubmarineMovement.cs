@@ -24,6 +24,7 @@ public class SubmarineMovement : MonoBehaviour
     [SerializeField] private Color[] _fogColors;
     [SerializeField] private float _fogAdjustmentTime;
 
+
     private Rigidbody _rigidbody;
     private InputAction _linearMovementAction;
     private InputAction _rotationalMovementAction;
@@ -46,7 +47,7 @@ public class SubmarineMovement : MonoBehaviour
     private float[] _currentFogColor = new float[3];
     private Color _targetFogColor;
     private float[] _currentFogColorDelta = new float[3];
-
+    
     // Properties
 
     // Events / Delegates

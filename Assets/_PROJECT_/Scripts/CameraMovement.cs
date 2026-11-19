@@ -13,6 +13,7 @@ public class CameraMovement : MonoBehaviour
     [SerializeField] private float _distance;
     [SerializeField] private Transform _playerTransform;
     [SerializeField] private float _sensitivity;
+    [SerializeField] private LayerMask _layerMask;
     [SerializeField] private Light _light;
     [SerializeField] private float _maxLight;
     [SerializeField] private float _minLight;
@@ -35,6 +36,7 @@ public class CameraMovement : MonoBehaviour
     {
         _paused = false;
         CanvasUIManager.OnPause += OnPause;
+        SubmarineHealth.OnDeath += OnPause;
         CanvasUIManager.OnResume += OnResume;
         _mouseDelta = InputSystem.actions.FindAction("Look");
         transform.position = _distance * new Vector3(Mathf.Cos(_theta), Mathf.Sin(_phi), Mathf.Sin(_theta));
@@ -49,8 +51,17 @@ public class CameraMovement : MonoBehaviour
         //Debug.Log("theta: " + _theta + " | phi: " + _phi);
         if (!_paused)
         {
-            transform.position = _playerTransform.position +
-                                 _distance * new Vector3(Mathf.Cos(_theta), Mathf.Sin(_phi), Mathf.Sin(_theta));
+            if (Physics.Raycast(_playerTransform.position, new Vector3(Mathf.Cos(_theta), Mathf.Sin(_phi), Mathf.Sin(_theta)), out RaycastHit hitInfo, _distance, _layerMask)) {
+                // Debug.DrawLine(_playerTransform.position, hitInfo.point, Color.green);
+                transform.position = _playerTransform.position + hitInfo.distance * 0.9f * new Vector3(Mathf.Cos(_theta), Mathf.Sin(_phi), Mathf.Sin(_theta));
+            }
+            else {
+                // Debug.DrawLine(_playerTransform.position, _playerTransform.position + _distance * new Vector3(Mathf.Cos(_theta), Mathf.Sin(_phi), Mathf.Sin(_theta)), Color.red);
+                transform.position = _playerTransform.position + _distance * new Vector3(Mathf.Cos(_theta), Mathf.Sin(_phi), Mathf.Sin(_theta));
+            }
+            
+            
+            
             transform.LookAt(_playerTransform);
         }
 

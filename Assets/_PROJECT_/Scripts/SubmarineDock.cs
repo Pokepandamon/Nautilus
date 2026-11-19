@@ -53,6 +53,6 @@ public class SubmarineDock : MonoBehaviour
     {
         return submarine != null &&
                (other.transform == submarine ||
-                other.transform.IsChildOf(submarine));
+                (other.transform.IsChildOf(submarine) && !other.CompareTag("Net")));
     }
 }
