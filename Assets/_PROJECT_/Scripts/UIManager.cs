@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
@@ -11,9 +12,16 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] private TMP_Text _fishBagText;
     [SerializeField] private GameObject _gameOverGroup;
+    [SerializeField] private GameObject _heightWarningGroup;
+    [SerializeField] private float _warningHeight;
+    [SerializeField] private float _killHeight;
+    [SerializeField] private AudioMixer _mixer;
 
     public static UIManager Instance;
     public static int FishCount = 0;
+    private Animator _heightWarningAnimator;
+    private SubmarineHealth _killObject;
+    private AudioSource _audioSource;
 
     // Properties
 
@@ -30,6 +38,9 @@ public class UIManager : MonoBehaviour
         }
 
         Instance = this;
+        _heightWarningAnimator = _heightWarningGroup.GetComponent<Animator>();
+        _killObject = SubmarineMovement.Instance.gameObject.GetComponent<SubmarineHealth>();
+        _audioSource = GetComponent<AudioSource>();
     }
 
     private void OnEnable()
@@ -45,6 +56,7 @@ public class UIManager : MonoBehaviour
 
     private void OnDisable()
     {
+        //Debug.Log("Disabled");
         InventoryManager.OnInventoryChange -= RefreshFishCount;
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
@@ -70,11 +82,40 @@ public class UIManager : MonoBehaviour
         if (_gameOverGroup != null)
         {
             InventoryManager inv = InventoryManager.instance;
-
+            
             if (inv != null && FishCount >= inv.maxBagCapacity)
             {
                 _gameOverGroup.SetActive(true);
             }
+        }
+
+        if (SubmarineMovement.Instance != null && SubmarineMovement.Instance.transform.position.y > _warningHeight && Time.timeScale == 1f)
+        {
+            _heightWarningGroup.SetActive(true);
+            if (!_audioSource.isPlaying)
+            {
+                _audioSource.Play();
+            }
+
+            _mixer.SetFloat("KlaxonPitch", 1f / (1f + (SubmarineMovement.Instance.transform.position.y - _warningHeight) / (_killHeight - _warningHeight)));
+            _audioSource.pitch = 1f + (SubmarineMovement.Instance.transform.position.y - _warningHeight) / (_killHeight - _warningHeight);
+            _heightWarningAnimator.speed = 1 + (SubmarineMovement.Instance.transform.position.y - _warningHeight) / (_killHeight - _warningHeight);
+        }
+        else
+        {
+            if (_audioSource.isPlaying){
+                _audioSource.Pause();
+            }
+
+            if (SubmarineMovement.Instance != null)
+            {
+                _heightWarningGroup.SetActive(false);
+            }
+        }
+
+        if (SubmarineMovement.Instance != null && SubmarineMovement.Instance.transform.position.y > _killHeight)
+        {
+            _killObject.TakeDamage(100);
         }
     }
 
@@ -84,6 +125,7 @@ public class UIManager : MonoBehaviour
         {
             Instance = null;
         }
+        //Debug.Log("Destroyed");
     }
 
     // Public Methods
